@@ -3,6 +3,6 @@
 
 This is contains customized components made by J.W.Opitz.
 
-= Current Components =
+=Current Components=
 
   * HyperlinkText
