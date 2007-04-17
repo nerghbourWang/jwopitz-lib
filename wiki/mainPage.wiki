@@ -1,0 +1,10 @@
+#summary custom AS3.0/Flex components by Jwopitz
+= Introduction =
+
+This is contains customized components made by J.W.Opitz.
+
+= Details =
+
+current components:
+- HyperlinkText
+
