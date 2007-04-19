@@ -1,4 +1,5 @@
 #summary custom AS3.0/Flex components by Jwopitz
+#labels Featured
 = Introduction =
 
 Open-source custom Flex components.
