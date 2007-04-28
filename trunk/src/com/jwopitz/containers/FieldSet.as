@@ -30,29 +30,98 @@ package com.jwopitz.containers {
     import mx.containers.Box;
     import mx.controls.Text;
     
-    [Style(name="titleGap", type="String", inherit="no")]
+    /**
+     * Sets the horizontal alignment of the titleTextField.  Values are "left, "center" and "right".  The default value is "left".
+     */
+    [Style(name="titleAlign", type="String", enumeration="left,center,right", inherit="no")]
+    
+    /**
+     * Sets the gap between the titleTextField and the drawn border endpoints on each side.  The default value is 2.
+     */
+    [Style(name="titleGap", type="Number", inherit="no")]
+    
+    /**
+     * Sets the vertical placement of the titleTextField.  Current values are "top".  The default value is "top".
+     * 
+     * 2007.04.12 - this feature has not yet been implemented - jwopitz
+     */
+    [Style(name="titlePlacement", type="String", enumeration="top", inherit="no")]
+    
+    /**
+     * Sets the style for the titleTextField.
+     */
     [Style(name="titleStyleName", type="String", inherit="no")]
 	
     [Bindable]
 	public class FieldSet extends Box {
-    	
-    	public static const TITLE_ALIGN_LEFT:String = "left";
+		
+		public static const TITLE_ALIGN_LEFT:String = "left";
     	public static const TITLE_ALIGN_CENTER:String = "center";
     	public static const TITLE_ALIGN_RIGHT:String = "right";
                 
         protected var _title:String = "";
         protected var _titleTextField:Text;
-        protected var _titlePlacement:String = "left";
         
+        protected var _titleAlign:String = "left";
+		protected var _titleGap:Number = 2;
+		protected var _titleStyleName:Object;
+		protected var _borderSkin:Class;
+		
         protected var _titlePt:Point;
         
-		/**
+        /**
 		 * Constructor
 		 */
         public function FieldSet (){
         	super();
         	
-        	setStyle("borderSkin", FieldSetBorder);
+        	setDefaultStyles();
+        	
+        	//setStyle("borderStyle", "solid");
+        	//setStyle("borderSkin", FieldSetBorder);
+        }
+		
+		/**
+		 * Sets the default values for custom styles.  This method is called during the constructor.
+		 * Since subclasses will most likely have additional custom style properties,
+		 * it is recommended that they override this method.
+		 */
+		protected function setDefaultStyles ():void {
+			
+		}
+		
+		override public function styleChanged (styleProp:String):void {
+        	super.styleChanged(styleProp);
+        	
+        	var allStyles:Boolean = !styleProp || styleProp == "styleName";
+        	if (allStyles || styleProp == "titleAlign"){
+        		var ta:String = String(getStyle("titleAlign"));
+        		if (ta && ta != "undefined")
+        			_titleAlign = ta;
+        	}
+        		
+        	
+        	if (allStyles || styleProp == "titleGap"){
+        		var tg:Number = Number(getStyle("titleGap"));
+        		if (!isNaN(tg))
+        			_titleGap = tg;
+        	}
+        		
+        	
+        	if (allStyles || styleProp == "titleStyleName"){
+        		_titleStyleName = getStyle("titleStyleName")      	
+        		
+        		if (_titleTextField)
+					_titleTextField.styleName = _titleStyleName;
+        	}
+        	
+        	if (allStyles || styleProp == "borderStyle")
+        		super.setStyle("borderStyle", "solid");
+        		
+        	if (allStyles || styleProp == "borderSkin")
+				super.setStyle("borderSkin", FieldSetBorder);
+				
+			invalidateDisplayList();
         }
 		
 		/**
@@ -66,9 +135,7 @@ package com.jwopitz.containers {
                 _titleTextField.mouseEnabled = false;
                 _titleTextField.text = title;
                 
-                var titleStyle:Object = getStyle("titleStyleName");
-                if (titleStyle)
-                	_titleTextField.styleName = titleStyle;
+                _titleTextField.styleName = _titleStyleName;
                 
 				rawChildren.addChild(_titleTextField);
             }
@@ -91,18 +158,20 @@ package com.jwopitz.containers {
 		/**
 		 * Determines the point of placement for the titleTextField based on the value of titleAlign.
 		 */
-        protected function adjustTitlePt ():void {
-        	if (!titleTextField)
-        		return;
-        		
+		protected function adjustTitlePt ():void {
+			if (!titleTextField)
+				return;
+				
         	var nx:Number = 0;
         	var ny:Number = 0;
-        	/*if (borderMetrics.top > titleTextField.getExplicitOrMeasuredHeight())
-        		ny = borderMetrics.top - (titleTextField.getExplicitOrMeasuredHeight() / 2);*/
+			var gap:Number = _titleGap;
+			var cr:Number = getStyle("cornerRadius");
+				        		
+        	_titleAlign = getStyle("titleAlign"); 
         		
-        	switch (_titlePlacement){
+        	switch (_titleAlign){
         		case FieldSet.TITLE_ALIGN_RIGHT:
-        		nx = width - getStyle("cornerRadius") - borderMetrics.right - 10 - titleTextField.getExplicitOrMeasuredWidth();
+        		nx = width - cr - borderMetrics.right - _titleGap - titleTextField.getExplicitOrMeasuredWidth() - 5;
         		break;
         		
         		case FieldSet.TITLE_ALIGN_CENTER:
@@ -111,7 +180,7 @@ package com.jwopitz.containers {
         		
         		case FieldSet.TITLE_ALIGN_RIGHT:
         		default:
-        		nx = getStyle("cornerRadius") + borderMetrics.left + 10;
+        		nx = cr + borderMetrics.left + _titleGap + 5;
         	}
         	
         	_titlePt = new Point(nx, ny);
@@ -132,23 +201,6 @@ package com.jwopitz.containers {
             if (_titleTextField)
                 _titleTextField.text = value;
                 
-        	layoutChrome(unscaledWidth, unscaledHeight);
-        }
-		
-		/**
-		 * The placement of the titleTextField.  The accepted values are "left", "center" and "right".  Any other value is replaced with "left".
-		 * 
-		 * @default "left"
-		 */
-        public function get titleAlign ():String {
-        	return _titlePlacement;
-        }
-		/**
-		 * @private
-		 */
-		public function set titleAlign (value:String):void {
-        	_titlePlacement = value;
-        	
         	layoutChrome(unscaledWidth, unscaledHeight);
         }
 		
