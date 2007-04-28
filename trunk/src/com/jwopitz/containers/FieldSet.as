@@ -23,12 +23,16 @@ SOFTWARE.
 */
 package com.jwopitz.containers {
 	
+    import com.jwopitz.core.jwo_internal;
     import com.jwopitz.skins.FieldSetBorder;
     
     import flash.geom.Point;
     
     import mx.containers.Box;
     import mx.controls.Text;
+    import mx.core.UITextField;
+       
+	use namespace jwo_internal;
     
     /**
      * Sets the horizontal alignment of the titleTextField.  Values are "left, "center" and "right".  The default value is "left".
@@ -52,15 +56,14 @@ package com.jwopitz.containers {
      */
     [Style(name="titleStyleName", type="String", inherit="no")]
 	
-    [Bindable]
-	public class FieldSet extends Box {
+    public class FieldSet extends Box {
 		
 		public static const TITLE_ALIGN_LEFT:String = "left";
     	public static const TITLE_ALIGN_CENTER:String = "center";
     	public static const TITLE_ALIGN_RIGHT:String = "right";
                 
         protected var _title:String = "";
-        protected var _titleTextField:Text;
+        protected var _titleTextField:UITextField;
         
         protected var _titleAlign:String = "left";
 		protected var _titleGap:Number = 2;
@@ -76,9 +79,6 @@ package com.jwopitz.containers {
         	super();
         	
         	setDefaultStyles();
-        	
-        	//setStyle("borderStyle", "solid");
-        	//setStyle("borderSkin", FieldSetBorder);
         }
 		
 		/**
@@ -88,6 +88,14 @@ package com.jwopitz.containers {
 		 */
 		protected function setDefaultStyles ():void {
 			
+			var tg:Number = getStyle("titleGap");
+			if (!isNaN(tg))
+				_titleGap = tg;
+				
+			setStyle("titleGap", _titleGap);
+			
+			setStyle("borderStyle", "solid");
+        	setStyle("borderSkin", FieldSetBorder);
 		}
 		
 		override public function styleChanged (styleProp:String):void {
@@ -131,11 +139,15 @@ package com.jwopitz.containers {
             super.createChildren();
             
             if (!_titleTextField){
-                _titleTextField = new Text();
+                _titleTextField = new UITextField();
                 _titleTextField.mouseEnabled = false;
                 _titleTextField.text = title;
                 
-                _titleTextField.styleName = _titleStyleName;
+                _titleStyleName = getStyle("titleStyleName");
+                if (_titleStyleName)
+                	_titleTextField.styleName = _titleStyleName;
+                else
+                	_titleTextField.styleName = this;
                 
 				rawChildren.addChild(_titleTextField);
             }
@@ -164,11 +176,8 @@ package com.jwopitz.containers {
 				
         	var nx:Number = 0;
         	var ny:Number = 0;
-			var gap:Number = _titleGap;
 			var cr:Number = getStyle("cornerRadius");
-				        		
-        	_titleAlign = getStyle("titleAlign"); 
-        		
+			        		
         	switch (_titleAlign){
         		case FieldSet.TITLE_ALIGN_RIGHT:
         		nx = width - cr - borderMetrics.right - _titleGap - titleTextField.getExplicitOrMeasuredWidth() - 5;
@@ -207,8 +216,9 @@ package com.jwopitz.containers {
 		/**
 		 * Allows outside access to the fieldSet's titleTextField.
 		 */
-        public function get titleTextField ():Text {
-            return _titleTextField;
-        }
+        jwo_internal function get titleTextField ():UITextField {
+        	trace('t');
+			return _titleTextField;
+		}
     }
 }

@@ -24,19 +24,22 @@ SOFTWARE.
 package com.jwopitz.skins {
 	
 	import com.jwopitz.containers.FieldSet;
+	import com.jwopitz.core.jwo_internal;
 	
 	import flash.display.Graphics;
 	import flash.geom.Point;
 	
-	import mx.controls.Text;
 	import mx.core.EdgeMetrics;
+	import mx.core.UITextField;
 	import mx.skins.RectangularBorder;
+	
+	use namespace jwo_internal;
 	
 	public class FieldSetBorder extends RectangularBorder {
 		
 	    protected var _borderMetrics:EdgeMetrics;
 	    
-	    protected var _title:Text;      
+	    protected var _title:UITextField;      
 	    
 	    override public function get borderMetrics ():EdgeMetrics {
 	        if (!_borderMetrics){
@@ -103,7 +106,7 @@ package com.jwopitz.skins {
 			var g:Graphics = graphics;
 			g.clear();
 			
-			g.lineStyle(bThickness, bColor, bAlpha);
+			g.lineStyle(bThickness, bColor, bAlpha, true);
 			g.moveTo(pt00.x, pt00.y);
 			g.lineTo(pt01.x, pt01.y);
 			g.curveTo(pt02.x, pt02.y, pt03.x, pt03.y);
@@ -116,7 +119,7 @@ package com.jwopitz.skins {
 			g.lineTo(pt13.x, pt13.y);
 	    }
 	    
-	    protected function get title ():Text {
+	    protected function get title ():UITextField {
 	    	if (!_title){
 	    		if (parent && parent is FieldSet){
 	    			_title = FieldSet(parent).titleTextField;
