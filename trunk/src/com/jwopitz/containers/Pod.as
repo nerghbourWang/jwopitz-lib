@@ -30,18 +30,20 @@ package com.jwopitz.containers {
 	import mx.core.EventPriority;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
+	import mx.styles.StyleManager;
+	import mx.styles.CSSStyleDeclaration;
 	
 	/**
      * Sets the vertical alignment of the header children added with addTitleBarComponent and the titleTextField.
      * Values are "top, "middle" and "bottom".  The default value is "middle".
      */
-    [Style (name="headerVerticalAlign", type="String", enumeration="top,middle,bottom", inherit="no")]
+    [Style (name="headerAlign", type="String", enumeration="top,middle,bottom", inherit="no")]
     
     /**
      * Sets the horizontal gap of the header children added with addTitleBarComponent.  
      * If no value is set, then the value of horizontalGap will be used for the gap.  The default value is 6.
      */
-    [Style (name="headerHorizontalGap", type="Number", inherit="no")]
+    [Style (name="headerGap", type="Number", inherit="no")]
 	
 	[Event (name="gripClick", type="flash.events.MouseEvent")]
 	[Event (name="gripMouseDown", type="flash.events.MouseEvent")]
@@ -63,53 +65,45 @@ package com.jwopitz.containers {
 		public static const GRIP_MOUSE_UP:String = "gripMouseUp";
 		public static const GRIP_ROLL_OUT:String = "gripRollOut";
 		public static const GRIP_ROLL_OVER:String = "gripRollOver";
+		
+		private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 				
 		protected var _creationQueue:Array = [];
 		protected var _titleBarAssets:Array = [];
 		
-		protected var _headerVerticalAlign:String = "middle";
+		protected var _headerAlign:String = "middle";
 		protected var _headerChildGap:Number;
 		
 		public var defaultTitleBarComponentClass:Class = Button;
 		
-		/**
-		 * Constructor
-		 */
-		public function Pod (){
-			super();
+		private static function setDefaultStyles ():Boolean {
 			
-			setDefaultStyles();
-		}
-		
-		/**
-		 * Sets the default values for custom styles.  This method is called during the constructor.
-		 * Since subclasses will most likely have additional custom style properties,
-		 * it is recommended that they override this method.
-		 */
-		protected function setDefaultStyles ():void {
-			if (getStyle("headerVerticalAlign"))
-				_headerVerticalAlign = String(getStyle("headerVerticalAlign"));
+			if (!StyleManager.getStyleDeclaration("Pod")){
 				
-			if (getStyle("headerHorizontalGap"))
-				_headerChildGap = Number(getStyle("headerHorizontalGap"));
-			else
-				_headerChildGap = Number(getStyle("horizontalGap"));
+				var s:CSSStyleDeclaration = new CSSStyleDeclaration();
+				s.setStyle("headerAlign", "middle");
+				s.setStyle("headerGap", 2);
+				
+				StyleManager.setStyleDeclaration("Pod", s, true);
+			}
+							
+			return true;
 		}
 		
 		override public function styleChanged (styleProp:String):void {
 			super.styleChanged(styleProp);
 			
 			var allStyles:Boolean = !styleProp || styleProp == "styleName";
-			if (allStyles || styleProp == "headerVerticalAlign"){
-				var hva:String = String(getStyle("headerVerticalAlign"));
+			if (allStyles || styleProp == "headerAlign"){
+				var hva:String = String(getStyle("headerAlign"));
 				if (!hva)
 					hva = "middle";
 				
-				_headerVerticalAlign = hva;
+				_headerAlign = hva;
 			}
 			
-			if (allStyles || styleProp == "headerHorizontalGap"){
-				var hhg:Number = Number(getStyle("headerHorizontalGap"));
+			if (allStyles || styleProp == "headerGap"){
+				var hhg:Number = Number(getStyle("headerGap"));
 				if (isNaN(hhg))
 					hhg = getStyle("horizontalGap");
 					
@@ -166,7 +160,7 @@ package com.jwopitz.containers {
 					tx = px - uic.getExplicitOrMeasuredWidth() - _headerChildGap;
 				}
 				
-				switch(_headerVerticalAlign){
+				switch(_headerAlign){
 					case "top":
 					ty = 5;
 					break;
@@ -189,7 +183,7 @@ package com.jwopitz.containers {
 			}
 			
 			if (titleTextField){
-				switch(_headerVerticalAlign){
+				switch(_headerAlign){
 					case "top":
 					ty = 5;
 					break;

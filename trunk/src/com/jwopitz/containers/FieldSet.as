@@ -29,8 +29,9 @@ package com.jwopitz.containers {
     import flash.geom.Point;
     
     import mx.containers.Box;
-    import mx.controls.Text;
     import mx.core.UITextField;
+    import mx.styles.StyleManager;
+    import mx.styles.CSSStyleDeclaration;
        
 	use namespace jwo_internal;
     
@@ -57,46 +58,38 @@ package com.jwopitz.containers {
     [Style(name="titleStyleName", type="String", inherit="no")]
 	
     public class FieldSet extends Box {
+    	
+    	private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 		
-		public static const TITLE_ALIGN_LEFT:String = "left";
-    	public static const TITLE_ALIGN_CENTER:String = "center";
-    	public static const TITLE_ALIGN_RIGHT:String = "right";
-                
-        protected var _title:String = "";
+		protected var _title:String = "";
         protected var _titleTextField:UITextField;
         
         protected var _titleAlign:String = "left";
 		protected var _titleGap:Number = 2;
 		protected var _titleStyleName:Object;
-		protected var _borderSkin:Class;
 		
         protected var _titlePt:Point;
         
-        /**
-		 * Constructor
-		 */
-        public function FieldSet (){
-        	super();
+        private static function setDefaultStyles ():Boolean {
         	
-        	setDefaultStyles();
-        }
-		
-		/**
-		 * Sets the default values for custom styles.  This method is called during the constructor.
-		 * Since subclasses will most likely have additional custom style properties,
-		 * it is recommended that they override this method.
-		 */
-		protected function setDefaultStyles ():void {
-			
-			var tg:Number = getStyle("titleGap");
-			if (!isNaN(tg))
-				_titleGap = tg;
+        	if (!StyleManager.getStyleDeclaration('FieldSet')){
+        		
+        		var tsn:CSSStyleDeclaration = new CSSStyleDeclaration();
+        		tsn.setStyle('fontWeight', 'bold');
+        		
+        		var s:CSSStyleDeclaration = new CSSStyleDeclaration();
+        		s.setStyle('titleAlign', 'left');
+        		s.setStyle('titleGap', 2);
+        		s.setStyle('titlePlacement', 'top');
+        		s.setStyle('borderStyle', 'solid');
+				s.setStyle('borderSkin', FieldSetBorder);
+				s.setStyle('titleStyleName', tsn);
 				
-			setStyle("titleGap", _titleGap);
-			
-			setStyle("borderStyle", "solid");
-        	setStyle("borderSkin", FieldSetBorder);
-		}
+				StyleManager.setStyleDeclaration('FieldSet', s, true);
+        	}
+        	
+        	return true;
+        }
 		
 		override public function styleChanged (styleProp:String):void {
         	super.styleChanged(styleProp);
@@ -108,26 +101,18 @@ package com.jwopitz.containers {
         			_titleAlign = ta;
         	}
         		
-        	
         	if (allStyles || styleProp == "titleGap"){
         		var tg:Number = Number(getStyle("titleGap"));
         		if (!isNaN(tg))
         			_titleGap = tg;
         	}
         		
-        	
         	if (allStyles || styleProp == "titleStyleName"){
         		_titleStyleName = getStyle("titleStyleName")      	
         		
         		if (_titleTextField)
 					_titleTextField.styleName = _titleStyleName;
         	}
-        	
-        	if (allStyles || styleProp == "borderStyle")
-        		super.setStyle("borderStyle", "solid");
-        		
-        	if (allStyles || styleProp == "borderSkin")
-				super.setStyle("borderSkin", FieldSetBorder);
 				
 			invalidateDisplayList();
         }
@@ -179,23 +164,23 @@ package com.jwopitz.containers {
 			var cr:Number = getStyle("cornerRadius");
 			        		
         	switch (_titleAlign){
-        		case FieldSet.TITLE_ALIGN_RIGHT:
+        		case "right":
         		nx = width - cr - borderMetrics.right - _titleGap - titleTextField.getExplicitOrMeasuredWidth() - 5;
         		break;
         		
-        		case FieldSet.TITLE_ALIGN_CENTER:
+        		case "center":
         		nx = (width - titleTextField.getExplicitOrMeasuredWidth()) / 2;
         		break;
         		
-        		case FieldSet.TITLE_ALIGN_RIGHT:
+        		case "left":
         		default:
         		nx = cr + borderMetrics.left + _titleGap + 5;
         	}
         	
         	_titlePt = new Point(nx, ny);
         }
-		
-		/**
+        
+        /**
 		 * The string value of the FieldSet's title.
 		 */
         public function get title ():String {
@@ -217,8 +202,7 @@ package com.jwopitz.containers {
 		 * Allows outside access to the fieldSet's titleTextField.
 		 */
         jwo_internal function get titleTextField ():UITextField {
-        	trace('t');
-			return _titleTextField;
+        	return _titleTextField;
 		}
     }
 }
