@@ -30,20 +30,18 @@ package com.jwopitz.containers {
 	import mx.core.EventPriority;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
-	import mx.styles.StyleManager;
-	import mx.styles.CSSStyleDeclaration;
 	
 	/**
      * Sets the vertical alignment of the header children added with addTitleBarComponent and the titleTextField.
      * Values are "top, "middle" and "bottom".  The default value is "middle".
      */
-    [Style (name="headerAlign", type="String", enumeration="top,middle,bottom", inherit="no")]
+    [Style (name="headerVerticalAlign", type="String", enumeration="top,middle,bottom", inherit="no")]
     
     /**
      * Sets the horizontal gap of the header children added with addTitleBarComponent.  
      * If no value is set, then the value of horizontalGap will be used for the gap.  The default value is 6.
      */
-    [Style (name="headerGap", type="Number", inherit="no")]
+    [Style (name="headerHorizontalGap", type="Number", inherit="no")]
 	
 	[Event (name="gripClick", type="flash.events.MouseEvent")]
 	[Event (name="gripMouseDown", type="flash.events.MouseEvent")]
@@ -54,6 +52,9 @@ package com.jwopitz.containers {
 	[Event (name="gripRollOut", type="flash.events.MouseEvent")]
 	[Event (name="gripRollOver", type="flash.events.MouseEvent")]
 	
+	/**
+	 * 
+	 */
 	[Bindable]
 	public class Pod extends Panel {
 		
@@ -65,45 +66,53 @@ package com.jwopitz.containers {
 		public static const GRIP_MOUSE_UP:String = "gripMouseUp";
 		public static const GRIP_ROLL_OUT:String = "gripRollOut";
 		public static const GRIP_ROLL_OVER:String = "gripRollOver";
-		
-		private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 				
-		protected var _creationQueue:Array = [];
-		protected var _titleBarAssets:Array = [];
+		protected var creationQueue:Array = [];
+		protected var titleBarAssets:Array = [];
 		
-		protected var _headerAlign:String = "middle";
+		protected var _headerVerticalAlign:String = "middle";
 		protected var _headerChildGap:Number;
 		
 		public var defaultTitleBarComponentClass:Class = Button;
 		
-		private static function setDefaultStyles ():Boolean {
+		/**
+		 * Constructor
+		 */
+		public function Pod (){
+			super();
 			
-			if (!StyleManager.getStyleDeclaration("Pod")){
+			setDefaultStyles();
+		}
+		
+		/**
+		 * Sets the default values for custom styles.  This method is called during the constructor.
+		 * Since subclasses will most likely have additional custom style properties,
+		 * it is recommended that they override this method.
+		 */
+		protected function setDefaultStyles ():void {
+			if (getStyle("headerVerticalAlign"))
+				_headerVerticalAlign = String(getStyle("headerVerticalAlign"));
 				
-				var s:CSSStyleDeclaration = new CSSStyleDeclaration();
-				s.setStyle("headerAlign", "middle");
-				s.setStyle("headerGap", 2);
-				
-				StyleManager.setStyleDeclaration("Pod", s, true);
-			}
-							
-			return true;
+			if (getStyle("headerHorizontalGap"))
+				_headerChildGap = Number(getStyle("headerHorizontalGap"));
+			else
+				_headerChildGap = Number(getStyle("horizontalGap"));
 		}
 		
 		override public function styleChanged (styleProp:String):void {
 			super.styleChanged(styleProp);
 			
 			var allStyles:Boolean = !styleProp || styleProp == "styleName";
-			if (allStyles || styleProp == "headerAlign"){
-				var hva:String = String(getStyle("headerAlign"));
+			if (allStyles || styleProp == "headerVerticalAlign"){
+				var hva:String = String(getStyle("headerVerticalAlign"));
 				if (!hva)
 					hva = "middle";
 				
-				_headerAlign = hva;
+				_headerVerticalAlign = hva;
 			}
 			
-			if (allStyles || styleProp == "headerGap"){
-				var hhg:Number = Number(getStyle("headerGap"));
+			if (allStyles || styleProp == "headerHorizontalGap"){
+				var hhg:Number = Number(getStyle("headerHorizontalGap"));
 				if (isNaN(hhg))
 					hhg = getStyle("horizontalGap");
 					
@@ -146,12 +155,12 @@ package com.jwopitz.containers {
 			var ty:Number = 0; //target y value
 			
 			var i:int = 0;
-			var l:int = _titleBarAssets.length;
+			var l:int = titleBarAssets.length;
 			if (l == 0)
 				return;
 			
 			for (i; i < l; i++){
-				uic = _titleBarAssets[i] as UIComponent;
+				uic = titleBarAssets[i] as UIComponent;
 				uic.setActualSize(uic.getExplicitOrMeasuredWidth(), uic.getExplicitOrMeasuredHeight());
 				
 				if (i == 0){
@@ -160,7 +169,7 @@ package com.jwopitz.containers {
 					tx = px - uic.getExplicitOrMeasuredWidth() - _headerChildGap;
 				}
 				
-				switch(_headerAlign){
+				switch(_headerVerticalAlign){
 					case "top":
 					ty = 5;
 					break;
@@ -183,7 +192,7 @@ package com.jwopitz.containers {
 			}
 			
 			if (titleTextField){
-				switch(_headerAlign){
+				switch(_headerVerticalAlign){
 					case "top":
 					ty = 5;
 					break;
@@ -217,10 +226,10 @@ package com.jwopitz.containers {
 			value.owner = this;
 			//value.styleName = this;
 			
-			_titleBarAssets.push(value);
+			titleBarAssets.push(value);
 			
 			if (!titleBar){
-				_creationQueue.push(value);
+				creationQueue.push(value);
 			} else {
 				titleBar.addChild(value);
 			}
@@ -274,13 +283,13 @@ package com.jwopitz.containers {
 		protected function titleBar_onCreationComplete (evt:FlexEvent):void {
 			var titleBarChild:UIComponent;
 			var i:int = 0;
-			var l:int = _creationQueue.length;
+			var l:int = creationQueue.length;
 			for (i; i < l; i++){
-				titleBarChild = _creationQueue[i] as UIComponent;
+				titleBarChild = creationQueue[i] as UIComponent;
 				titleBar.addChild(titleBarChild);
 			}
 			
-			_creationQueue = [];
+			creationQueue = [];
 		}
 		
 		protected function titleBar_onClick (evt:MouseEvent):void {

@@ -33,16 +33,18 @@ package com.jwopitz.skins {
 	import mx.core.UITextField;
 	import mx.skins.RectangularBorder;
 	
-	use namespace jwo_internal;
+	use namespace jwo_internal
 	
 	public class FieldSetBorder extends RectangularBorder {
 		
-	    protected var _borderMetrics:EdgeMetrics;
-	    
-	    protected var _title:UITextField;      
+	////////////////////////////////////////////////////////////////
+	//	BORDER METRICS
+	//////////////////////////////////////////////////////////////// 	
+	
+	    protected var bm:EdgeMetrics;
 	    
 	    override public function get borderMetrics ():EdgeMetrics {
-	        if (!_borderMetrics){
+	        if (!bm){
 	        	
 	        	var radius:Number = getStyle("cornerRadius");
 	        	var borderTop:Number = getStyle("borderThickness");
@@ -56,12 +58,33 @@ package com.jwopitz.skins {
 	        		}
 	        	}
 	        	
-	            _borderMetrics = new EdgeMetrics(borderThickness, borderTop, borderThickness, borderThickness);
+	            bm = new EdgeMetrics(borderThickness, borderTop, borderThickness, borderThickness);
 	        }
 	        
-	        return _borderMetrics;
+	        return bm;
 	    }
 	    
+	////////////////////////////////////////////////////////////////
+	//	TEXT FIELD
+	//////////////////////////////////////////////////////////////// 
+	    
+	    /**
+	     * @private
+	     */
+	    protected var textField:UITextField;
+	    
+	    protected function get title ():UITextField {
+	    	if (!textField){
+	    		if (parent && parent is FieldSet){
+	    			textField = FieldSet(parent).titleTextField;
+	    		}
+	    	}
+	    	
+	    	return textField;
+	    }
+
+	//////////////////////////////////////////////////////////////// 
+
 	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
 	        super.updateDisplayList(unscaledWidth, unscaledHeight);
 			
@@ -106,7 +129,7 @@ package com.jwopitz.skins {
 			var g:Graphics = graphics;
 			g.clear();
 			
-			g.lineStyle(bThickness, bColor, bAlpha, true);
+			g.lineStyle(bThickness, bColor, bAlpha);
 			g.moveTo(pt00.x, pt00.y);
 			g.lineTo(pt01.x, pt01.y);
 			g.curveTo(pt02.x, pt02.y, pt03.x, pt03.y);
@@ -117,16 +140,6 @@ package com.jwopitz.skins {
 			g.lineTo(pt10.x, pt10.y);
 			g.curveTo(pt11.x, pt11.y, pt12.x, pt12.y);
 			g.lineTo(pt13.x, pt13.y);
-	    }
-	    
-	    protected function get title ():UITextField {
-	    	if (!_title){
-	    		if (parent && parent is FieldSet){
-	    			_title = FieldSet(parent).titleTextField;
-	    		}
-	    	}
-	    	
-	    	return _title;
 	    }
 	}
 }

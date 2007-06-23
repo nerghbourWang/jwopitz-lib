@@ -30,47 +30,42 @@ package com.jwopitz.containers {
     
     import mx.containers.Box;
     import mx.core.UITextField;
-    import mx.styles.StyleManager;
     import mx.styles.CSSStyleDeclaration;
+    import mx.styles.StyleManager;
        
 	use namespace jwo_internal;
     
     /**
-     * Sets the horizontal alignment of the titleTextField.  Values are "left, "center" and "right".  The default value is "left".
+     * Sets the horizontal alignment of the textField.  Values are "left, "center" and "right".  The default value is "left".
      */
     [Style(name="titleAlign", type="String", enumeration="left,center,right", inherit="no")]
     
     /**
-     * Sets the gap between the titleTextField and the drawn border endpoints on each side.  The default value is 2.
+     * Sets the gap between the textField and the drawn border endpoints on each side.  The default value is 2.
      */
     [Style(name="titleGap", type="Number", inherit="no")]
     
     /**
-     * Sets the vertical placement of the titleTextField.  Current values are "top".  The default value is "top".
+     * Sets the vertical placement of the textField.  Current values are "top".  The default value is "top".
      * 
      * 2007.04.12 - this feature has not yet been implemented - jwopitz
      */
     [Style(name="titlePlacement", type="String", enumeration="top", inherit="no")]
     
     /**
-     * Sets the style for the titleTextField.
+     * Sets the style for the textField.
      */
     [Style(name="titleStyleName", type="String", inherit="no")]
 	
     public class FieldSet extends Box {
     	
+    ////////////////////////////////////////////////////////////////
+	//	DEFAULT STYLES INIT
+	////////////////////////////////////////////////////////////////
+	
     	private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 		
-		protected var _title:String = "";
-        protected var _titleTextField:UITextField;
-        
-        protected var _titleAlign:String = "left";
-		protected var _titleGap:Number = 2;
-		protected var _titleStyleName:Object;
-		
-        protected var _titlePt:Point;
-        
-        private static function setDefaultStyles ():Boolean {
+		private static function setDefaultStyles ():Boolean {
         	
         	if (!StyleManager.getStyleDeclaration('FieldSet')){
         		
@@ -91,30 +86,26 @@ package com.jwopitz.containers {
         	return true;
         }
 		
+		protected var _titleAlign:String = "left";
+		protected var _titleGap:Number = 2;
+		protected var _titleStyleName:Object;
+		        
+        protected var titleStyleNameChanged:Boolean = false;
+		
 		override public function styleChanged (styleProp:String):void {
         	super.styleChanged(styleProp);
         	
         	var allStyles:Boolean = !styleProp || styleProp == "styleName";
-        	if (allStyles || styleProp == "titleAlign"){
-        		var ta:String = String(getStyle("titleAlign"));
-        		if (ta && ta != "undefined")
-        			_titleAlign = ta;
-        	}
+        	if (allStyles || styleProp == "titleAlign")
+        		_titleAlign = getStyle("titleAlign");
         		
-        	if (allStyles || styleProp == "titleGap"){
-        		var tg:Number = Number(getStyle("titleGap"));
-        		if (!isNaN(tg))
-        			_titleGap = tg;
-        	}
+        	if (allStyles || styleProp == "titleGap")
+        		_titleGap = getStyle("titleGap");
         		
-        	if (allStyles || styleProp == "titleStyleName"){
-        		_titleStyleName = getStyle("titleStyleName")      	
-        		
-        		if (_titleTextField)
-					_titleTextField.styleName = _titleStyleName;
-        	}
-				
-			invalidateDisplayList();
+        	if (allStyles || styleProp == "titleStyleName")
+        		titleStyleNameChanged = true;
+    
+        	invalidateDisplayList();
         }
 		
 		/**
@@ -123,86 +114,145 @@ package com.jwopitz.containers {
         override protected function createChildren ():void {
             super.createChildren();
             
-            if (!_titleTextField){
-                _titleTextField = new UITextField();
-                _titleTextField.mouseEnabled = false;
-                _titleTextField.text = title;
+            if (!textField){
+                textField = new UITextField();
+                textField.mouseEnabled = false;
+                textField.text = title;
+                textField.styleName = getStyle("titleStyleName");
                 
-                _titleStyleName = getStyle("titleStyleName");
-                if (_titleStyleName)
-                	_titleTextField.styleName = _titleStyleName;
-                else
-                	_titleTextField.styleName = this;
-                
-				rawChildren.addChild(_titleTextField);
+                rawChildren.addChild(textField);
             }
         }
-		
+        
 		/**
 		 * 
 		 */
-        override protected function layoutChrome (unscaledWidth:Number, unscaledHeight:Number):void {
-            super.layoutChrome(unscaledWidth, unscaledHeight);
-            
-            adjustTitlePt();
-            
-            if (titleTextField && _titlePt){
-            	titleTextField.setActualSize(titleTextField.getExplicitOrMeasuredWidth(), titleTextField.getExplicitOrMeasuredHeight());
-            	titleTextField.move(_titlePt.x, _titlePt.y);
-            }
-        }
+		override protected function commitProperties ():void {
+			super.commitProperties();
+			
+			if (titleTextChanged && textField){
+				textField.text = title;
+				titleTextChanged = false;
+			}
+		}
+        
+        /**
+         * 
+         */
+		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			if (titleStyleNameChanged){
+				textField.styleName = getStyle('titleStyleName');
+				titleStyleNameChanged = false;
+				titlePtChanged = true; //style may affect the position of the textField
+			}
+			
+			if (titlePtChanged){
+				textField.setActualSize(textField.getExplicitOrMeasuredWidth(), 
+										textField.getExplicitOrMeasuredHeight());
+				
+				textField.move(titlePoint.x, titlePoint.y);
+				titlePtChanged = false;
+			}
+		}
+			
+	////////////////////////////////////////////////////////////////
+	//	TITLE PT
+	////////////////////////////////////////////////////////////////
+	
+		/**
+		 * @private
+		 */ 
+		protected var titlePtChanged:Boolean = false;
+        
+		/**
+		 * @private
+		 */
+		private var _tp:Point = new Point();
 		
 		/**
-		 * Determines the point of placement for the titleTextField based on the value of titleAlign.
+		 * Returns the targeted origin pt of the titleTextField based on titleAlignment.
 		 */
-		protected function adjustTitlePt ():void {
-			if (!titleTextField)
-				return;
-				
-        	var nx:Number = 0;
+		protected function get titlePoint ():Point {
+			if (!textField)
+				return _tp;
+						
+			var nx:Number = 0;
         	var ny:Number = 0;
+			
+			var ta:String = _titleAlign
+			var tg:Number = _titleGap
 			var cr:Number = getStyle("cornerRadius");
 			        		
-        	switch (_titleAlign){
+        	switch (ta){
         		case "right":
-        		nx = width - cr - borderMetrics.right - _titleGap - titleTextField.getExplicitOrMeasuredWidth() - 5;
+        		nx = width - cr - borderMetrics.right - tg - textField.getExplicitOrMeasuredWidth() - 5;
         		break;
         		
         		case "center":
-        		nx = (width - titleTextField.getExplicitOrMeasuredWidth()) / 2;
+        		nx = (width - textField.getExplicitOrMeasuredWidth()) / 2;
         		break;
         		
         		case "left":
         		default:
-        		nx = cr + borderMetrics.left + _titleGap + 5;
-        	}
-        	
-        	_titlePt = new Point(nx, ny);
-        }
+        		nx = cr + borderMetrics.left + tg + 5;
+        	}	
+			
+			if (_tp.x != x)
+				_tp.x = nx;
+			
+			return _tp;
+		}
+		
+	////////////////////////////////////////////////////////////////
+	//	TITLE
+	////////////////////////////////////////////////////////////////	
+        
+        /**
+         * @private
+         */ 
+        protected var titleText:String = "";
+        
+		/**
+		 * @private
+		 */
+        protected var titleTextChanged:Boolean = false;
         
         /**
 		 * The string value of the FieldSet's title.
 		 */
         public function get title ():String {
-            return _title;
+            return titleText;
         }
 		/**
 		 * @private
 		 */
         public function set title (value:String):void {
-            _title = value;
-            
-            if (_titleTextField)
-                _titleTextField.text = value;
-                
-        	layoutChrome(unscaledWidth, unscaledHeight);
+            if (titleText != value){
+            	titleText = value;
+            	titleTextChanged = true;
+            	titlePtChanged = true;
+				
+            	invalidateProperties();
+            	invalidateDisplayList();
+            }
         }
+	
+	////////////////////////////////////////////////////////////////
+	//	TITLE TEXT FIELD
+	////////////////////////////////////////////////////////////////       
 		
 		/**
-		 * Allows outside access to the fieldSet's titleTextField.
+		 * @private
+		 */
+		protected var textField:UITextField;
+		
+		/**
+		 * Allows outside access to the fieldSet's textField.
 		 */
         jwo_internal function get titleTextField ():UITextField {
-        	return _titleTextField;
+        	return textField;
 		}
     }
 }

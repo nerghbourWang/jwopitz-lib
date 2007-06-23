@@ -22,171 +22,186 @@ SOFTWARE.
 
 */
 package com.jwopitz.controls {
-    
-    import flash.events.Event;
-    import flash.events.FocusEvent;
-    import flash.events.MouseEvent;
-    
-    import mx.containers.Canvas;
-    import mx.controls.LinkButton;
-    import mx.core.UITextField;
-    
-    /**
-     * Style declaration for when the mouseDown event has been triggered over the <code>_linkBtn</code>.
-     */
-    [Style(name="downText", type="String", inherit="no")]
-    
-    /**
-     * Style declaration for when the rollOver event has been triggered over the <code>_linkBtn</code>.
-     */
-    [Style(name="overText", type="String", inherit="no")]
-        
-    public class HyperlinkText extends Canvas {
-        
-        protected var _text:String = "";
-        
-        protected var _txtField:UITextField;
-        protected var _linkBtn:LinkButton;
-        
-        protected var _titleStyle:Object;
-        
-        protected var _hasDefinedWidth:Boolean = false;
-        
-        public function HyperlinkText (){
-            super();
-            
-            horizontalScrollPolicy = "off";
-            verticalScrollPolicy = "off";
-        }
-                
-        override protected function createChildren ():void {
-            super.createChildren();
-            
-            if (!_linkBtn){
-                _linkBtn = new LinkButton();
-                _linkBtn.buttonMode = true;
-                _linkBtn.owner = this;
-                _linkBtn.styleName = this;
-                _linkBtn.tabEnabled = true;
-                
-                _linkBtn.addEventListener( MouseEvent.CLICK, linkBtn_onClick);
-                _linkBtn.addEventListener(MouseEvent.MOUSE_DOWN, linkBtn_onMouseDown);
-                _linkBtn.addEventListener(MouseEvent.MOUSE_UP, linkBtn_onMouseUp);
-                _linkBtn.addEventListener( MouseEvent.ROLL_OUT, linkBtn_onRollOut);
-                _linkBtn.addEventListener(MouseEvent.ROLL_OVER, linkBtn_onRollOver);
-                
-                _linkBtn.addEventListener(FocusEvent.FOCUS_IN, linkBtn_onFocusIn);
-                _linkBtn.addEventListener(FocusEvent.FOCUS_OUT, linkBtn_onFocusOut);
-                
-                addChild(_linkBtn);
-            }
-            
-            if (!_txtField){
-                _txtField = new UITextField();
-                _txtField.mouseEnabled = false;
-                _txtField.owner = this;
-                _txtField.selectable = false;
-                _txtField.styleName = this;
-                _txtField.text = _text;
-                _txtField.wordWrap = _hasDefinedWidth;
-                
-                addChild(_txtField);
-            }
-        }
-        
-        override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
-            super.updateDisplayList(unscaledWidth, unscaledHeight);
-            
-            var tw:Number;
-            var th:Number;
-            
-            if (isNaN(percentWidth)){
-                tw = getExplicitOrMeasuredWidth();
-                th = getExplicitOrMeasuredHeight();
-            } else {
-                tw = unscaledWidth;
-                th = unscaledHeight;
-            }
-            
-            _txtField.move(0, 0);
-            _txtField.setActualSize(tw, th);
-            
-            _linkBtn.move(0, 0);
-            _linkBtn.setActualSize(tw, th);
-            
-            invalidateSize()
-        }
-                
-        protected function updateTextFieldProperties ():void {
-            if (!isNaN(width) || !isNaN(percentWidth))
-                _hasDefinedWidth = true;
-            else
-                _hasDefinedWidth = false;
-                
-            if (_txtField)
-                _txtField.wordWrap = _hasDefinedWidth;
-                
-            invalidateDisplayList();
+	
+	import com.jwopitz.skins.ClearButtonSkin;
+	
+	import flash.events.Event;
+	import flash.events.FocusEvent;
+	import flash.events.MouseEvent;
+	
+	import mx.containers.Canvas;
+	import mx.controls.LinkButton;
+	import mx.core.UITextField;
+	import mx.styles.CSSStyleDeclaration;
+	import mx.styles.StyleManager;
+		
+	/**
+	 * Style declaration for when the rollOver event has been triggered over the <code>linkBtn</code>.
+	 */
+	[Style(name="rollOverStyle", type="String", inherit="no")]
+		 
+	public class HyperlinkText extends Canvas {
+		
+		private static var defaultStylesInitialized:Boolean = setDefaultStyles();
+		
+		private static function setDefaultStyles ():Boolean {
+			
+			if (!StyleManager.getStyleDeclaration('HyperlinkText')){
+				
+				var rollOverStyle:CSSStyleDeclaration = new CSSStyleDeclaration();
+				rollOverStyle.setStyle('textDecoration', 'underline');
+				
+				var defaultStyle:CSSStyleDeclaration = new CSSStyleDeclaration();
+				defaultStyle.setStyle('color', 0x0000FF);
+				defaultStyle.setStyle('textDecoration', 'none');
+				defaultStyle.setStyle('disabledSkin', ClearButtonSkin);
+				defaultStyle.setStyle('downSkin', ClearButtonSkin);
+				defaultStyle.setStyle('overSkin', ClearButtonSkin);
+				defaultStyle.setStyle('upSkin', ClearButtonSkin);
+				defaultStyle.setStyle('rollOverStyle', rollOverStyle);
+				
+				StyleManager.setStyleDeclaration('HyperlinkText', defaultStyle, true);
+			}
+			
+			return true;
+		}
+		
+		protected var txt:String = "";
+		
+		protected var txtField:UITextField;
+		protected var linkBtn:LinkButton;
+		
+		protected var hasDefinedWidth:Boolean = false;
+		
+		public function HyperlinkText (){
+			super();
+			
+			horizontalScrollPolicy = "off";
+			verticalScrollPolicy = "off";
+		}
+				
+		override protected function createChildren ():void {
+			super.createChildren();
+			
+			if (!linkBtn){
+				linkBtn = new LinkButton();
+				linkBtn.buttonMode = true;
+				linkBtn.owner = this;
+				linkBtn.styleName = this;
+				linkBtn.tabEnabled = true;
+				linkBtn.move(0, 0);
+				
+				linkBtn.addEventListener(MouseEvent.CLICK, linkBtn_onClick);
+				linkBtn.addEventListener(MouseEvent.MOUSE_DOWN, linkBtn_onMouseDown);
+				linkBtn.addEventListener(MouseEvent.MOUSE_UP, linkBtn_onMouseUp);
+				linkBtn.addEventListener(MouseEvent.ROLL_OUT, linkBtn_onRollOut);
+				linkBtn.addEventListener(MouseEvent.ROLL_OVER, linkBtn_onRollOver);
+				
+				linkBtn.addEventListener(FocusEvent.FOCUS_IN, linkBtn_onFocusIn);
+				linkBtn.addEventListener(FocusEvent.FOCUS_OUT, linkBtn_onFocusOut);
+				
+				addChild(linkBtn);
+			}
+			
+			if (!txtField){
+				txtField = new UITextField();
+				txtField.mouseEnabled = false;
+				txtField.owner = this;
+				txtField.selectable = false;
+				txtField.styleName = this;
+				txtField.text = txt;
+				txtField.wordWrap = hasDefinedWidth;
+				txtField.move(0, 0);
+				
+				addChild(txtField);
+			}
+		}
+		
+		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			var tw:Number;
+			var th:Number;
+			
+			if (isNaN(percentWidth)){
+				tw = getExplicitOrMeasuredWidth();
+				th = getExplicitOrMeasuredHeight();
+			} else {
+				tw = unscaledWidth;
+				th = unscaledHeight;
+			}
+			
+			
+			txtField.setActualSize(tw, th);
+			
+			
+			linkBtn.setActualSize(tw, th);
+			
+			invalidateSize()
+		}
+				
+		protected function updateTextFieldProperties ():void {
+			if (!isNaN(width) || !isNaN(percentWidth))
+				hasDefinedWidth = true;
+			else 
+				hasDefinedWidth = false;
+				
+			if (txtField)
+				txtField.wordWrap = hasDefinedWidth;
+				
+			invalidateDisplayList();
 
-        }
-        
-        protected function linkBtn_onClick (evt:MouseEvent):void {
-            evt.stopPropagation();
-            dispatchEvent(evt);
-        }
-        
-        protected function linkBtn_onMouseDown (evt:MouseEvent):void {
-            _titleStyle = getStyle("downText");
-            if (_titleStyle)
-                _txtField.styleName = _titleStyle;
-        }
-        
-        protected function linkBtn_onMouseUp (evt:MouseEvent):void {
-            _titleStyle = getStyle("overText");
-            if (_titleStyle)
-                _txtField.styleName = _titleStyle;
-        }
-        
-        protected function linkBtn_onRollOut (evt:MouseEvent):void {
-            _txtField.styleName = this;
-        }
-        
-        protected function linkBtn_onRollOver (evt:MouseEvent):void {
-            _titleStyle = getStyle("overText");
-            if (_titleStyle)
-                _txtField.styleName = _titleStyle;
-        }
-        
-        protected function linkBtn_onFocusIn (evt:FocusEvent):void {
-            _titleStyle = getStyle("overText");
-            if (_titleStyle)
-                _txtField.styleName = _titleStyle;
-        }
-        
-        protected function linkBtn_onFocusOut (evt:FocusEvent):void {
-            _txtField.styleName = this;
-        }
-                                
-        public function get text ():String {
-            return _text;
-        }
-        public function set text (value:String):void {
-            _text = value;
-            
-            if (_txtField)
-                _txtField.text = _text;
-        }
-                
-        override public function set width (value:Number):void {
-            super.width = value;
-            
-            updateTextFieldProperties();
-        }
-        
-        override public function set percentWidth (value:Number):void {
-            super.percentWidth = value;
-            
-            updateTextFieldProperties();
-        }
-    }
+		}
+		
+		protected function linkBtn_onClick (evt:MouseEvent):void {
+			evt.stopPropagation();
+			dispatchEvent(evt);
+		}
+		
+		protected function linkBtn_onMouseDown (evt:MouseEvent):void {
+			txtField.styleName = getStyle("rollOverStyle");
+		}
+		
+		protected function linkBtn_onMouseUp (evt:MouseEvent):void {
+			txtField.styleName = getStyle("rollOverStyle");
+		}
+		
+		protected function linkBtn_onRollOut (evt:MouseEvent):void {
+			txtField.styleName = this;
+		}
+		
+		protected function linkBtn_onRollOver (evt:MouseEvent):void {
+			txtField.styleName = getStyle("rollOverStyle");
+		}
+		
+		protected function linkBtn_onFocusIn (evt:FocusEvent):void {
+			txtField.styleName = getStyle("rollOverStyle");
+		}
+		
+		protected function linkBtn_onFocusOut (evt:FocusEvent):void {
+			txtField.styleName = this;
+		}
+		
+		public function get text ():String {
+			return txt;
+		}
+		public function set text (value:String):void {
+			txt = value;
+			
+			if (txtField)
+				txtField.text = txt;
+		}
+				
+		override public function set width (value:Number):void {
+			super.width = value;
+			
+			updateTextFieldProperties();
+		}
+		
+		override public function set percentWidth (value:Number):void {
+			super.percentWidth = value;
+			
+			updateTextFieldProperties();
+		}
+	}
 }
