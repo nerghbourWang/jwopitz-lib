@@ -28,11 +28,50 @@ package com.jwopitz.controls
 	import flash.geom.Point;
 	
 	import mx.controls.HRule;
+	import mx.styles.CSSStyleDeclaration;
+	import mx.styles.StyleManager;
+	
+	[Style(name="paddingLeft", type="Number", format="Length", inherit="no")]
+	
+	[Style(name="paddingRight", type="Number", format="Length", inherit="no")]
 	
 	[Style(name="dashLength", type="Number", format="Length", inherit="no")]
 	
 	public class HRule extends mx.controls.HRule
-	{
+	{		
+		private static var defaultStylesInitialized:Boolean = setDefaultStyles();
+		
+		private static function setDefaultStyles ():Boolean
+		{	
+			//copy over old styles if applicable
+			var oldS:CSSStyleDeclaration = StyleManager.getStyleDeclaration("HRule");
+			var s:CSSStyleDeclaration = new CSSStyleDeclaration();
+			
+        	if (oldS)
+        	{
+        		var oldStrokeColor:uint = oldS.getStyle("strokeColor");
+        		var oldStrokeWidth:Number = oldS.getStyle("strokeWidth");
+        		
+        		s.setStyle("strokeColor", oldStrokeColor);
+        		s.setStyle("strokeWidth", oldStrokeWidth);
+        		
+        		StyleManager.clearStyleDeclaration("HRule", true);
+        	}
+        	else
+        	{
+        		s.setStyle("strokeColor", 0xC4CCCC);
+        		s.setStyle("strokeWidth", 1);
+        	}
+        	
+        	//add new default styles
+        	s.setStyle("paddingLeft", 0);
+        	s.setStyle("paddingRight", 0);
+        	s.setStyle("dashLength", 0);
+        	        	
+        	StyleManager.setStyleDeclaration("HRule", s, true);
+        	
+        	return true;
+        }
 		
 		protected var lineSprite:Sprite;
 		protected var dashMask:Sprite;
@@ -62,15 +101,11 @@ package com.jwopitz.controls
 			var strokeColor:Number = getStyle("strokeColor");
 			var shadowColor:Number = getStyle("shadowColor");
 			var strokeWidth:Number = getStyle("strokeWidth");
+			
 			var dashLength:Number = getStyle("dashLength");
-			if (dashLength <= 0 || isNaN(dashLength))
-			{
-				lineSprite.mask = null;
-				return;
-			}
-			
-			// copied fom mx.controls.HRule
-			
+			var paddingLeft:Number = getStyle("paddingLeft");
+			var paddingRight:Number = getStyle("paddingRight");
+				
 			// The thickness of the stroke shouldn't be greater than
 			// the unscaledHeight of the bounding rectangle.
 			if (strokeWidth > unscaledHeight)
@@ -79,9 +114,9 @@ package com.jwopitz.controls
 			// The horizontal rule extends from the left edge
 			// to the right edge of the bounding rectangle and
 			// is vertically centered within the bounding rectangle.
-			var left:Number = 0;
+			var left:Number = Math.min(unscaledWidth, paddingLeft);
 			var top:Number = (unscaledHeight - strokeWidth) / 2;
-			var right:Number = unscaledWidth;
+			var right:Number = Math.max(unscaledWidth - paddingRight, 0);
 			var bottom:Number = top + strokeWidth;
 				
 			//clear our graphics
@@ -92,42 +127,69 @@ package com.jwopitz.controls
 			g = lineSprite.graphics;
 			g.clear();
 			
-			if (strokeWidth == 1)
+			if (strokeWidth <= 1)
 			{
 				g.beginFill(strokeColor);
-				g.drawRect(left, top, unscaledWidth, bottom-top);
+				g.drawRect(left, 
+						   top, 
+						   right - left,
+						   bottom - top);
 				g.endFill();
 			}
 			else if (strokeWidth == 2)
 			{
 				g.beginFill(strokeColor);
-				g.drawRect(left, top, unscaledWidth, 1);
+				g.drawRect(left,
+						   top,
+						   right - left,
+						   1);
 				g.endFill();
 	
 				g.beginFill(shadowColor);
-				g.drawRect(left, bottom - 1, unscaledWidth, 1);
+				g.drawRect(left,
+						   bottom - 1,
+						   right - left,
+						   1);
 				g.endFill();
 			}
 			else if (strokeWidth > 2)
 			{
 				g.beginFill(strokeColor);
-				g.drawRect(left, top, unscaledWidth - 1, 1);
+				g.drawRect(left,
+						   top,
+						   right - left - 1,
+						   1);
 				g.endFill();
 	
 				g.beginFill(shadowColor);
-				g.drawRect(right - 1, top, 1, bottom - top - 1);
-				g.drawRect(left, bottom - 1, unscaledWidth, 1);
+				g.drawRect(right - 1,
+						   top,
+						   1,
+						   bottom - top - 1);
+				g.drawRect(left,
+						   bottom - 1,
+						   right - left,
+						   1);
 				g.endFill();
 	
 				g.beginFill(strokeColor);
-				g.drawRect(left, top + 1, 1, bottom - top - 2);
+				g.drawRect(left,
+						   top + 1,
+						   1,
+						   bottom - top - 2);
 				g.endFill();
 			}
 			
-			//now lets draw our mask
+			//now lets draw our mask if applicable
 			g = dashMask.graphics;
 			g.clear();
 			
+			if (dashLength <= 0)
+			{
+				lineSprite.mask = null;
+				return
+			} 
+						
 			var dl:Number = dashLength * 2;
 			
 			var tx:Number = 0;
@@ -136,12 +198,12 @@ package com.jwopitz.controls
 			var th:Number = unscaledHeight;
 			
 			var i:int = 0;
-			var l:int = Math.ceil(unscaledWidth / dl);
+			var l:int = Math.ceil(right - left / dl);
 			for (i; i < l; i++)
 			{	
-				tx = dl * i;
-				if (tx + tw > unscaledWidth)
-					tw = unscaledWidth - tx;
+				tx = dl * i + left;
+				if (tx + tw > right)
+					tw = right - tx;
 				
 				g.beginFill(0x000000, 1.0);
 				g.drawRect(tx, ty, tw, th);
