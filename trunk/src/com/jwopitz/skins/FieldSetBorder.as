@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.skins {
-	
+package com.jwopitz.skins
+{
 	import com.jwopitz.containers.FieldSet;
 	import com.jwopitz.core.jwo_internal;
 	
@@ -35,27 +35,28 @@ package com.jwopitz.skins {
 	
 	use namespace jwo_internal
 	
-	public class FieldSetBorder extends RectangularBorder {
-		
-	////////////////////////////////////////////////////////////////
-	//	BORDER METRICS
-	//////////////////////////////////////////////////////////////// 	
+	public class FieldSetBorder extends RectangularBorder
+	{
+		////////////////////////////////////////////////////////////////
+		//	BORDER METRICS
+		////////////////////////////////////////////////////////////////
 	
 	    protected var bm:EdgeMetrics;
 	    
-	    override public function get borderMetrics ():EdgeMetrics {
-	        if (!bm){
-	        	
+	    override public function get borderMetrics ():EdgeMetrics
+	    {
+	        if (!bm)
+	        {
 	        	var radius:Number = getStyle("cornerRadius");
 	        	var borderTop:Number = getStyle("borderThickness");
 	        	var borderThickness:Number = getStyle("borderThickness");
 	        	
-	        	if (parent && parent is FieldSet){
+	        	if (parent && parent is FieldSet)
+	        	{
 	        		var textHeight:Number = FieldSet(parent).titleTextField.getExplicitOrMeasuredHeight();
 	        		
-	        		if (borderTop < textHeight || borderTop < radius){
+	        		if (borderTop < textHeight || borderTop < radius)
 	        			borderTop = (textHeight > radius)? textHeight: radius;
-	        		}
 	        	}
 	        	
 	            bm = new EdgeMetrics(borderThickness, borderTop, borderThickness, borderThickness);
@@ -64,28 +65,30 @@ package com.jwopitz.skins {
 	        return bm;
 	    }
 	    
-	////////////////////////////////////////////////////////////////
-	//	TEXT FIELD
-	//////////////////////////////////////////////////////////////// 
+		////////////////////////////////////////////////////////////////
+		//	TEXT FIELD
+		//////////////////////////////////////////////////////////////// 
 	    
 	    /**
 	     * @private
 	     */
 	    protected var textField:UITextField;
 	    
-	    protected function get title ():UITextField {
-	    	if (!textField){
-	    		if (parent && parent is FieldSet){
+	    protected function get title ():UITextField
+	    {
+	    	if (!textField)
+	    	{
+	    		if (parent && parent is FieldSet)
 	    			textField = FieldSet(parent).titleTextField;
-	    		}
 	    	}
 	    	
 	    	return textField;
 	    }
 
-	//////////////////////////////////////////////////////////////// 
+		
 
-	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
+	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+	    {
 	        super.updateDisplayList(unscaledWidth, unscaledHeight);
 			
 			if (!title)

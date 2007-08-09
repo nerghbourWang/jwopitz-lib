@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.containers {
-	
+package com.jwopitz.containers
+{ 	
     import com.jwopitz.core.jwo_internal;
     import com.jwopitz.skins.FieldSetBorder;
     
@@ -57,18 +57,19 @@ package com.jwopitz.containers {
      */
     [Style(name="titleStyleName", type="String", inherit="no")]
 	
-    public class FieldSet extends Box {
+    public class FieldSet extends Box
+    {
     	
-    ////////////////////////////////////////////////////////////////
-	//	DEFAULT STYLES INIT
-	////////////////////////////////////////////////////////////////
+	    ////////////////////////////////////////////////////////////////
+		//	DEFAULT STYLES INIT
+		////////////////////////////////////////////////////////////////
 	
     	private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 		
-		private static function setDefaultStyles ():Boolean {
-        	
-        	if (!StyleManager.getStyleDeclaration('FieldSet')){
-        		
+		private static function setDefaultStyles ():Boolean
+		{
+        	if (!StyleManager.getStyleDeclaration('FieldSet'))
+        	{
         		var tsn:CSSStyleDeclaration = new CSSStyleDeclaration();
         		tsn.setStyle('fontWeight', 'bold');
         		
@@ -88,11 +89,11 @@ package com.jwopitz.containers {
 		
 		protected var _titleAlign:String = "left";
 		protected var _titleGap:Number = 2;
-		protected var _titleStyleName:Object;
 		        
         protected var titleStyleNameChanged:Boolean = false;
 		
-		override public function styleChanged (styleProp:String):void {
+		override public function styleChanged (styleProp:String):void
+		{
         	super.styleChanged(styleProp);
         	
         	var allStyles:Boolean = !styleProp || styleProp == "styleName";
@@ -111,10 +112,12 @@ package com.jwopitz.containers {
 		/**
 		 * 
 		 */
-        override protected function createChildren ():void {
+        override protected function createChildren ():void
+        {
             super.createChildren();
             
-            if (!textField){
+            if (!textField)
+            {
                 textField = new UITextField();
                 textField.mouseEnabled = false;
                 textField.text = title;
@@ -127,10 +130,12 @@ package com.jwopitz.containers {
 		/**
 		 * 
 		 */
-		override protected function commitProperties ():void {
+		override protected function commitProperties ():void
+		{
 			super.commitProperties();
 			
-			if (titleTextChanged && textField){
+			if (titleTextChanged && textField)
+			{
 				textField.text = title;
 				titleTextChanged = false;
 			}
@@ -139,16 +144,19 @@ package com.jwopitz.containers {
         /**
          * 
          */
-		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
+		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			
-			if (titleStyleNameChanged){
+			if (titleStyleNameChanged)
+			{
 				textField.styleName = getStyle('titleStyleName');
 				titleStyleNameChanged = false;
 				titlePtChanged = true; //style may affect the position of the textField
 			}
 			
-			if (titlePtChanged){
+			if (titlePtChanged)
+			{
 				textField.setActualSize(textField.getExplicitOrMeasuredWidth(), 
 										textField.getExplicitOrMeasuredHeight());
 				
@@ -157,9 +165,9 @@ package com.jwopitz.containers {
 			}
 		}
 			
-	////////////////////////////////////////////////////////////////
-	//	TITLE PT
-	////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////
+		//	TITLE PT
+		////////////////////////////////////////////////////////////////
 	
 		/**
 		 * @private
@@ -169,45 +177,54 @@ package com.jwopitz.containers {
 		/**
 		 * @private
 		 */
-		private var _tp:Point = new Point();
+		protected var tp:Point = new Point();
 		
 		/**
 		 * Returns the targeted origin pt of the titleTextField based on titleAlignment.
 		 */
-		protected function get titlePoint ():Point {
+		protected function get titlePoint ():Point
+		{
 			if (!textField)
-				return _tp;
+				return tp;
 						
 			var nx:Number = 0;
         	var ny:Number = 0;
 			
-			var ta:String = _titleAlign
-			var tg:Number = _titleGap
+			var ta:String = getStyle("titleAlign");
+			var tg:Number = getStyle("titleGap");
 			var cr:Number = getStyle("cornerRadius");
 			        		
-        	switch (ta){
+        	switch (ta)
+        	{
         		case "right":
-        		nx = width - cr - borderMetrics.right - tg - textField.getExplicitOrMeasuredWidth() - 5;
-        		break;
+        		{
+        			nx = width - cr - borderMetrics.right - tg - textField.getExplicitOrMeasuredWidth() - 5;
+        			break;
+        		}
         		
         		case "center":
-        		nx = (width - textField.getExplicitOrMeasuredWidth()) / 2;
-        		break;
+        		{
+        			nx = (width - textField.getExplicitOrMeasuredWidth()) / 2;
+        			break;
+        		}
         		
         		case "left":
         		default:
-        		nx = cr + borderMetrics.left + tg + 5;
+        		{
+        			nx = cr + borderMetrics.left + tg + 5;
+        			break;
+        		}
         	}	
 			
-			if (_tp.x != x)
-				_tp.x = nx;
+			if (tp.x != x)
+				tp.x = nx;
 			
-			return _tp;
+			return tp;
 		}
 		
-	////////////////////////////////////////////////////////////////
-	//	TITLE
-	////////////////////////////////////////////////////////////////	
+		////////////////////////////////////////////////////////////////
+		//	TITLE
+		////////////////////////////////////////////////////////////////	
         
         /**
          * @private
@@ -222,14 +239,17 @@ package com.jwopitz.containers {
         /**
 		 * The string value of the FieldSet's title.
 		 */
-        public function get title ():String {
+        public function get title ():String
+        {
             return titleText;
         }
 		/**
 		 * @private
 		 */
-        public function set title (value:String):void {
-            if (titleText != value){
+        public function set title (value:String):void
+        {
+            if (titleText != value)
+            {
             	titleText = value;
             	titleTextChanged = true;
             	titlePtChanged = true;
@@ -239,9 +259,9 @@ package com.jwopitz.containers {
             }
         }
 	
-	////////////////////////////////////////////////////////////////
-	//	TITLE TEXT FIELD
-	////////////////////////////////////////////////////////////////       
+		////////////////////////////////////////////////////////////////
+		//	TITLE TEXT FIELD
+		////////////////////////////////////////////////////////////////       
 		
 		/**
 		 * @private
@@ -251,7 +271,8 @@ package com.jwopitz.containers {
 		/**
 		 * Allows outside access to the fieldSet's textField.
 		 */
-        jwo_internal function get titleTextField ():UITextField {
+        jwo_internal function get titleTextField ():UITextField
+		{
         	return textField;
 		}
     }

@@ -21,15 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.containers {
-	
+package com.jwopitz.containers
+{
 	import flash.events.MouseEvent;
 	
 	import mx.containers.Panel;
 	import mx.controls.Button;
 	import mx.core.EventPriority;
 	import mx.core.UIComponent;
+	import mx.core.mx_internal;
 	import mx.events.FlexEvent;
+	import flash.display.Sprite;
+	
+	use namespace mx_internal;
 	
 	/**
      * Sets the vertical alignment of the header children added with addTitleBarComponent and the titleTextField.
@@ -56,8 +60,8 @@ package com.jwopitz.containers {
 	 * 
 	 */
 	[Bindable]
-	public class Pod extends Panel {
-		
+	public class Pod extends Panel
+	{
 		public static const GRIP_CLICK:String = "gripClick";
 		public static const GRIP_MOUSE_DOWN:String = "gripMouseDown";
 		public static const GRIP_MOUSE_MOVE:String = "gripMouseMove";
@@ -78,7 +82,8 @@ package com.jwopitz.containers {
 		/**
 		 * Constructor
 		 */
-		public function Pod (){
+		public function Pod ()
+		{
 			super();
 			
 			setDefaultStyles();
@@ -89,7 +94,8 @@ package com.jwopitz.containers {
 		 * Since subclasses will most likely have additional custom style properties,
 		 * it is recommended that they override this method.
 		 */
-		protected function setDefaultStyles ():void {
+		protected function setDefaultStyles ():void 
+		{
 			if (getStyle("headerVerticalAlign"))
 				_headerVerticalAlign = String(getStyle("headerVerticalAlign"));
 				
@@ -99,11 +105,13 @@ package com.jwopitz.containers {
 				_headerChildGap = Number(getStyle("horizontalGap"));
 		}
 		
-		override public function styleChanged (styleProp:String):void {
+		override public function styleChanged (styleProp:String):void 
+		{
 			super.styleChanged(styleProp);
 			
 			var allStyles:Boolean = !styleProp || styleProp == "styleName";
-			if (allStyles || styleProp == "headerVerticalAlign"){
+			if (allStyles || styleProp == "headerVerticalAlign")
+			{
 				var hva:String = String(getStyle("headerVerticalAlign"));
 				if (!hva)
 					hva = "middle";
@@ -111,7 +119,8 @@ package com.jwopitz.containers {
 				_headerVerticalAlign = hva;
 			}
 			
-			if (allStyles || styleProp == "headerHorizontalGap"){
+			if (allStyles || styleProp == "headerHorizontalGap")
+			{
 				var hhg:Number = Number(getStyle("headerHorizontalGap"));
 				if (isNaN(hhg))
 					hhg = getStyle("horizontalGap");
@@ -121,20 +130,23 @@ package com.jwopitz.containers {
 							
 		}
 		
-		override protected function createChildren ():void {
+		override protected function createChildren ():void 
+		{
 			super.createChildren();
 			
 			titleBar.mouseChildren = false;
 			assignTitleBarListeners();
 		}
 				
-		override protected function layoutChrome (unscaledWidth:Number, unscaledHeight:Number):void {
+		override protected function layoutChrome (unscaledWidth:Number, unscaledHeight:Number):void 
+		{
 			super.layoutChrome(unscaledWidth, unscaledHeight);
 			
 			repositionHeaderElements();
 		}
 		
-		protected function assignTitleBarListeners ():void {
+		protected function assignTitleBarListeners ():void 
+		{
 			titleBar.addEventListener(FlexEvent.CREATION_COMPLETE, titleBar_onCreationComplete, false, EventPriority.DEFAULT_HANDLER);
 			
 			titleBar.addEventListener(MouseEvent.CLICK, titleBar_onClick, false, EventPriority.DEFAULT_HANDLER);
@@ -147,8 +159,8 @@ package com.jwopitz.containers {
 			titleBar.addEventListener(MouseEvent.ROLL_OVER, titleBar_onRollOver, false, EventPriority.DEFAULT_HANDLER);
 		}
 		
-		protected function repositionHeaderElements ():void {
-			
+		protected function repositionHeaderElements ():void 
+		{
 			var uic:UIComponent;
 			var tx:Number = 0; //target x value
 			var px:Number = 0; //previous x value
@@ -159,31 +171,41 @@ package com.jwopitz.containers {
 			if (l == 0)
 				return;
 			
-			for (i; i < l; i++){
+			for (i; i < l; i++)
+			{
 				uic = titleBarAssets[i] as UIComponent;
 				uic.setActualSize(uic.getExplicitOrMeasuredWidth(), uic.getExplicitOrMeasuredHeight());
 				
-				if (i == 0){
+				if (i == 0)
+				{
 					tx = unscaledWidth - borderMetrics.right - uic.getExplicitOrMeasuredWidth() - 10;
-				} else {
+				} 
+				else
+				{
 					tx = px - uic.getExplicitOrMeasuredWidth() - _headerChildGap;
 				}
 				
-				switch(_headerVerticalAlign){
+				switch(_headerVerticalAlign)
+				{
 					case "top":
-					ty = 5;
-					break;
+					{
+						ty = 5;
+						break;
+					}
 					
 					case "bottom":
-					ty = getHeaderHeight() - uic.getExplicitOrMeasuredHeight();
-					break;
+					{
+						ty = getHeaderHeight() - uic.getExplicitOrMeasuredHeight();
+						break;
+					}
 					
 					case "middle":
 					default:
-					ty = (getHeaderHeight() - uic.getExplicitOrMeasuredHeight()) / 2;
-					break;
+					{
+						ty = (getHeaderHeight() - uic.getExplicitOrMeasuredHeight()) / 2;
+						break;
+					}
 				}
-				
 				
 				if (uic.x != tx || uic.y != ty)
 					uic.move(tx, ty);
@@ -191,20 +213,28 @@ package com.jwopitz.containers {
 				px = tx;
 			}
 			
-			if (titleTextField){
-				switch(_headerVerticalAlign){
+			if (titleTextField)
+			{
+				switch(_headerVerticalAlign)
+				{
 					case "top":
-					ty = 5;
-					break;
+					{
+						ty = 5;
+						break;
+					}
 					
 					case "bottom":
-					ty = getHeaderHeight() - titleTextField.getExplicitOrMeasuredHeight();
-					break;
+					{
+						ty = getHeaderHeight() - titleTextField.getExplicitOrMeasuredHeight();
+						break;
+					}
 					
 					case "middle":
 					default:
-					ty = (getHeaderHeight() - titleTextField.getExplicitOrMeasuredHeight()) / 2;
-					break;
+					{
+						ty = (getHeaderHeight() - titleTextField.getExplicitOrMeasuredHeight()) / 2;
+						break;
+					}
 				}
 				
 				titleTextField.move(titleTextField.x, ty);
@@ -212,15 +242,35 @@ package com.jwopitz.containers {
 			
 		}
 		
-		public function addTitleBarComponent (value:UIComponent = null):UIComponent {
+		public function addTitleBarComponent (value:UIComponent = null):UIComponent
+		{
 			if (!value)
 				value = new defaultTitleBarComponentClass();
 			
-			value.addEventListener(MouseEvent.CLICK, titleBarComponent_defaultMouseEventHandler, false, EventPriority.DEFAULT_HANDLER);
-			value.addEventListener(MouseEvent.MOUSE_DOWN, titleBarComponent_defaultMouseEventHandler, false, EventPriority.DEFAULT_HANDLER);
-			value.addEventListener(MouseEvent.MOUSE_OUT, titleBarComponent_defaultMouseEventHandler, false, EventPriority.DEFAULT_HANDLER);
-			value.addEventListener(MouseEvent.MOUSE_OVER, titleBarComponent_defaultMouseEventHandler, false, EventPriority.DEFAULT_HANDLER);
-			value.addEventListener(MouseEvent.MOUSE_UP, titleBarComponent_defaultMouseEventHandler, false, EventPriority.DEFAULT_HANDLER);
+			value.addEventListener(MouseEvent.CLICK, 
+				titleBarComponent_defaultMouseEventHandler,
+				false, 
+				EventPriority.DEFAULT_HANDLER);
+			
+			value.addEventListener(MouseEvent.MOUSE_DOWN,
+				titleBarComponent_defaultMouseEventHandler, 
+				false, 
+				EventPriority.DEFAULT_HANDLER);
+			
+			value.addEventListener(MouseEvent.MOUSE_OUT,
+				titleBarComponent_defaultMouseEventHandler,
+				false,
+				EventPriority.DEFAULT_HANDLER);
+			
+			value.addEventListener(MouseEvent.MOUSE_OVER,
+				titleBarComponent_defaultMouseEventHandler,
+				false,
+				EventPriority.DEFAULT_HANDLER);
+			
+			value.addEventListener(MouseEvent.MOUSE_UP,
+				titleBarComponent_defaultMouseEventHandler,
+				false,
+				EventPriority.DEFAULT_HANDLER);
 			
 			value.buttonMode = true;
 			value.owner = this;
@@ -228,9 +278,12 @@ package com.jwopitz.containers {
 			
 			titleBarAssets.push(value);
 			
-			if (!titleBar){
+			if (!titleBar)
+			{
 				creationQueue.push(value);
-			} else {
+			}
+			else
+			{
 				titleBar.addChild(value);
 			}
 			
@@ -242,18 +295,19 @@ package com.jwopitz.containers {
 		 * This method should be used only for capturing events fired from the titleBar area which
 		 * do not originate from any of its children.
 		 */
-		protected function createTitleBarMouseEvent (type:String, targetEvt:MouseEvent):MouseEvent {
+		protected function createTitleBarMouseEvent (type:String, targetEvt:MouseEvent):MouseEvent
+		{
 			var evt:MouseEvent = new MouseEvent(type, 
-												targetEvt.bubbles,
-												targetEvt.cancelable,
-												targetEvt.localX,
-												targetEvt.localY,
-												targetEvt.relatedObject,
-												targetEvt.ctrlKey,
-												targetEvt.altKey,
-												targetEvt.shiftKey,
-												targetEvt.buttonDown,
-												targetEvt.delta);
+				targetEvt.bubbles,
+				targetEvt.cancelable,
+				targetEvt.localX,
+				targetEvt.localY,
+				targetEvt.relatedObject,
+				targetEvt.ctrlKey,
+				targetEvt.altKey,
+				targetEvt.shiftKey,
+				targetEvt.buttonDown,
+				targetEvt.delta);
 			
 			return evt;
 		}
@@ -267,7 +321,8 @@ package com.jwopitz.containers {
 		 * In order to override that default behavior, the evt must stop propogation and be handled in a different manner so as not to
 		 * trigger a possible drag action.
 		 */ 
-		protected function titleBarComponent_defaultMouseEventHandler (evt:MouseEvent):void {
+		protected function titleBarComponent_defaultMouseEventHandler (evt:MouseEvent):void
+		{
 			evt.stopPropagation();
 		}
 		
@@ -280,11 +335,13 @@ package com.jwopitz.containers {
 		 * In order to avoid null pointer references, if a titleBarComponent is being added and the titleBar = null, the added child
 		 * is placed in the creation queue.  TitleBar then references this queue and adds the components listed.
 		 */ 
-		protected function titleBar_onCreationComplete (evt:FlexEvent):void {
+		protected function titleBar_onCreationComplete (evt:FlexEvent):void
+		{
 			var titleBarChild:UIComponent;
 			var i:int = 0;
 			var l:int = creationQueue.length;
-			for (i; i < l; i++){
+			for (i; i < l; i++)
+			{
 				titleBarChild = creationQueue[i] as UIComponent;
 				titleBar.addChild(titleBarChild);
 			}
@@ -292,7 +349,8 @@ package com.jwopitz.containers {
 			creationQueue = [];
 		}
 		
-		protected function titleBar_onClick (evt:MouseEvent):void {
+		protected function titleBar_onClick (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_CLICK, evt));
 		}
 		
@@ -300,41 +358,55 @@ package com.jwopitz.containers {
 		 * TitleBar has a predefined handler that acts on click events when a Pod is in popup mode.  
 		 * titleBar_onMouseDown is used in order to receive and broadcast click events when in non-popup mode. 
 		 */
-		protected function titleBar_onMouseDown (evt:MouseEvent):void {
-			if (!isPopUp){
+		protected function titleBar_onMouseDown (evt:MouseEvent):void
+		{
+			if (!isPopUp)
 				dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_DOWN, evt));
-			}
 		}
 		
-		protected function titleBar_onMouseMove (evt:MouseEvent):void {
+		protected function titleBar_onMouseMove (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_MOVE, evt));
 		}
 		
-		protected function titleBar_onMouseOut (evt:MouseEvent):void {
+		protected function titleBar_onMouseOut (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_OUT, evt));
 		}
 		
-		protected function titleBar_onMouseOver (evt:MouseEvent):void {
+		protected function titleBar_onMouseOver (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_OVER, evt));
 		}
 		
-		protected function titleBar_onMouseUp (evt:MouseEvent):void {
+		protected function titleBar_onMouseUp (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_UP, evt));
 		}
 		
-		protected function titleBar_onRollOut (evt:MouseEvent):void {
+		protected function titleBar_onRollOut (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_ROLL_OUT, evt));
 		}
 		
-		protected function titleBar_onRollOver (evt:MouseEvent):void {
+		protected function titleBar_onRollOver (evt:MouseEvent):void
+		{
 			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_ROLL_OVER, evt));
 		}
 				
-		public function get headerHeight ():Number {
+		public function get headerHeight ():Number
+		{
 			return getHeaderHeight();
 		}
-		public function set headerHeight (value:Number):void {
+		
+		public function set headerHeight (value:Number):void
+		{
 			setStyle("headerHeight", value);
+		}
+		
+		public function get content ():Sprite
+		{
+			return contentPane;
 		}
 		
 	}
