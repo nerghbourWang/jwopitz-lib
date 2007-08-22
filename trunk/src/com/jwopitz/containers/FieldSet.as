@@ -26,6 +26,7 @@ package com.jwopitz.containers
     import com.jwopitz.core.jwo_internal;
     import com.jwopitz.skins.FieldSetBorder;
     
+    import flash.events.Event;
     import flash.geom.Point;
     
     import mx.containers.Box;
@@ -74,34 +75,34 @@ package com.jwopitz.containers
         		tsn.setStyle('fontWeight', 'bold');
         		
         		var s:CSSStyleDeclaration = new CSSStyleDeclaration();
-        		s.setStyle('titleAlign', 'left');
-        		s.setStyle('titleGap', 2);
-        		s.setStyle('titlePlacement', 'top');
         		s.setStyle('borderStyle', 'solid');
 				s.setStyle('borderSkin', FieldSetBorder);
-				s.setStyle('titleStyleName', tsn);
 				
+				s.setStyle('paddingLeft', 2);
+				s.setStyle('paddingRight', 2);
+				s.setStyle('paddingTop', 2);
+				s.setStyle('paddingBottom', 2);
+				
+				s.setStyle('titleAlign', 'left');
+        		s.setStyle('titleGap', 2);
+        		s.setStyle('titlePlacement', 'top');
+        		s.setStyle('titleStyleName', tsn);
+        						
 				StyleManager.setStyleDeclaration('FieldSet', s, true);
         	}
         	
         	return true;
         }
 		
-		protected var _titleAlign:String = "left";
-		protected var _titleGap:Number = 2;
-		        
-        protected var titleStyleNameChanged:Boolean = false;
+		protected var titleStyleNameChanged:Boolean = false;
 		
 		override public function styleChanged (styleProp:String):void
 		{
         	super.styleChanged(styleProp);
         	
         	var allStyles:Boolean = !styleProp || styleProp == "styleName";
-        	if (allStyles || styleProp == "titleAlign")
-        		_titleAlign = getStyle("titleAlign");
-        		
-        	if (allStyles || styleProp == "titleGap")
-        		_titleGap = getStyle("titleGap");
+        	if (allStyles || styleProp == "titleAlign" || styleProp == "titleGap")
+        		titlePtChanged = true;
         		
         	if (allStyles || styleProp == "titleStyleName")
         		titleStyleNameChanged = true;
@@ -146,8 +147,6 @@ package com.jwopitz.containers
          */
 		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
 		{
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			
 			if (titleStyleNameChanged)
 			{
 				textField.styleName = getStyle('titleStyleName');
@@ -157,12 +156,25 @@ package com.jwopitz.containers
 			
 			if (titlePtChanged)
 			{
-				textField.setActualSize(textField.getExplicitOrMeasuredWidth(), 
-										textField.getExplicitOrMeasuredHeight());
+				var pt:Point = getTitlePoint();
+				var minX:Number = getStyle("cornerRadius") + getStyle("titleGap") + 5;
+				var maxW:Number = getExplicitOrMeasuredWidth() - 2 * minX + 5;
+				if (pt.x <= minX || textField.getExplicitOrMeasuredWidth() >= maxW)
+				{
+					pt.x = minX;
+					
+					textField.setActualSize(maxW, textField.getExplicitOrMeasuredHeight());
+					textField.truncateToFit();
+				}
+				else
+					textField.setActualSize(textField.getExplicitOrMeasuredWidth(), textField.getExplicitOrMeasuredHeight());
+					
+				textField.move(pt.x, pt.y);
 				
-				textField.move(titlePoint.x, titlePoint.y);
 				titlePtChanged = false;
 			}
+			
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
 			
 		////////////////////////////////////////////////////////////////
@@ -175,18 +187,15 @@ package com.jwopitz.containers
 		protected var titlePtChanged:Boolean = false;
         
 		/**
-		 * @private
-		 */
-		protected var tp:Point = new Point();
-		
-		/**
 		 * Returns the targeted origin pt of the titleTextField based on titleAlignment.
 		 */
-		protected function get titlePoint ():Point
+		protected function getTitlePoint ():Point
 		{
+			var pt:Point = new Point();
+			
 			if (!textField)
-				return tp;
-						
+				return pt;
+			
 			var nx:Number = 0;
         	var ny:Number = 0;
 			
@@ -216,10 +225,10 @@ package com.jwopitz.containers
         		}
         	}	
 			
-			if (tp.x != x)
-				tp.x = nx;
+			if (pt.x != nx)
+				pt.x = nx;
 			
-			return tp;
+			return pt;
 		}
 		
 		////////////////////////////////////////////////////////////////
@@ -239,6 +248,7 @@ package com.jwopitz.containers
         /**
 		 * The string value of the FieldSet's title.
 		 */
+		[Bindable("titleChanged")]
         public function get title ():String
         {
             return titleText;
@@ -254,8 +264,10 @@ package com.jwopitz.containers
             	titleTextChanged = true;
             	titlePtChanged = true;
 				
-            	invalidateProperties();
+				invalidateProperties();
             	invalidateDisplayList();
+            	
+            	dispatchEvent(new Event("titleChanged"));
             }
         }
 	

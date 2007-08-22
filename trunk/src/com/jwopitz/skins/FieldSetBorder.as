@@ -103,9 +103,11 @@ package com.jwopitz.skins
 			if (isNaN(titleGap))
 				titleGap = 0;
 				
-			var top:Number = title.y + title.getExplicitOrMeasuredHeight() / 2
+			var top:Number = title.y + title.getExplicitOrMeasuredHeight() / 2;
 			
-			var pt00:Point = new Point(title.x - titleGap, top);
+			var startX:Number = Math.max(title.x - titleGap,
+				titleGap + radius);
+			var pt00:Point = new Point(startX, top);
 			
 			//upper left corner
 			var pt01:Point = new Point(radius, top);
@@ -127,12 +129,14 @@ package com.jwopitz.skins
 			var pt11:Point = new Point(width, top);
 			var pt12:Point = new Point(width - radius, top);
 			
-			var pt13:Point = new Point(title.x + title.getExplicitOrMeasuredWidth() + titleGap, top);
+			var endX:Number = Math.min(title.x + title.getExplicitOrMeasuredWidth() + titleGap,
+				width - radius - titleGap);
+			var pt13:Point = new Point(endX, top);
 			
 			var g:Graphics = graphics;
 			g.clear();
 			
-			g.lineStyle(bThickness, bColor, bAlpha);
+			g.lineStyle(bThickness, bColor, bAlpha, true);
 			g.moveTo(pt00.x, pt00.y);
 			g.lineTo(pt01.x, pt01.y);
 			g.curveTo(pt02.x, pt02.y, pt03.x, pt03.y);
