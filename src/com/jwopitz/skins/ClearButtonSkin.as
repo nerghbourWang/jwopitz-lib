@@ -22,39 +22,51 @@ SOFTWARE.
 
 */
 package com.jwopitz.skins {
-	
+
 	import flash.display.Graphics;
 	import flash.geom.Point;
-	
+
 	import mx.core.EdgeMetrics;
 	import mx.skins.RectangularBorder;
-	
+
+	/**
+	 * @private
+	 */
 	public class ClearButtonSkin extends RectangularBorder {
-		
+
+	    /**
+	     * @private
+	     */
 	    protected var bm:EdgeMetrics;
-	    
+
+	    /**
+	     * @private
+	     */
 	    override public function get borderMetrics ():EdgeMetrics {
 	        if (!bm){
-	        	
+
 	        	var borderThickness:Number = getStyle("borderThickness");
 	        	bm = new EdgeMetrics(borderThickness, borderThickness, borderThickness, borderThickness);
 	        }
-	        
+
 	        return bm;
 	    }
-	    
+
+	    /**
+	     * @private
+	     */
 	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
 	        super.updateDisplayList(unscaledWidth, unscaledHeight);
-			
+
 			//since its a clear box, we don't really need any styling input aside from dimensions
-			
+
 			var g:Graphics = graphics;
 			g.clear();
 			g.lineStyle(0, 0x000000, 0.0);
 			g.beginFill(0x000000, 0.0);
-			
+
 			g.drawRect(parent.x, parent.y, parent.width, parent.height);
-			
+
 			g.endFill();
 	    }
 	}

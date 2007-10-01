@@ -1,1 +1,1 @@
-asdoc -doc-sources 'location path here' -output 'location path here'
+asdoc -doc-sources e:\jwopitz\projects\jwo_lib\src -output e:\jwopitz\projects\jwo_lib\asdoc

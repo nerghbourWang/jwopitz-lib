@@ -25,24 +25,33 @@ package com.jwopitz.skins
 {
 	import com.jwopitz.containers.FieldSet;
 	import com.jwopitz.core.jwo_internal;
-	
+
 	import flash.display.Graphics;
 	import flash.geom.Point;
-	
+
 	import mx.core.EdgeMetrics;
 	import mx.core.UITextField;
 	import mx.skins.RectangularBorder;
-	
+
 	use namespace jwo_internal
-	
+
+	/**
+	 * @private
+	 */
 	public class FieldSetBorder extends RectangularBorder
 	{
 		////////////////////////////////////////////////////////////////
 		//	BORDER METRICS
 		////////////////////////////////////////////////////////////////
-	
+
+	    /**
+	     * @private
+	     */
 	    protected var bm:EdgeMetrics;
-	    
+
+	    /**
+	     * @private
+	     */
 	    override public function get borderMetrics ():EdgeMetrics
 	    {
 	        if (!bm)
@@ -50,30 +59,35 @@ package com.jwopitz.skins
 	        	var radius:Number = getStyle("cornerRadius");
 	        	var borderTop:Number = getStyle("borderThickness");
 	        	var borderThickness:Number = getStyle("borderThickness");
-	        	
+
 	        	if (parent && parent is FieldSet)
 	        	{
 	        		var textHeight:Number = FieldSet(parent).titleTextField.getExplicitOrMeasuredHeight();
-	        		
+
 	        		if (borderTop < textHeight || borderTop < radius)
 	        			borderTop = (textHeight > radius)? textHeight: radius;
 	        	}
-	        	
+
 	            bm = new EdgeMetrics(borderThickness, borderTop, borderThickness, borderThickness);
 	        }
-	        
+
 	        return bm;
 	    }
-	    
+
 		////////////////////////////////////////////////////////////////
 		//	TEXT FIELD
-		//////////////////////////////////////////////////////////////// 
-	    
+		////////////////////////////////////////////////////////////////
+
+	    /**
+	     * @private
+	     *
+	     * A reference to the fieldSet's title textField.
+	     */
+	    protected var textField:UITextField;
+
 	    /**
 	     * @private
 	     */
-	    protected var textField:UITextField;
-	    
 	    protected function get title ():UITextField
 	    {
 	    	if (!textField)
@@ -81,61 +95,62 @@ package com.jwopitz.skins
 	    		if (parent && parent is FieldSet)
 	    			textField = FieldSet(parent).titleTextField;
 	    	}
-	    	
+
 	    	return textField;
 	    }
 
-		
-
-	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+		/**
+		 * @private
+		 */
+		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
 	    {
 	        super.updateDisplayList(unscaledWidth, unscaledHeight);
-			
+
 			if (!title)
 				return;
-				
+
 			var bAlpha:Number = getStyle("borderAlpha");
 			var bColor:uint = getStyle("borderColor");
 			var bThickness:Number = getStyle("borderThickness");
 			var radius:Number = getStyle("cornerRadius");
 			var titleGap:Number = getStyle("titleGap");
-			
+
 			if (isNaN(titleGap))
 				titleGap = 0;
-				
+
 			var top:Number = title.y + title.getExplicitOrMeasuredHeight() / 2;
-			
+
 			var startX:Number = Math.max(title.x - titleGap,
 				titleGap + radius);
 			var pt00:Point = new Point(startX, top);
-			
+
 			//upper left corner
 			var pt01:Point = new Point(radius, top);
 			var pt02:Point = new Point(0, top);
 			var pt03:Point = new Point(0, top + radius);
-			
+
 			//lower left corner
 			var pt04:Point = new Point(0, height - radius);
 			var pt05:Point = new Point(0, height);
 			var pt06:Point = new Point(radius, height);
-			
+
 			//lower right corner
 			var pt07:Point = new Point(width - radius, height);
 			var pt08:Point = new Point(width, height);
 			var pt09:Point = new Point(width, height - radius);
-			
+
 			//upper right corner
 			var pt10:Point = new Point(width, top + radius);
 			var pt11:Point = new Point(width, top);
 			var pt12:Point = new Point(width - radius, top);
-			
+
 			var endX:Number = Math.min(title.x + title.getExplicitOrMeasuredWidth() + titleGap,
 				width - radius - titleGap);
 			var pt13:Point = new Point(endX, top);
-			
+
 			var g:Graphics = graphics;
 			g.clear();
-			
+
 			g.lineStyle(bThickness, bColor, bAlpha, true);
 			g.moveTo(pt00.x, pt00.y);
 			g.lineTo(pt01.x, pt01.y);

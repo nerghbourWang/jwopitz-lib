@@ -37,27 +37,59 @@ package com.jwopitz.containers
 	use namespace jwo_internal;
 
     /**
-     * Sets the horizontal alignment of the textField.  Values are "left, "center" and "right".  The default value is "left".
+     * Sets the horizontal alignment of the title.  Values are "left, "center" and "right".
+     *
+     * @default left
      */
     [Style(name="titleAlign", type="String", enumeration="left,center,right", inherit="no")]
 
     /**
-     * Sets the gap between the textField and the drawn border endpoints on each side.  The default value is 2.
+     * Sets the gap between the title and the drawn border endpoints on each side.
+     * @default 2
      */
     [Style(name="titleGap", type="Number", inherit="no")]
 
     /**
-     * Sets the vertical placement of the textField.  Current values are "top".  The default value is "top".
+     * @private
+     *
+     * Sets the vertical placement of the title.  Current values are "top".  The default value is "top".
      *
      * 2007.04.12 - this feature has not yet been implemented - jwopitz
      */
     [Style(name="titlePlacement", type="String", enumeration="top", inherit="no")]
 
     /**
-     * Sets the style for the textField.
+     * Sets the style for the title.
+     *
+     * @default bold
      */
     [Style(name="titleStyleName", type="String", inherit="no")]
 
+    /**
+     * The FieldSet is a container class that is modeled after the html fieldSet version.
+     * It can layout its children in either a vertical (default) or horizontal.
+     * <p>The <code>&lt;jwo_lib:FieldSet&gt;</code> tag inherits all of the tag
+	 * attributes of its superclass, and adds the following tag attributes:</p>
+	 *
+	 * <p>
+	 * <pre>
+	 * &lt;jwo_lib:FieldSet
+	 *	 <strong>Properties</strong>
+	 * 	 title=""
+	 *   <strong>Styles</strong>
+	 *   titleAlign="left|center|right"
+	 *   titleGap="2"
+	 *   titleStyleName="bold"
+	 *	 &gt;
+	 *   ...
+	 *     <i>child tags</i>
+	 *   ...
+	 *  &lt;/jwo_lib:FieldSet&gt;
+	 *  </pre>
+	 *  </p>
+	 *
+	 *  @see mx.containers.Box
+	 */
     public class FieldSet extends Box
     {
 
@@ -65,8 +97,14 @@ package com.jwopitz.containers
 		//	DEFAULT STYLES INIT
 		////////////////////////////////////////////////////////////////
 
+		/**
+		 * @private
+		 */
     	private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 
+		/**
+		 * @private
+		 */
 		private static function setDefaultStyles ():Boolean
 		{
         	if (!StyleManager.getStyleDeclaration('FieldSet'))
@@ -94,8 +132,14 @@ package com.jwopitz.containers
         	return true;
         }
 
+		/**
+		 * @private
+		 */
 		protected var titleStyleNameChanged:Boolean = false;
 
+		/**
+		 * @private
+		 */
 		override public function styleChanged (styleProp:String):void
 		{
         	super.styleChanged(styleProp);
@@ -111,9 +155,9 @@ package com.jwopitz.containers
         }
 
 		/**
-		 *
+		 * @private
 		 */
-        override protected function createChildren ():void
+		override protected function createChildren ():void
         {
             super.createChildren();
 
@@ -129,7 +173,7 @@ package com.jwopitz.containers
         }
 
 		/**
-		 *
+		 * @private
 		 */
 		override protected function commitProperties ():void
 		{
@@ -143,8 +187,8 @@ package com.jwopitz.containers
 		}
 
         /**
-         *
-         */
+		 * @private
+		 */
 		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			if (titleStyleNameChanged)
@@ -187,7 +231,9 @@ package com.jwopitz.containers
 		protected var titlePtChanged:Boolean = false;
 
 		/**
-		 * Returns the targeted origin pt of the titleTextField based on titleAlignment.
+		 * Calculates the targeted origin pt of the title textField based on titleAlignment.
+		 *
+		 * @return A point whose x and y coordinates are the location for the tilte textField.
 		 */
 		protected function getTitlePoint ():Point
 		{
@@ -281,6 +327,8 @@ package com.jwopitz.containers
 		protected var textField:UITextField;
 
 		/**
+		 * @private
+		 *
 		 * Allows outside access to the fieldSet's textField.
 		 */
         jwo_internal function get titleTextField ():UITextField
