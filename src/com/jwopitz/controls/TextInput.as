@@ -24,23 +24,65 @@ SOFTWARE.
 package com.jwopitz.controls
 {
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 
 	import mx.controls.Button;
 	import mx.controls.TextInput;
 	import mx.core.EdgeMetrics;
+	import mx.core.IFlexDisplayObject;
 	import mx.core.mx_internal;
 	import mx.skins.RectangularBorder;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
-	import mx.core.IFlexDisplayObject;
-	import flash.ui.Mouse;
-	import flash.events.MouseEvent;
-	import flash.events.TextEvent;
 
 	//use namespace mx_internal;
 
+	//////////////////////////////////////////////////////////////
+	//	STYLES
+	//////////////////////////////////////////////////////////////
+
+	/**
+	 * The horizontal gap between the end of the UITextField and the clear button.
+	 *
+	 * @default 5
+	 */
 	[Style(name="horizontalGap", type="Number", format="Length", inherit="no")]
 
+	//////////////////////////////////////////////////////////////
+	//	EVENTS
+	//////////////////////////////////////////////////////////////
+
+	/**
+	 * Triggered when the user clicks the clear button.
+	 */
+	[Event(name="clear", type="flash.events.Event")]
+
+	/**
+	 *  The TextInput control is a single-line text field
+	 *  that is optionally editable.
+	 *  All text in this control must use the same styling
+	 *  unless it is HTML text.
+	 *  The TextInput control supports the HTML rendering
+	 *  capabilities of the Adobe Flash Player.
+	 *
+	 *  <p>The <code>&lt;jwo_lib:TextInput&gt;</code> tag inherits the attributes
+	 *  of its superclass and adds the following attributes:</p>
+	 *
+	 *  <pre>
+	 *  &lt;jwo_lib:TextInput
+	 *    <b>Properties</b>
+	 *    showClearButton="false|true"
+	 *    &nbsp;
+	 *    <b>Styles</b>
+	 *    horizontalGap="5"
+	 *    &nbsp;
+	 *    <b>Events</b>
+	 *    clear="<i>No default</i>"
+	 *  /&gt;
+	 *  </pre>
+	 *
+	 *  @see mx.controls.TextInput
+	 */
 	public class TextInput extends mx.controls.TextInput
 	{
 		//////////////////////////////////////////////////////////////
@@ -120,6 +162,9 @@ package com.jwopitz.controls
 		 */
 		protected var showClearBtnChanged:Boolean = false;
 
+		/**
+		 * Flag indicating whether or not to show the clear button for the text field.
+		 */
 		[Bindable ("showClearButtonChanged")]
 		public function get showClearButton ():Boolean
 		{
@@ -149,6 +194,9 @@ package com.jwopitz.controls
 		//	OVERRIDES
 		//////////////////////////////////////////////////////////////
 
+		/**
+		 * @private
+		 */
 		override protected function createChildren ():void
 		{
 			super.createChildren();
@@ -169,6 +217,9 @@ package com.jwopitz.controls
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function commitProperties ():void
 		{
 			super.commitProperties();
@@ -182,6 +233,9 @@ package com.jwopitz.controls
 			}
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function measure ():void
 		{
 			super.measure();
@@ -189,6 +243,9 @@ package com.jwopitz.controls
 			measuredWidth = measuredWidth + getStyle("horizontalGap") + clearBtn.getExplicitOrMeasuredWidth();
 		}
 
+		/**
+		 * @private
+		 */
 		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
@@ -235,9 +292,15 @@ package com.jwopitz.controls
 		//	EVENT HANDLERS
 		//////////////////////////////////////////////////////////////
 
+		/**
+		 * @private
+		 */
 		protected function onClick_clearBtnHandler (evt:MouseEvent):void
 		{
 			text = "";
+			htmlText = "";
+
+			dispatchEvent(new Event('clear'));
 		}
 	}
 }
