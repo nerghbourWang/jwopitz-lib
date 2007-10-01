@@ -35,13 +35,17 @@ package com.jwopitz.containers
 	import mx.styles.StyleManager;
 	import flash.events.Event;
 
+	//////////////////////////////////////////////////////////////
+	//	STYLES
+	//////////////////////////////////////////////////////////////
+
 	/**
      * Sets the vertical alignment of the header children added with addTitleBarComponent and the titleTextField.
      * Values are "top, "middle" and "bottom".
      *
      * @default middle
      */
-    [Style (name="headerVerticalAlign", type="String", enumeration="top,middle,bottom", inherit="no")]
+    [Style(name="headerVerticalAlign", type="String", enumeration="top,middle,bottom", inherit="no")]
 
     /**
      * Sets the horizontal gap of the header children added with addTitleBarComponent.
@@ -49,16 +53,51 @@ package com.jwopitz.containers
      *
      * @default 6
      */
-    [Style (name="headerHorizontalGap", type="Number", inherit="no")]
+    [Style(name="headerHorizontalGap", type="Number", inherit="no")]
 
-	[Event (name="gripClick", type="flash.events.MouseEvent")]
-	[Event (name="gripMouseDown", type="flash.events.MouseEvent")]
-	[Event (name="gripMouseMove", type="flash.events.MouseEvent")]
-	[Event (name="gripMouseOver", type="flash.events.MouseEvent")]
-	[Event (name="gripMouseOut", type="flash.events.MouseEvent")]
-	[Event (name="gripMouseUp", type="flash.events.MouseEvent")]
-	[Event (name="gripRollOut", type="flash.events.MouseEvent")]
-	[Event (name="gripRollOver", type="flash.events.MouseEvent")]
+	//////////////////////////////////////////////////////////////
+	//	EVENTS
+	//////////////////////////////////////////////////////////////
+
+	/**
+	 * Dispatched when the user clicks on the header area.
+	 */
+	[Event(name="gripClick", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user presses the mouse button on the header area.
+	 */
+	[Event(name="gripMouseDown", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user moves the mouse over the header area.
+	 */
+	[Event(name="gripMouseMove", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user clicks on the header area.
+	 */
+	[Event(name="gripMouseOver", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user moves the mouse out of the header area.
+	 */
+	[Event(name="gripMouseOut", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user releases the mouse button above the header area.
+	 */
+	[Event(name="gripMouseUp", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user rolls out of the header area.
+	 */
+	[Event(name="gripRollOut", type="flash.events.MouseEvent")]
+
+	/**
+	 * Dispatched when the user rolls over the header area.
+	 */
+	[Event(name="gripRollOver", type="flash.events.MouseEvent")]
 
 	/**
 	 * Pod is an extension of the &lt;mx:Panel&gt; allowing children to be added to the header area
@@ -80,17 +119,60 @@ package com.jwopitz.containers
 	 *
 	 *  @see mx.containers.Panel
 	 */
-	//[Bindable]
 	public class Pod extends Panel
 	{
-		public static const GRIP_CLICK:String = "gripClick";
-		public static const GRIP_MOUSE_DOWN:String = "gripMouseDown";
-		public static const GRIP_MOUSE_MOVE:String = "gripMouseMove";
-		public static const GRIP_MOUSE_OVER:String = "gripMouseOver";
-		public static const GRIP_MOUSE_OUT:String = "gripMouseOut";
-		public static const GRIP_MOUSE_UP:String = "gripMouseUp";
-		public static const GRIP_ROLL_OUT:String = "gripRollOut";
-		public static const GRIP_ROLL_OVER:String = "gripRollOver";
+
+		/////////////////////////////////////////////////////////////////////////////////
+		// CONSTANTS
+		/////////////////////////////////////////////////////////////////////////////////
+
+		/*
+
+		2007.10.01 - jwopitz
+		The following constants are located here rather than in a seperate MouseEvent subclass for ease of use.
+		At some future point these MAY be moved over to a specialized MouseEvent subclass if the need arises.
+
+		*/
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_CLICK:String = "gripClick";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_MOUSE_DOWN:String = "gripMouseDown";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_MOUSE_MOVE:String = "gripMouseMove";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_MOUSE_OVER:String = "gripMouseOver";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_MOUSE_OUT:String = "gripMouseOut";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_MOUSE_UP:String = "gripMouseUp";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_ROLL_OUT:String = "gripRollOut";
+
+		/**
+		 * @private
+		 */
+    	public static const GRIP_ROLL_OVER:String = "gripRollOver";
 
 		/////////////////////////////////////////////////////////////////////////////////
 		// DEFAULT STYLES INIT

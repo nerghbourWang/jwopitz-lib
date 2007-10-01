@@ -76,6 +76,7 @@ package com.jwopitz.containers
 	 * &lt;jwo_lib:FieldSet
 	 *	 <strong>Properties</strong>
 	 * 	 title=""
+	 * 	 &nbsp;
 	 *   <strong>Styles</strong>
 	 *   titleAlign="left|center|right"
 	 *   titleGap="2"
