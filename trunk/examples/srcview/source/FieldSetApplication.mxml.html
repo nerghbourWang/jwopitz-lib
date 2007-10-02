@@ -1,0 +1,90 @@
+<!-- saved from url=(0014)about:internet -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>FieldSetApplication.mxml</title>
+<link rel="stylesheet" type="text/css" href="../SourceStyles.css"/>
+</head>
+
+<body><pre><span class="mxmlCdata">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="mxmlComponent">&lt;mx:Application</span>
+    layout=&quot;<span class="mxmlString">vertical</span>&quot;
+    backgroundColor=&quot;<span class="mxmlString">0xFFFFFF</span>&quot;
+    horizontalAlign=&quot;<span class="mxmlString">center</span>&quot;
+    
+    viewSourceURL=&quot;<span class="mxmlString">srcview/index.html</span>&quot;
+    
+    xmlns:mx=&quot;<span class="mxmlString">http://www.adobe.com/2006/mxml</span>&quot;
+    xmlns:containers=&quot;<span class="mxmlString">com.jwopitz.containers.*</span>&quot;<span class="mxmlComponent">&gt;</span>
+    
+    <span class="mxmlTag">&lt;mx:Script&gt;</span>
+        <span class="asOperator">&lt;!</span><span class="asBracket">[</span>CDATA<span class="asBracket">[</span>
+            
+            <span class="asReserved">public</span> <span class="asVar">var</span> titleStyleCSS<span class="asOperator">:</span>CSSStyleDeclaration <span class="asOperator">=</span> <span class="asReserved">new</span> CSSStyleDeclaration<span class="asBracket">()</span>;
+            
+        <span class="asBracket">]]</span><span class="asOperator">&gt;</span>
+    <span class="mxmlTag">&lt;/mx:Script&gt;</span>
+    
+    <span class="mxmlComponent">&lt;containers:FieldSet</span> id=&quot;<span class="mxmlString">fs</span>&quot; width=&quot;<span class="mxmlString">450</span>&quot; title=&quot;<span class="mxmlString">title</span>&quot;<span class="mxmlComponent">&gt;</span>
+        
+        <span class="mxmlComponent">&lt;mx:Form&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormHeading</span> label=&quot;<span class="mxmlString">properties</span>&quot;<span class="mxmlComponent">/&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">title</span>&quot; direction=&quot;<span class="mxmlString">horizontal</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:TextInput</span> id=&quot;<span class="mxmlString">title_ti</span>&quot; text=&quot;<span class="mxmlString">title</span>&quot;<span class="mxmlComponent">/&gt;</span>
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.title <span class="asOperator">=</span> title_ti.text;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormHeading</span> label=&quot;<span class="mxmlString">styles</span>&quot;<span class="mxmlComponent">/&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">titleAlign</span>&quot; direction=&quot;<span class="mxmlString">horizontal</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:ComboBox</span> id=&quot;<span class="mxmlString">ta_cb</span>&quot; prompt=&quot;<span class="mxmlString">select style</span>&quot; dataProvider=&quot;<span class="mxmlString">{</span><span class="asBracket">[</span><span class="asString">&apos;left&apos;</span>, <span class="asString">&apos;center&apos;</span>, <span class="asString">&apos;right&apos;</span><span class="asBracket">]</span><span class="mxmlString">}</span>&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.setStyle<span class="asBracket">(</span><span class="asString">&apos;titleAlign&apos;</span>, ta_cb.selectedLabel<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">titleGap</span>&quot; direction=&quot;<span class="mxmlString">horizontal</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:NumericStepper</span> id=&quot;<span class="mxmlString">tg_ns</span>&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.setStyle<span class="asBracket">(</span><span class="asString">&apos;titleGap&apos;</span>, tg_ns.value<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">titleStyleName</span>&quot; direction=&quot;<span class="mxmlString">vertical</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:ComboBox</span> prompt=&quot;<span class="mxmlString">font weight</span>&quot; dataProvider=&quot;<span class="mxmlString">{</span><span class="asBracket">[</span><span class="asString">&apos;normal&apos;</span>, <span class="asString">&apos;bold&apos;</span><span class="asBracket">]</span><span class="mxmlString">}</span>&quot; 
+                    change=&quot;titleStyleCSS.setStyle<span class="asBracket">(</span><span class="asString">&apos;fontWeight&apos;</span>, event.target.selectedLabel<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+                    
+                <span class="mxmlComponent">&lt;mx:ColorPicker</span> change=&quot;titleStyleCSS.setStyle<span class="asBracket">(</span><span class="asString">&apos;color&apos;</span>, event.target.selectedColor<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:NumericStepper</span> minimum=&quot;<span class="mxmlString">8</span>&quot; value=&quot;<span class="mxmlString">10</span>&quot; maximum=&quot;<span class="mxmlString">30</span>&quot; change=&quot;titleStyleCSS.setStyle<span class="asBracket">(</span><span class="asString">&apos;fontSize&apos;</span>, event.target.value<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.setStyle<span class="asBracket">(</span><span class="asString">&apos;titleStyleName&apos;</span>, titleStyleCSS<span class="asBracket">)</span>; fs.invalidateDisplayList<span class="asBracket">()</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormHeading</span> label=&quot;<span class="mxmlString">inherited styles</span>&quot;<span class="mxmlComponent">/&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">cornerRadius</span>&quot; direction=&quot;<span class="mxmlString">horizontal</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:NumericStepper</span> id=&quot;<span class="mxmlString">cr_ns</span>&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.setStyle<span class="asBracket">(</span><span class="asString">&apos;cornerRadius&apos;</span>, cr_ns.value<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">borderThickness</span>&quot; direction=&quot;<span class="mxmlString">horizontal</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:NumericStepper</span> id=&quot;<span class="mxmlString">bt_ns</span>&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.setStyle<span class="asBracket">(</span><span class="asString">&apos;borderThickness&apos;</span>, bt_ns.value<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+            <span class="mxmlComponent">&lt;mx:FormItem</span> label=&quot;<span class="mxmlString">borderColor</span>&quot; direction=&quot;<span class="mxmlString">horizontal</span>&quot;<span class="mxmlComponent">&gt;</span>
+                <span class="mxmlComponent">&lt;mx:ColorPicker</span> id=&quot;<span class="mxmlString">bc_cp</span>&quot;<span class="mxmlComponent">/&gt;</span>
+                
+                <span class="mxmlComponent">&lt;mx:Button</span> label=&quot;<span class="mxmlString">commit</span>&quot; click=&quot;fs.setStyle<span class="asBracket">(</span><span class="asString">&apos;borderColor&apos;</span>, bc_cp.selectedColor<span class="asBracket">)</span>;&quot;<span class="mxmlComponent">/&gt;</span>
+            <span class="mxmlComponent">&lt;/mx:FormItem&gt;</span>
+            
+        <span class="mxmlComponent">&lt;/mx:Form&gt;</span>
+        
+    <span class="mxmlComponent">&lt;/containers:FieldSet&gt;</span>
+    
+<span class="mxmlComponent">&lt;/mx:Application&gt;</span></pre></body>
+</html>
