@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.skins {
-
+package com.jwopitz.skins
+{
 	import flash.display.Graphics;
 	import flash.geom.Point;
 
@@ -32,8 +32,8 @@ package com.jwopitz.skins {
 	/**
 	 * @private
 	 */
-	public class ClearButtonSkin extends RectangularBorder {
-
+	public class ClearButtonSkin extends RectangularBorder
+	{
 	    /**
 	     * @private
 	     */
@@ -42,9 +42,10 @@ package com.jwopitz.skins {
 	    /**
 	     * @private
 	     */
-	    override public function get borderMetrics ():EdgeMetrics {
-	        if (!bm){
-
+	    override public function get borderMetrics ():EdgeMetrics
+	    {
+	        if (!bm)
+	        {
 	        	var borderThickness:Number = getStyle("borderThickness");
 	        	bm = new EdgeMetrics(borderThickness, borderThickness, borderThickness, borderThickness);
 	        }
@@ -55,7 +56,8 @@ package com.jwopitz.skins {
 	    /**
 	     * @private
 	     */
-	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
+	    override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+	    {
 	        super.updateDisplayList(unscaledWidth, unscaledHeight);
 
 			//since its a clear box, we don't really need any styling input aside from dimensions

@@ -23,52 +23,52 @@ SOFTWARE.
 */
 package com.jwopitz.containers
 {
-    import com.jwopitz.core.jwo_internal;
-    import com.jwopitz.skins.FieldSetBorder;
+	import com.jwopitz.core.jwo_internal;
+	import com.jwopitz.skins.FieldSetBorder;
 
-    import flash.events.Event;
-    import flash.geom.Point;
+	import flash.events.Event;
+	import flash.geom.Point;
 
-    import mx.containers.Box;
-    import mx.core.UITextField;
-    import mx.styles.CSSStyleDeclaration;
-    import mx.styles.StyleManager;
+	import mx.containers.Box;
+	import mx.core.UITextField;
+	import mx.styles.CSSStyleDeclaration;
+	import mx.styles.StyleManager;
 
 	use namespace jwo_internal;
 
-    /**
-     * Sets the horizontal alignment of the title.  Values are "left, "center" and "right".
-     *
-     * @default left
-     */
-    [Style(name="titleAlign", type="String", enumeration="left,center,right", inherit="no")]
+	/**
+	 * Sets the horizontal alignment of the title.  Values are "left, "center" and "right".
+	 *
+	 * @default left
+	 */
+	[Style(name="titleAlign", type="String", enumeration="left,center,right", inherit="no")]
 
-    /**
-     * Sets the gap between the title and the drawn border endpoints on each side.
-     * @default 2
-     */
-    [Style(name="titleGap", type="Number", inherit="no")]
+	/**
+	 * Sets the gap between the title and the drawn border endpoints on each side.
+	 * @default 2
+	 */
+	[Style(name="titleGap", type="Number", inherit="no")]
 
-    /**
-     * @private
-     *
-     * Sets the vertical placement of the title.  Current values are "top".  The default value is "top".
-     *
-     * 2007.04.12 - this feature has not yet been implemented - jwopitz
-     */
-    [Style(name="titlePlacement", type="String", enumeration="top", inherit="no")]
+	/**
+	 * @private
+	 *
+	 * Sets the vertical placement of the title.  Current values are "top".  The default value is "top".
+	 *
+	 * 2007.04.12 - this feature has not yet been implemented - jwopitz
+	 */
+	[Style(name="titlePlacement", type="String", enumeration="top", inherit="no")]
 
-    /**
-     * Sets the style for the title.
-     *
-     * @default bold
-     */
-    [Style(name="titleStyleName", type="String", inherit="no")]
+	/**
+	 * Sets the style for the title.
+	 *
+	 * @default bold
+	 */
+	[Style(name="titleStyleName", type="String", inherit="no")]
 
-    /**
-     * The FieldSet is a container class that is modeled after the html fieldSet version.
-     * It can layout its children in either a vertical (default) or horizontal.
-     * <p>The <code>&lt;jwo_lib:FieldSet&gt;</code> tag inherits all of the tag
+	/**
+	 * The FieldSet is a container class that is modeled after the html fieldSet version.
+	 * It can layout its children in either a vertical (default) or horizontal.
+	 * <p>The <code>&lt;jwo_lib:FieldSet&gt;</code> tag inherits all of the tag
 	 * attributes of its superclass, and adds the following tag attributes:</p>
 	 *
 	 * <p>
@@ -91,30 +91,30 @@ package com.jwopitz.containers
 	 *
 	 *  @see mx.containers.Box
 	 */
-    public class FieldSet extends Box
-    {
+	public class FieldSet extends Box
+	{
 
-	    ////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////
 		//	DEFAULT STYLES INIT
 		////////////////////////////////////////////////////////////////
 
 		/**
 		 * @private
 		 */
-    	private static var defaultStylesInitialized:Boolean = setDefaultStyles();
+		private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 
 		/**
 		 * @private
 		 */
 		private static function setDefaultStyles ():Boolean
 		{
-        	if (!StyleManager.getStyleDeclaration('FieldSet'))
-        	{
-        		var tsn:CSSStyleDeclaration = new CSSStyleDeclaration();
-        		tsn.setStyle('fontWeight', 'bold');
+			if (!StyleManager.getStyleDeclaration('FieldSet'))
+			{
+				var tsn:CSSStyleDeclaration = new CSSStyleDeclaration();
+				tsn.setStyle('fontWeight', 'bold');
 
-        		var s:CSSStyleDeclaration = new CSSStyleDeclaration();
-        		s.setStyle('borderStyle', 'solid');
+				var s:CSSStyleDeclaration = new CSSStyleDeclaration();
+				s.setStyle('borderStyle', 'solid');
 				s.setStyle('borderSkin', FieldSetBorder);
 
 				s.setStyle('paddingLeft', 2);
@@ -123,15 +123,15 @@ package com.jwopitz.containers
 				s.setStyle('paddingBottom', 2);
 
 				s.setStyle('titleAlign', 'left');
-        		s.setStyle('titleGap', 2);
-        		s.setStyle('titlePlacement', 'top');
-        		s.setStyle('titleStyleName', tsn);
+				s.setStyle('titleGap', 2);
+				s.setStyle('titlePlacement', 'top');
+				s.setStyle('titleStyleName', tsn);
 
 				StyleManager.setStyleDeclaration('FieldSet', s, true);
-        	}
+			}
 
-        	return true;
-        }
+			return true;
+		}
 
 		/**
 		 * @private
@@ -143,35 +143,35 @@ package com.jwopitz.containers
 		 */
 		override public function styleChanged (styleProp:String):void
 		{
-        	super.styleChanged(styleProp);
+			super.styleChanged(styleProp);
 
-        	var allStyles:Boolean = !styleProp || styleProp == "styleName";
-        	if (allStyles || styleProp == "titleAlign" || styleProp == "titleGap")
-        		titlePtChanged = true;
+			var allStyles:Boolean = !styleProp || styleProp == "styleName";
+			if (allStyles || styleProp == "titleAlign" || styleProp == "titleGap")
+				titlePtChanged = true;
 
-        	if (allStyles || styleProp == "titleStyleName")
-        		titleStyleNameChanged = true;
+			if (allStyles || styleProp == "titleStyleName")
+				titleStyleNameChanged = true;
 
-        	invalidateDisplayList();
-        }
+			invalidateDisplayList();
+		}
 
 		/**
 		 * @private
 		 */
 		override protected function createChildren ():void
-        {
-            super.createChildren();
+		{
+			super.createChildren();
 
-            if (!textField)
-            {
-                textField = new UITextField();
-                textField.mouseEnabled = false;
-                textField.text = title;
-                textField.styleName = getStyle("titleStyleName");
+			if (!textField)
+			{
+				textField = new UITextField();
+				textField.mouseEnabled = false;
+				textField.text = title;
+				textField.styleName = getStyle("titleStyleName");
 
-                rawChildren.addChild(textField);
-            }
-        }
+				rawChildren.addChild(textField);
+			}
+		}
 
 		/**
 		 * @private
@@ -187,7 +187,7 @@ package com.jwopitz.containers
 			}
 		}
 
-        /**
+				/**
 		 * @private
 		 */
 		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
@@ -244,33 +244,33 @@ package com.jwopitz.containers
 				return pt;
 
 			var nx:Number = 0;
-        	var ny:Number = 0;
+					var ny:Number = 0;
 
 			var ta:String = getStyle("titleAlign");
 			var tg:Number = getStyle("titleGap");
 			var cr:Number = getStyle("cornerRadius");
 
-        	switch (ta)
-        	{
-        		case "right":
-        		{
-        			nx = width - cr - borderMetrics.right - tg - textField.getExplicitOrMeasuredWidth() - 5;
-        			break;
-        		}
+			switch (ta)
+			{
+				case "right":
+				{
+					nx = width - cr - borderMetrics.right - tg - textField.getExplicitOrMeasuredWidth() - 5;
+					break;
+				}
 
-        		case "center":
-        		{
-        			nx = (width - textField.getExplicitOrMeasuredWidth()) / 2;
-        			break;
-        		}
+				case "center":
+				{
+					nx = (width - textField.getExplicitOrMeasuredWidth()) / 2;
+					break;
+				}
 
-        		case "left":
-        		default:
-        		{
-        			nx = cr + borderMetrics.left + tg + 5;
-        			break;
-        		}
-        	}
+				case "left":
+				default:
+				{
+					nx = cr + borderMetrics.left + tg + 5;
+					break;
+				}
+			}
 
 			if (pt.x != nx)
 				pt.x = nx;
@@ -282,41 +282,41 @@ package com.jwopitz.containers
 		//	TITLE
 		////////////////////////////////////////////////////////////////
 
-        /**
-         * @private
-         */
-        protected var titleText:String = "";
+		/**
+		 * @private
+		 */
+		protected var titleText:String = "";
 
 		/**
 		 * @private
 		 */
-        protected var titleTextChanged:Boolean = false;
+		protected var titleTextChanged:Boolean = false;
 
-        /**
+		/**
 		 * The string value of the FieldSet's title.
 		 */
 		[Bindable("titleChanged")]
-        public function get title ():String
-        {
-            return titleText;
-        }
+		public function get title ():String
+		{
+				return titleText;
+		}
 		/**
 		 * @private
 		 */
-        public function set title (value:String):void
-        {
-            if (titleText != value)
-            {
-            	titleText = value;
-            	titleTextChanged = true;
-            	titlePtChanged = true;
+		public function set title (value:String):void
+		{
+			if (titleText != value)
+			{
+				titleText = value;
+				titleTextChanged = true;
+				titlePtChanged = true;
 
 				invalidateProperties();
-            	invalidateDisplayList();
+				invalidateDisplayList();
 
-            	dispatchEvent(new Event("titleChanged"));
-            }
-        }
+				dispatchEvent(new Event("titleChanged"));
+			}
+		}
 
 		////////////////////////////////////////////////////////////////
 		//	TITLE TEXT FIELD
@@ -332,9 +332,9 @@ package com.jwopitz.containers
 		 *
 		 * Allows outside access to the fieldSet's textField.
 		 */
-        jwo_internal function get titleTextField ():UITextField
+		jwo_internal function get titleTextField ():UITextField
 		{
-        	return textField;
+					return textField;
 		}
-    }
+	}
 }
