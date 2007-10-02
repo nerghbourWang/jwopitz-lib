@@ -1,0 +1,37 @@
+<!-- saved from url=(0014)about:internet -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>QuoteVO.as</title>
+<link rel="stylesheet" type="text/css" href="../../../../SourceStyles.css"/>
+</head>
+
+<body><pre><span class="asPackage">package</span> com.jwopitz.vo <span class="asBracket">{</span>
+
+    <span class="asBracket">[</span><span class="asMetadata">Bindable</span><span class="asBracket">]</span>
+    <span class="asReserved">public</span> <span class="asClass">class</span> QuoteVO <span class="asBracket">{</span>
+        
+        <span class="asReserved">public</span> <span class="asVar">var</span> symbol<span class="asOperator">:</span>String <span class="asOperator">=</span> <span class="asString">&quot;&quot;</span>;
+        <span class="asReserved">public</span> <span class="asVar">var</span> name<span class="asOperator">:</span>String <span class="asOperator">=</span> <span class="asString">&quot;&quot;</span>;
+        <span class="asReserved">public</span> <span class="asVar">var</span> value<span class="asOperator">:</span>Number <span class="asOperator">=</span> 0.00;
+        <span class="asReserved">public</span> <span class="asVar">var</span> change<span class="asOperator">:</span>Number <span class="asOperator">=</span> 0.00;
+        <span class="asReserved">public</span> <span class="asVar">var</span> percentChange<span class="asOperator">:</span>Number <span class="asOperator">=</span> 0.00;
+        
+        <span class="asReserved">public</span> <span class="asFunction">function</span> QuoteVO <span class="asBracket">(</span>symbol<span class="asOperator">:</span>String <span class="asOperator">=</span> <span class="asString">&quot;&quot;</span>, 
+                                 name<span class="asOperator">:</span>String <span class="asOperator">=</span> <span class="asString">&quot;&quot;</span>, 
+                                 value<span class="asOperator">:</span>Number <span class="asOperator">=</span> 0.00,
+                                 change<span class="asOperator">:</span>Number <span class="asOperator">=</span> 0.00,
+                                 percentChange<span class="asOperator">:</span>Number <span class="asOperator">=</span> 0.00<span class="asBracket">){</span>
+                                     
+            <span class="asReserved">this</span>.symbol <span class="asOperator">=</span> symbol;
+            <span class="asReserved">this</span>.name <span class="asOperator">=</span> name;
+            <span class="asReserved">this</span>.value <span class="asOperator">=</span> value;
+            <span class="asReserved">this</span>.change <span class="asOperator">=</span> change;
+            <span class="asReserved">this</span>.percentChange <span class="asOperator">=</span> percentChange;
+            
+        <span class="asBracket">}</span>
+        
+    <span class="asBracket">}</span>
+<span class="asBracket">}</span></pre></body>
+</html>
