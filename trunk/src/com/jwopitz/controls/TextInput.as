@@ -48,6 +48,38 @@ package com.jwopitz.controls
 	 */
 	[Style(name="horizontalGap", type="Number", format="Length", inherit="no")]
 
+	/**
+	 *  Name of the class to use as the skin for the background and border
+	 *  when the clear button is not selected and the mouse is not over the control.
+	 *
+	 *  @default "/assets/swf/closeButtonSkins.swf#CloseButton_upSkin"
+	 */
+	[Style(name="upSkin", type="Class", inherit="no")]
+
+	/**
+	 *  Name of the class to use as the skin for the background and border
+	 *  when the clear button is not selected and the mouse is over the control.
+	 *
+	 *  @default "/assets/swf/closeButtonSkins.swf#CloseButton_overSkin"
+	 */
+	[Style(name="overSkin", type="Class", inherit="no")]
+
+	/**
+	 *  Name of the class to use as the skin for the background and border
+	 *  when the clear button is not selected and the mouse button is down.
+	 *
+	 *  @default "/assets/swf/closeButtonSkins.swf#CloseButton_downSkin"
+	 */
+	[Style(name="downSkin", type="Class", inherit="no")]
+
+	/**
+	 *  Name of the class to use as the skin for the background and border
+	 *  when the clear button is not selected and is disabled.
+	 *
+	 *  @default "/assets/swf/closeButtonSkins.swf#CloseButton_disabledSkin"
+	 */
+	[Style(name="disabledSkin", type="Class", inherit="no")]
+
 	//////////////////////////////////////////////////////////////
 	//	EVENTS
 	//////////////////////////////////////////////////////////////
@@ -286,6 +318,39 @@ package com.jwopitz.controls
 
 			textField.width = tw;
 	        textField.height = Math.max(0, unscaledHeight - (bm.top + bm.bottom + 1));;
+		}
+
+		/**
+		 * @private
+		 */
+		override public function styleChanged (styleProp:String):void
+		{
+			super.styleChanged(styleProp);
+
+			var allStyles:Boolean = !styleProp || styleProp == "styleName";
+			if (clearBtn && allStyles)
+			{
+				var upSkin:Class = getStyle("upSkin");
+				var overSkin:Class = getStyle("overSkin");
+				var downSkin:Class = getStyle("downSkin");
+				var disabledSkin:Class = getStyle("disabledSkin");
+
+				clearBtn.setStyle("upSkin", upSkin);
+				clearBtn.setStyle("overSkin", overSkin);
+				clearBtn.setStyle("downSkin", downSkin);
+				clearBtn.setStyle("disabledSkin", disabledSkin);
+			}
+
+			if (clearBtn && styleProp == "upSkin" ||
+				styleProp == "overSkin" ||
+				styleProp == "downSkin" ||
+				styleProp == "disabledSkin")
+			{
+				var btnSkin:Class = getStyle(styleProp);
+				clearBtn.setStyle(styleProp, btnSkin);
+			}
+
+			invalidateDisplayList();
 		}
 
 		//////////////////////////////////////////////////////////////
