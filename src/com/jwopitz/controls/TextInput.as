@@ -126,8 +126,6 @@ package com.jwopitz.controls
 		 */
 		private static var defaultStylesInitialized:Boolean = setDefaultStyles();
 
-
-
 		/**
 		 * @private
 		 */
