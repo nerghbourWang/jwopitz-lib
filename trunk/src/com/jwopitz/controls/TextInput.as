@@ -25,16 +25,19 @@ package com.jwopitz.controls
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-
+	import flash.events.FocusEvent;
+	
 	import mx.controls.Button;
 	import mx.controls.TextInput;
 	import mx.core.EdgeMetrics;
+	import mx.core.EventPriority;
 	import mx.core.IFlexDisplayObject;
 	import mx.core.mx_internal;
+	import mx.managers.IFocusManagerComponent;
 	import mx.skins.RectangularBorder;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
-
+	
 	//use namespace mx_internal;
 
 	//////////////////////////////////////////////////////////////
@@ -145,16 +148,16 @@ package com.jwopitz.controls
 			}
 
 			//create embedded skin vars
-			[Embed (source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_disabledSkin")]
+			[Embed(source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_disabledSkin")]
 			var disabledSkin:Class;
 
-			[Embed (source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_downSkin")]
+			[Embed(source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_downSkin")]
 			var downSkin:Class;
 
-			[Embed (source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_overSkin")]
+			[Embed(source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_overSkin")]
 			var overSkin:Class;
 
-			[Embed (source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_upSkin")]
+			[Embed(source="/assets/swf/closeButtonSkins.swf", symbol="CloseButton_upSkin")]
 			var upSkin:Class;
 
 			//add new default styles
@@ -166,10 +169,150 @@ package com.jwopitz.controls
 
 			StyleManager.setStyleDeclaration("TextInput", s, true);
 
-        	return true;
-        }
+			return true;
+		}
+		
+		//////////////////////////////////////////////////////////////
+		//	CONSTRUCTOR
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		public function TextInput ()
+		{
+			super();
+			
+			//tapping into private workings of mx:TextInput 
+			//which dispatches this event when the user types in the text field.
+			addEventListener("textChanged",
+				onTextChangedHandler,
+				false,
+				EventPriority.DEFAULT_HANDLER,
+				false);
+		}
+		
+		//////////////////////////////////////////////////////////////
+		//	APPEAR AS LABEL
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		protected var appearAsLabelAfterEdit:Boolean = true;
+		
+		/**
+		 * @private
+		 */
+		protected var appearAsLabelChanged:Boolean = true;
+		
+		/**
+		 * Flag indicating if once the component has lost focus, it should appear as a label, removing the border and clear button.
+		 * The default value is true.
+		 */
+		[Bindable("appearAsLabelChanged")]
+		public function get appearAsLabel ():Boolean
+		{
+			return appearAsLabelAfterEdit
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set appearAsLabel (value:Boolean):void
+		{
+			if (appearAsLabelAfterEdit != value)
+			{
+				appearAsLabelAfterEdit = value;
+				appearAsLabelChanged = true;
+				
+				invalidateProperties();
+				invalidateDisplayList();
+				
+				dispatchEvent(new Event("appearAsLabelChanged"));
+			}
+		}
+		
+		//////////////////////////////////////////////////////////////
+		//	PROMPT
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		protected var promptChanged:Boolean = false;
+		
+		/**
+		 * @private
+		 */
+		protected var editPrompt:String = " (edit)";
+		
+		/**
+		 * Indicator string located at the end of the text when <code>labelMode</code> = true.
+		 * Default value is " (edit)".
+		 */
+		[Bindable("promptChanged")]
+		public function get prompt ():String
+		{
+			return editPrompt
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set prompt (value:String):void
+		{
+			if (editPrompt != value)
+			{
+				editPrompt = value;
+				promptChanged = true;
+				
+				invalidateProperties();
+				invalidateDisplayList();
+				
+				dispatchEvent(new Event("promptChanged"));
+			}
+		}
+		
+		//////////////////////////////////////////////////////////////
+		//	LABEL MODE
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		protected var labelModeChanged:Boolean = true;
+		
+		/**
+		 * @private
+		 */
+		protected var lblMode:Boolean = true;
+		
+		/**
+		 * Flag that tells internal methods if component is in label mode or edit mode.
+		 * This gets set in the focus event handlers.
+		 */
+		protected function get labelMode ():Boolean
+		{
+			return lblMode;
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function set labelMode (value:Boolean):void
+		{
+			if (lblMode != value)
+			{
+				lblMode = value;
+				labelModeChanged = true;
+				
+				invalidateProperties();
+				invalidateDisplayList();
+			}
+		}
 
-        //////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////
 		//	CLEAR BUTTON
 		//////////////////////////////////////////////////////////////
 
@@ -195,7 +338,7 @@ package com.jwopitz.controls
 		/**
 		 * Flag indicating whether or not to show the clear button for the text field.
 		 */
-		[Bindable ("showClearButtonChanged")]
+		[Bindable("showClearButtonChanged")]
 		public function get showClearButton ():Boolean
 		{
 			return showClearBtn;
@@ -221,8 +364,108 @@ package com.jwopitz.controls
 		}
 
 		//////////////////////////////////////////////////////////////
+		//	FOCUS ON CLEAR
+		//////////////////////////////////////////////////////////////
+
+		/**
+		 * @private
+		 */
+		protected var focusOnClearChanged:Boolean = false;
+
+		/**
+		 * @private
+		 */
+		protected var willFocusOnClear:Boolean = true;
+
+		/**
+		 * Flag indicating if the text field should gain focus after a clear event.  The default is true.
+		 */
+		public function get focusOnClear ():Boolean
+		{
+			return willFocusOnClear;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set focusOnClear (value:Boolean):void
+		{
+			if (willFocusOnClear != value)
+			{
+				willFocusOnClear = value;
+				/*focusOnClearChanged = true;
+
+				invalidateProperties();*/
+			}
+		}
+		
+		//////////////////////////////////////////////////////////////
+		//	TEXT
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		protected var textChanged:Boolean = false;
+		
+		/**
+		 * @private
+		 * 
+		 * A storage property seperating the text from the added prompt.
+		 */
+		protected var originalText:String = "";
+		
+		/**
+		 * @private
+		 */
+		override public function get text ():String
+		{
+			return originalText;
+		}
+		
+		/**
+		 * @private
+		 */
+		override public function set text (value:String):void
+		{
+			if (originalText != value)
+			{
+				originalText = value;
+				textChanged = true;
+				
+				invalidateProperties();
+			}
+		}
+
+		//////////////////////////////////////////////////////////////
 		//	OVERRIDES
 		//////////////////////////////////////////////////////////////
+
+		/**
+		 * @private
+		 */
+		protected var enabledChanged:Boolean = false;
+
+		/**
+		 * @private
+		 */
+		override public function get enabled ():Boolean
+		{
+			return super.enabled;
+		}
+		/**
+		 * @private
+		 */
+		override public function set enabled (value:Boolean):void
+		{
+			if (super.enabled != value)
+			{
+				super.enabled = value;
+				enabledChanged = true;
+
+				invalidateProperties();
+			}
+		}
 
 		/**
 		 * @private
@@ -245,6 +488,14 @@ package com.jwopitz.controls
 
 				addChild(clearBtn);
 			}
+			
+			if (appearAsLabel)
+			{
+				textField.text = text + prompt;
+				
+				mx_internal::border.visible = false;
+				clearBtn.visible = false;
+			}
 		}
 
 		/**
@@ -253,6 +504,40 @@ package com.jwopitz.controls
 		override protected function commitProperties ():void
 		{
 			super.commitProperties();
+			
+			if (appearAsLabelChanged)
+			{
+				if (appearAsLabel)
+				{					
+					labelMode = true;
+					
+					if (!hasFocusEventHandlers)
+						addFocusEventHandlers();
+				}
+				else
+				{
+					labelMode = false;
+					
+					if (hasFocusEventHandlers)
+						removeFocusEventHandlers();
+				}
+				
+				appearAsLabelChanged = false;
+			}
+			
+			if (labelModeChanged)
+			{
+				textField.text = labelMode?
+					originalText + " " + prompt:
+					originalText;
+					
+				labelModeChanged = false;
+			}
+			
+			if (textChanged)
+			{
+				textChanged = false;
+			}
 
 			if (showClearBtnChanged)
 			{
@@ -260,6 +545,13 @@ package com.jwopitz.controls
 				clearBtn.visible = showClearBtn;
 
 				showClearBtnChanged = false;
+			}
+
+			if (enabledChanged)
+			{
+				clearBtn.enabled = enabled;
+
+				enabledChanged = false;
 			}
 		}
 
@@ -279,28 +571,30 @@ package com.jwopitz.controls
 		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-
+			
+			//gather info about the border
 			var bm:EdgeMetrics;
 			var b:IFlexDisplayObject = mx_internal::border;
 
-	        if (b)
-	        {
-	            b.setActualSize(unscaledWidth, unscaledHeight);
-	            bm = b is RectangularBorder ?
-	            	RectangularBorder(b).borderMetrics : EdgeMetrics.EMPTY;
-	        }
-	        else
-	        {
-	        	bm = EdgeMetrics.EMPTY;
-	        }
+			if (b)
+			{
+				b.setActualSize(unscaledWidth, unscaledHeight);
+				bm = b is RectangularBorder ?
+					RectangularBorder(b).borderMetrics : EdgeMetrics.EMPTY;
+			}
+			else
+			{
+				bm = EdgeMetrics.EMPTY;
+			}
+			
+			//resize the textField and reposition the clear button to fit within the border if applicable
+			var tw:Number;
+			var hGap:Number = getStyle("horizontalGap");
 
-	        var tw:Number;
-	        var hGap:Number = getStyle("horizontalGap");
+			textField.x = bm.left;
+			textField.y = bm.top;
 
-	        textField.x = bm.left;
-	        textField.y = bm.top;
-
-	        if (showClearBtn)
+			if (showClearBtn)
 			{
 				tw = Math.max(0, unscaledWidth - (bm.left + bm.right) - hGap - clearBtn.width);
 
@@ -308,23 +602,40 @@ package com.jwopitz.controls
 				var ty:Number = (unscaledHeight - clearBtn.height) / 2;
 
 				clearBtn.move(tx, ty);
-	        }
+			}
 			else
 			{
 				tw = Math.max(0, unscaledWidth - (bm.left + bm.right));
-	       	}
-
-			textField.width = tw;
-	        textField.height = Math.max(0, unscaledHeight - (bm.top + bm.bottom + 1));;
+			}
+			
+			textField.width = tw; 
+			textField.height = Math.max(0, unscaledHeight - (bm.top + bm.bottom + 1));
+			
+			//depending on certain display modes we need to shut the border and clear on or off
+			if (appearAsLabel)
+			{
+				if (labelMode)
+				{
+					mx_internal::border.visible = false;
+					clearBtn.visible = false;
+				}
+			}
+			else
+			{
+				mx_internal::border.visible = true;
+				
+				if (showClearButton)
+					clearBtn.visible = true;
+			}
 		}
-
+		
 		/**
 		 * @private
 		 */
 		override public function styleChanged (styleProp:String):void
 		{
 			super.styleChanged(styleProp);
-
+			
 			var allStyles:Boolean = !styleProp || styleProp == "styleName";
 			if (clearBtn && allStyles)
 			{
@@ -332,13 +643,13 @@ package com.jwopitz.controls
 				var overSkin:Class = getStyle("overSkin");
 				var downSkin:Class = getStyle("downSkin");
 				var disabledSkin:Class = getStyle("disabledSkin");
-
+				
 				clearBtn.setStyle("upSkin", upSkin);
 				clearBtn.setStyle("overSkin", overSkin);
 				clearBtn.setStyle("downSkin", downSkin);
 				clearBtn.setStyle("disabledSkin", disabledSkin);
 			}
-
+			
 			if (clearBtn && styleProp == "upSkin" ||
 				styleProp == "overSkin" ||
 				styleProp == "downSkin" ||
@@ -347,14 +658,108 @@ package com.jwopitz.controls
 				var btnSkin:Class = getStyle(styleProp);
 				clearBtn.setStyle(styleProp, btnSkin);
 			}
-
+			
 			invalidateDisplayList();
 		}
-
+		
+		//////////////////////////////////////////////////////////////
+		//	ADD/REMOVE EVENT HANDLERS
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		protected var hasFocusEventHandlers:Boolean = false; 
+		
+		/**
+		 * @private
+		 */
+		protected function addFocusEventHandlers ():void
+		{
+			addEventListener(FocusEvent.FOCUS_IN,
+				onFocusIn,
+				false,
+				EventPriority.DEFAULT_HANDLER,
+				false);
+			
+			addEventListener(FocusEvent.FOCUS_OUT,
+				onFocusOut,
+				false,
+				EventPriority.DEFAULT_HANDLER,
+				false);
+				
+			hasFocusEventHandlers = true;
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function removeFocusEventHandlers ():void
+		{
+			removeEventListener(FocusEvent.FOCUS_IN,
+				onFocusIn,
+				false);
+			
+			removeEventListener(FocusEvent.FOCUS_OUT,
+				onFocusOut,
+				false);
+				
+			hasFocusEventHandlers = false;
+		}
+		
 		//////////////////////////////////////////////////////////////
 		//	EVENT HANDLERS
 		//////////////////////////////////////////////////////////////
-
+		
+		/**
+		 * @private
+		 * 
+		 * This should only get fired from the user typing text into the textField.
+		 */
+		protected function onTextChangedHandler (evt:Event):void
+		{
+			if (textField)
+			{
+				var typedText:String = textField.text;
+				originalText = typedText;
+			}
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function onFocusIn (evt:FocusEvent):void
+		{
+			if (appearAsLabel)
+				labelMode = false;
+			
+			if (!mx_internal::border.visible)
+			{
+				mx_internal::border.visible	= true;
+				
+				if (showClearBtn)
+					clearBtn.visible = true;
+			}
+		}	
+		
+		/**
+		 * @private
+		 */
+		protected function onFocusOut (evt:FocusEvent):void
+		{
+			var	nextFocus:IFocusManagerComponent = focusManager.getFocus();
+			if (clearBtn != nextFocus && appearAsLabel)
+				labelMode = true;
+			
+			if (mx_internal::border.visible)
+			{
+				mx_internal::border.visible	= false;
+				
+				if	(clearBtn != nextFocus)
+					clearBtn.visible = false;
+			}
+		}
+		
 		/**
 		 * @private
 		 */
@@ -362,7 +767,16 @@ package com.jwopitz.controls
 		{
 			text = "";
 			htmlText = "";
-
+			
+			if (focusOnClear)
+			{
+				/*var nextFocus:IFocusManagerComponent = focusManager.getNextFocusManagerComponent(true);
+				focusManager.setFocus(nextFocus);*/
+				
+				var nextFocus:IFocusManagerComponent = IFocusManagerComponent(this);
+				focusManager.setFocus(nextFocus);
+			}
+			
 			dispatchEvent(new Event('clear'));
 		}
 	}
