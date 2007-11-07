@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<project name="jwo_lib" basedir="../" default="examples">
+
+	<!-- Define variables/paths used in this build script -->
+	<property file="./build/build.properties" />
+
+	<!-- Have you edited the properties file to make sure the paths are right on your system? -->
+	<target name="properties">
+		<fail unless="asdoc.exe">The "asdoc.exe" property must be set in ${build.dir}/build.properties.</fail>
+		<fail unless="compc.exe">The "compc.exe" property must be set in ${build.dir}/build.properties.</fail>
+		<fail unless="mxmlc.exe">The "mxmlc.exe" property must be set in ${build.dir}/build.properties.</fail>
+	</target>
+	
+	<!-- Compile all of the classes under the "src" tree into a .swc file -->
+	<target name="lib" depends="properties">
+		<exec executable="${compc.exe}" dir="${basedir}">
+			<arg line="-output '${bin.dir}/${jwo_lib.name}.swc'"/>
+			<arg line="-source-path ${src.dir}"/>
+			<arg line="-include-file closeButtonSkins.swf ${src.dir}\assets\swf\closeButtonSkins.swf"/>
+			<arg line="-include-sources ${src.dir}"/>
+			<arg line="-link-report=${build.dir}\${jwo_lib.report}.xml"/>
+		</exec>
+	</target>
+	
+	<!-- Generate asdocs from lib -->
+	<target name="docs" depends="properties, lib">
+		<exec executable="${asdoc.exe}" dir="${basedir}">
+			<arg line="-output ${asdoc.dir}"/>
+			<arg line="-doc-sources ${src.dir}"/>			
+		</exec>
+	</target>
+	
+	<!-- Generate example swfs from lib -->
+	<target name="examples" depends="properties, lib, docs">
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.dir}/src/${fieldSetApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${fieldSetApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.dir}\src"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+		
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.dir}/src/${ruleApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${ruleApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.dir}\src"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+		
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.dir}/src/${hyperlinkTextApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${hyperlinkTextApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.dir}\src"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+		
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.dir}/src/${podApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${podApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.dir}\src"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+		
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.dir}/src/${textInputApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${textInputApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.dir}\src"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+		
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.dir}/src/${tileCanvasApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${tileCanvasApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.dir}\src"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+	</target>
+	
+	
+
+</project>
