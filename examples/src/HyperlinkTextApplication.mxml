@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	layout="vertical"
+	backgroundColor="0xFFFFFF"
+	horizontalAlign="center"
+	
+	viewSourceURL="srcview/index.html"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:controls="com.jwopitz.controls.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+		]]>
+	</mx:Script>
+	
+	<mx:Panel title="HyperlinkText Example">
+		<controls:HyperlinkText text="{ti.text}" click="Alert.show('try tabbing to the text input to test for accessibilities')"/>
+			
+		<mx:TextInput id="ti" text="change text here"/>	
+	</mx:Panel>
+	
+</mx:Application>

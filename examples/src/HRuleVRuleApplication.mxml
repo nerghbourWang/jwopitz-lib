@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	layout="vertical"
+	backgroundColor="#FFFFFF"
+	
+	viewSourceURL="srcview/index.html"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:containers="com.jwopitz.containers.*" 
+	xmlns:controls="com.jwopitz.controls.*">
+	
+	<containers:FieldSet title="Dashed HRule and VRule" width="100%" height="100%"
+		paddingLeft="5" paddingTop="5">
+		
+		<mx:Label text="stroke color"/>
+		<mx:ColorPicker id="sc_cp"/>
+		
+		<mx:Label text="stroke width"/>
+		<mx:NumericStepper id="sw_ns" minimum="0" maximum="10" value="1"/>
+		
+		<mx:Label text="padding left/top"/>
+		<mx:NumericStepper id="pl_ns" minimum="0" maximum="10" value="2"/>
+		
+		<mx:Label text="padding right/bottom"/> 
+		<mx:NumericStepper id="pr_ns" minimum="0" maximum="10" value="2"/>
+		
+		<mx:Label text="dash length"/>
+		<mx:NumericStepper id="dl_ns" minimum="0" maximum="20" value="0"/>
+		
+		<mx:HBox>
+			<mx:Label text="width for dashed HRule"/>
+			
+			<mx:HSlider id="hs" minimum="0" maximum="150" value="75"/>
+			
+			<mx:Box paddingTop="10" paddingBottom="10" paddingLeft="0" paddingRight="0" borderStyle="solid">
+				<controls:HRule width="{hs.value}" strokeWidth="{sw_ns.value}" 
+					paddingLeft="{pl_ns.value}" paddingRight="{pr_ns.value}" dashLength="{dl_ns.value}" strokeColor="{sc_cp.selectedColor}"/>
+			</mx:Box>
+			
+			<mx:Box paddingTop="0" paddingBottom="0" paddingLeft="10" paddingRight="10" borderStyle="solid">
+				<controls:VRule height="{hs.value}" strokeWidth="{sw_ns.value}" 
+					paddingTop="{pl_ns.value}" paddingBottom="{pr_ns.value}" dashLength="{dl_ns.value}" strokeColor="{sc_cp.selectedColor}"/>
+			</mx:Box>
+				
+		</mx:HBox>
+		
+	</containers:FieldSet>
+	
+</mx:Application>

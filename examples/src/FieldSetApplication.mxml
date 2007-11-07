@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	layout="vertical"
+	backgroundColor="0xFFFFFF"
+	horizontalAlign="center"
+	
+	viewSourceURL="srcview/index.html"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:containers="com.jwopitz.containers.*">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			public var titleStyleCSS:CSSStyleDeclaration = new CSSStyleDeclaration();
+			
+		]]>
+	</mx:Script>
+	
+	<containers:FieldSet id="fs" width="450" title="title">
+		
+		<mx:Form>
+			
+			<mx:FormHeading label="properties"/>
+			
+			<mx:FormItem label="title" direction="horizontal">
+				<mx:TextInput id="title_ti" text="title"/>
+				<mx:Button label="commit" click="fs.title = title_ti.text;"/>
+			</mx:FormItem>
+			
+			<mx:FormHeading label="styles"/>
+			
+			<mx:FormItem label="titleAlign" direction="horizontal">
+				<mx:ComboBox id="ta_cb" prompt="select style" dataProvider="{['left', 'center', 'right']}"/>
+				
+				<mx:Button label="commit" click="fs.setStyle('titleAlign', ta_cb.selectedLabel);"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="titleGap" direction="horizontal">
+				<mx:NumericStepper id="tg_ns"/>
+				
+				<mx:Button label="commit" click="fs.setStyle('titleGap', tg_ns.value);"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="titleStyleName" direction="vertical">
+				<mx:ComboBox prompt="font weight" dataProvider="{['normal', 'bold']}" 
+					change="titleStyleCSS.setStyle('fontWeight', event.target.selectedLabel);"/>
+					
+				<mx:ColorPicker change="titleStyleCSS.setStyle('color', event.target.selectedColor);"/>
+				
+				<mx:NumericStepper minimum="8" value="10" maximum="30" change="titleStyleCSS.setStyle('fontSize', event.target.value);"/>
+				
+				<mx:Button label="commit" click="fs.setStyle('titleStyleName', titleStyleCSS); fs.invalidateDisplayList();"/>
+			</mx:FormItem>
+			
+			<mx:FormHeading label="inherited styles"/>
+			
+			<mx:FormItem label="cornerRadius" direction="horizontal">
+				<mx:NumericStepper id="cr_ns"/>
+				
+				<mx:Button label="commit" click="fs.setStyle('cornerRadius', cr_ns.value);"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="borderThickness" direction="horizontal">
+				<mx:NumericStepper id="bt_ns"/>
+				
+				<mx:Button label="commit" click="fs.setStyle('borderThickness', bt_ns.value);"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="borderColor" direction="horizontal">
+				<mx:ColorPicker id="bc_cp"/>
+				
+				<mx:Button label="commit" click="fs.setStyle('borderColor', bc_cp.selectedColor);"/>
+			</mx:FormItem>
+			
+		</mx:Form>
+		
+	</containers:FieldSet>
+	
+</mx:Application>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	layout="absolute"
+	backgroundColor="0xFFFFFF"
+	horizontalAlign="center"
+	
+	viewSourceURL="srcview/index.html"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:containers="com.jwopitz.containers.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ColorPickerEvent;
+			import mx.controls.ColorPicker;
+			import mx.controls.Button;
+			
+			public function createPodControls ():void
+			{
+				var expandCollapseBtn:Button = new Button();
+				expandCollapseBtn.label = "-";
+				expandCollapseBtn.toggle = true;
+				expandCollapseBtn.width = 30;
+				
+				expandCollapseBtn.addEventListener(MouseEvent.CLICK, onClick_expandCollapseBtnHandler);
+				
+				var cp:ColorPicker = new ColorPicker();
+				cp.addEventListener(ColorPickerEvent.CHANGE, 
+					function (evt:ColorPickerEvent):void
+					{
+						pod.setStyle('backgroundColor', evt.color);
+					});
+				
+				var cb:ComboBox = new ComboBox();
+				cb.dataProvider = [100, 200, 300];
+				cb.addEventListener(Event.CHANGE,
+					function (evt:Event):void
+					{
+						pod.height = Number(evt.target.selectedItem);
+					});
+				
+				pod.addTitleBarComponent(expandCollapseBtn);
+				pod.addTitleBarComponent(cb);
+				pod.addTitleBarComponent(cp);
+			}
+			
+			public function onClick_expandCollapseBtnHandler (evt:MouseEvent):void
+			{
+				if (evt.target.selected)
+				{
+					evt.target.label = "+";
+					pod.height = pod.headerHeight;
+				}
+				else
+				{
+					evt.target.label = "-";
+					pod.height = 300;
+				}
+			}
+			
+		]]>
+	</mx:Script>
+		
+	<containers:Pod id="pod" title="pod container"
+		width="400" height="300"
+		headerHeight="40"
+		gripMouseDown="pod.startDrag();" 
+		gripMouseUp="pod.stopDrag();"
+		creationComplete="createPodControls();">
+		
+		<mx:Label text="drag me!!!"/>
+		
+		<mx:Form>
+			
+			<mx:FormHeading label="styles"/>
+			
+			<mx:FormItem label="headerVerticalAlign" direction="horizontal">
+				<mx:ComboBox id="hva_cb" prompt="select style" dataProvider="{['top', 'middle', 'bottom']}"/>
+				
+				<mx:Button label="commit" click="pod.setStyle('headerVerticalAlign', hva_cb.selectedLabel);"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="headerHorizontalGap" direction="horizontal">
+				<mx:NumericStepper id="hhg_ns"/>
+			
+				<mx:Button label="commit" click="pod.setStyle('headerHorizontalGap', hhg_ns.value);"/>
+			</mx:FormItem>
+			
+		</mx:Form>
+		
+	</containers:Pod>
+	
+</mx:Application>

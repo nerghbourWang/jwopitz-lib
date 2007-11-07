@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	paddingLeft="10" paddingRight="10" 
+	paddingTop="5" paddingBottom="5" 
+	verticalGap="-2" currentState="verticalLayout"
+	borderStyle="solid" borderColor="white" backgroundColor="0xEEEEEE"
+	
+	creationComplete="onCreationComplete();">
+		
+	<mx:Script>
+		<![CDATA[
+					
+			//[Embed(source="/assets/swf/DecBetaTheme.swf#ArrowUp")]
+		    [Bindable]protected var _arrowUp:Class;
+			//[Embed(source="/assets/swf/DecBetaTheme.swf#ArrowDown")]
+		    [Bindable]protected var _arrowDown:Class;
+			
+			[Bindable]protected var _dataSymbol:String = "";
+			[Bindable]protected var _dataName:String = "";
+			
+			[Bindable]protected var _dataValue:Number = 0.0;
+			[Bindable]protected var _dataChange:Number = 0.0;
+			[Bindable]protected var _dataPercentChange:Number = 0.0;
+			
+			public var symbolProperty:String = "symbol";
+			public var nameProperty:String = "name";
+			public var valueProperty:String = "value";
+			public var changeProperty:String = "change";
+			public var percentChangeProperty:String = "percentChange";
+			
+			override public function set data (value:Object):void {
+				_dataSymbol = value[symbolProperty];
+				_dataName = value[nameProperty];
+				_dataValue = value[valueProperty];
+				_dataChange = value[changeProperty];
+				_dataPercentChange = value[percentChangeProperty];
+				super.data = value;
+			}
+			
+			public function set dataProvider (value:Object):void {
+				this.data = value;
+			}
+			
+			public function get dataProvider ():Object {
+				return this.data;
+			}
+			
+			protected function onCreationComplete ():void {
+				this.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+				this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			}
+			
+			protected function onMouseOver(evt:MouseEvent):void {
+				this.setStyle('borderColor', undefined);
+			}
+			
+			protected function onMouseOut(evt:MouseEvent):void {
+				this.setStyle('borderColor', 'white');
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:CurrencyFormatter id="currencyFormat" currencySymbol="$" precision="2" useThousandsSeparator="true"/>
+	
+	<mx:states>
+		<mx:State id="verticalLayout" name="verticalLayout">
+			<mx:AddChild>
+				<mx:VBox verticalGap="-2" width="100%" height="100%">
+					
+					<mx:Label text="{_dataSymbol}" fontWeight="bold" fontSize="11"/>
+					<mx:Label text="{_dataName}"/>
+					<mx:Spacer height="5"/>
+					<mx:HRule width="100%"/>
+					<mx:Spacer height="5"/>
+					<mx:Label text="{currencyFormat.format(_dataValue)}" fontWeight="bold" fontSize="11"/>
+					<mx:HBox verticalAlign="middle" horizontalGap="0">
+						<mx:Image source="{_dataChange >= 0 ? _arrowUp : _arrowDown}" height="11" width="10" maintainAspectRatio="false"/>
+						<mx:Label text="{currencyFormat.format(_dataChange) + ' / ' + _dataPercentChange + '%'}"/>
+					</mx:HBox>
+					
+				</mx:VBox>
+			</mx:AddChild>
+		</mx:State>
+		
+		<mx:State id="horizontalLayout" name="horizontalLayout">
+			<mx:AddChild>
+				<mx:HBox verticalGap="-2">
+					<mx:VBox verticalGap="-2" verticalAlign="middle">
+						
+						<mx:Label text="{_dataSymbol}" fontWeight="bold" fontSize="11"/>
+						<mx:Label text="{_dataName}"/>
+						
+					</mx:VBox>
+					<mx:HBox verticalAlign="middle">
+						<mx:Label text="{currencyFormat.format(_dataValue)}" fontWeight="bold" fontSize="11"/>
+						<mx:Image source="{_dataChange >= 0 ? _arrowUp : _arrowDown}" height="11" width="10" maintainAspectRatio="false"/>
+						<mx:Label text="{currencyFormat.format(_dataChange) + ' / ' + _dataPercentChange + '%'}"/>
+					</mx:HBox>					
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		
+	</mx:states>
+</mx:Box>

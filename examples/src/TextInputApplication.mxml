@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	layout="vertical"
+	backgroundColor="0xFFFFFF"
+	horizontalAlign="center"
+	
+	viewSourceURL="srcview/index.html"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:controls="com.jwopitz.controls.*">
+	
+	<mx:Panel title="TextInput Example" width="500" height="300">
+		
+		<mx:Form>
+			<mx:FormHeading label="properties/styles"/>
+			
+			<mx:FormItem label="appear as label">
+				<mx:CheckBox id="appearAsLabel_cb" label="{'textInput.appearAsLabel = ' + appearAsLabel_cb.selected}"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="show clear button">
+				<mx:CheckBox id="showClearBtn_cb" selected="true" label="{'textInput.showClearBtn = ' + showClearBtn_cb.selected}"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="focus on clear">
+				<mx:CheckBox id="focusOnClear_cb" label="{'textInput.focusOnClear = ' + focusOnClear_cb.selected}"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="prompt" direction="horizontal">
+				<mx:TextInput id="prompt_ti" text="(edit)" width="50"/>
+				<mx:Label text="{'textInput.prompt = ' + prompt_ti.text}"/>
+			</mx:FormItem>
+		</mx:Form>
+		
+		<controls:TextInput 
+			text="com.jwopitz.controls.TextInput"
+			
+			appearAsLabel="{appearAsLabel_cb.selected}" 
+			showClearButton="{showClearBtn_cb.selected}"
+			focusOnClear="{focusOnClear_cb.selected}"
+			
+			prompt="{prompt_ti.text}"
+			
+			width="300"/>
+			
+	</mx:Panel>
+	
+</mx:Application>
