@@ -22,7 +22,7 @@
 			<!--arg line="-include-sources ${src.dir}"/-->
 			<arg line="-link-report='${build.dir}/${jwo_lib.report}.xml'"/>
 		</exec>
-	</target>
+	</target> 
 	
 	<!-- Generate asdocs from lib -->
 	<target name="docs" depends="properties, lib">
