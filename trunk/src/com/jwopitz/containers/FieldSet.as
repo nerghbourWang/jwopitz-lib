@@ -186,12 +186,11 @@ package com.jwopitz.containers
 				titleTextChanged = false;
 			}
 		}
-
-				/**
-		 * @private
-		 */
-		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+		
+		override protected function layoutChrome (unscaledWidth:Number, unscaledHeight:Number):void
 		{
+			super.layoutChrome(unscaledWidth, unscaledHeight);
+			
 			if (titleStyleNameChanged)
 			{
 				textField.styleName = getStyle('titleStyleName');
@@ -218,19 +217,17 @@ package com.jwopitz.containers
 
 				titlePtChanged = false;
 			}
-
-			super.updateDisplayList(unscaledWidth, unscaledHeight);
 		}
-
+		
 		////////////////////////////////////////////////////////////////
 		//	TITLE PT
 		////////////////////////////////////////////////////////////////
-
+		
 		/**
 		 * @private
 		 */
 		protected var titlePtChanged:Boolean = false;
-
+		
 		/**
 		 * Calculates the targeted origin pt of the title textField based on titleAlignment.
 		 *
