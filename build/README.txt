@@ -39,6 +39,10 @@ flashDebugPlayer.exe = D:/Program Files/Adobe/Flex Builder 2 Plug-in/Player/debu
 # swc names
 jwo_lib.name = jwo_lib
 
+# manifest
+manifest.uri = http://www.jwolib.com/2006/mxml
+manifest.xml = ${basedir}/build/mxml-manifest.xml
+
 # mxml app names
 fieldSetApp.name = FieldSetApplication
 ruleApp.name = HRuleVRuleApplication
@@ -58,4 +62,5 @@ bin.dir = ${basedir}/bin
 build.dir = ${basedir}/build
 examples.dir = ${basedir}/../jwo_lib_EXAMPLES
 examples.bin = ${basedir}/../jwo_lib_EXAMPLES/example
+examples.src = ${basedir}/../jwo_lib_EXAMPLES/src
 src.dir = ${basedir}/src
