@@ -25,10 +25,10 @@ package com.jwopitz.skins
 {
 	import com.jwopitz.containers.FieldSet;
 	import com.jwopitz.core.jwo_internal;
-
+	
 	import flash.display.Graphics;
 	import flash.geom.Point;
-
+	
 	import mx.core.EdgeMetrics;
 	import mx.core.UITextField;
 	import mx.skins.RectangularBorder;
@@ -108,10 +108,12 @@ package com.jwopitz.skins
 
 			if (!title)
 				return;
-
-			var bAlpha:Number = getStyle("borderAlpha");
-			var bColor:uint = getStyle("borderColor");
-			var bThickness:Number = getStyle("borderThickness");
+			
+			var backgroundAlpha:Number = getStyle("backgroundAlpha");
+			var backgroundColor:uint = getStyle("backgroundColor");
+			var borderAlpha:Number = getStyle("borderAlpha");
+			var borderColor:uint = getStyle("borderColor");
+			var borderThickness:Number = getStyle("borderThickness");
 			var radius:Number = getStyle("cornerRadius");
 			var titleGap:Number = getStyle("titleGap");
 
@@ -151,8 +153,9 @@ package com.jwopitz.skins
 			var g:Graphics = graphics;
 			g.clear();
 
-			g.lineStyle(bThickness, bColor, bAlpha, true);
+			g.lineStyle(borderThickness, borderColor, borderAlpha, true);
 			g.moveTo(pt00.x, pt00.y);
+			g.beginFill(backgroundColor, backgroundAlpha);
 			g.lineTo(pt01.x, pt01.y);
 			g.curveTo(pt02.x, pt02.y, pt03.x, pt03.y);
 			g.lineTo(pt04.x, pt04.y);
@@ -162,6 +165,9 @@ package com.jwopitz.skins
 			g.lineTo(pt10.x, pt10.y);
 			g.curveTo(pt11.x, pt11.y, pt12.x, pt12.y);
 			g.lineTo(pt13.x, pt13.y);
+			g.lineStyle(0, 0, 0.0);
+			g.lineTo(pt00.x, pt00.y);
+			g.endFill();
 	    }
 	}
 }
