@@ -1,6 +1,4 @@
 #labels Featured,Phase-Implementation,Documentation
-# List of components in jwoLib.
-
 =Current Components=
 
 *com.jwopitz.containers*
