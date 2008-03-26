@@ -1,5 +1,5 @@
+#summary List of components in jwoLib
 #labels Featured,Phase-Implementation,Documentation
-#List of components in jwoLib
 
 =Current Components=
 
