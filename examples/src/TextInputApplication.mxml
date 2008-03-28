@@ -4,10 +4,10 @@
 	backgroundColor="0xFFFFFF"
 	horizontalAlign="center"
 	
-	viewSourceURL="srcview/index.html"
+	viewSourceURL="srcview/TextInput/index.html"
 	
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:controls="com.jwopitz.controls.*">
+	xmlns:jwolib="http://www.jwolib.com/2006/mxml">
 	
 	<mx:Panel title="TextInput Example" width="500" height="300">
 		
@@ -32,7 +32,7 @@
 			</mx:FormItem>
 		</mx:Form>
 		
-		<controls:TextInput 
+		<jwolib:TextInput 
 			text="com.jwopitz.controls.TextInput"
 			
 			appearAsLabel="{appearAsLabel_cb.selected}" 

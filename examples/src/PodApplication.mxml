@@ -4,10 +4,9 @@
 	backgroundColor="0xFFFFFF"
 	horizontalAlign="center"
 	
-	viewSourceURL="srcview/index.html"
+	viewSourceURL="srcview/Pod/index.html"
 	
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:containers="com.jwopitz.containers.*">
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:jwolib="http://www.jwolib.com/2006/mxml">
 	
 	<mx:Script>
 		<![CDATA[
@@ -61,7 +60,7 @@
 		]]>
 	</mx:Script>
 		
-	<containers:Pod id="pod" title="pod container"
+	<jwolib:Pod id="pod" title="pod container"
 		width="400" height="300"
 		headerHeight="40"
 		gripMouseDown="pod.startDrag();" 
@@ -88,6 +87,6 @@
 			
 		</mx:Form>
 		
-	</containers:Pod>
+	</jwolib:Pod>
 	
 </mx:Application>

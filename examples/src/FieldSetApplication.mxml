@@ -4,10 +4,9 @@
 	backgroundColor="0xFFFFFF"
 	horizontalAlign="center"
 	
-	viewSourceURL="srcview/index.html"
+	viewSourceURL="srcview/FieldSet/index.html"
 	
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:containers="com.jwopitz.containers.*">
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:jwolib="http://www.jwolib.com/2006/mxml">
 	
 	<mx:Script>
 		<![CDATA[
@@ -17,7 +16,9 @@
 		]]>
 	</mx:Script>
 	
-	<containers:FieldSet id="fs" width="450" title="title">
+	<mx:Button toggle="true" id="resize_btn"/>
+	
+	<jwolib:FieldSet id="fs" width="450" title="title" height="{resize_btn.selected ? 500 : 250}" backgroundColor="#FF0000" backgroundAlpha="0.5">
 		
 		<mx:Form>
 			
@@ -75,6 +76,6 @@
 			
 		</mx:Form>
 		
-	</containers:FieldSet>
+	</jwolib:FieldSet>
 	
 </mx:Application>

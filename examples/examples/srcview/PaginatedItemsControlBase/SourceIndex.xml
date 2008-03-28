@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+	<title>Source of jwo_lib_examples</title>
+	<nodes>
+		<node label="src" icon="classpathIcon" expanded="true">
+			<node label="controls" icon="packageIcon" expanded="true">
+				<node label="PaginatedItemsControl.mxml" icon="mxmlIcon" url="source/controls/PaginatedItemsControl.mxml.html"/>
+			</node>
+			<node selected="true" label="PaginatedItemsControlApplication.mxml" icon="mxmlAppIcon" url="source/PaginatedItemsControlApplication.mxml.html"/>
+		</node>
+	</nodes>
+</index>

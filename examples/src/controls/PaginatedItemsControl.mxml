@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jwolib:PaginatedItemsControlBase 
+	direction="horizontal"
+	verticalAlign="middle"
+	horizontalAlign="center"
+	
+	selectedItemsChanged="updateDisplayText();"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:jwolib="http://www.jwolib.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			[Bindable] public var prevButtonLabel:String = "<";
+			[Bindable] public var nextButtonLabel:String = ">";
+			
+			[Bindable] private var _display_txt:String = "(0 - 0 of 0 results)";
+			
+			public var displayFormat:String = "(@F - @L of @T results)";
+			
+			private function updateDisplayText ():void
+			{
+				var currentSet:int = selectedIndex + 1;
+				var totalItems:int = dataProvider.length;
+				var firstItemInSet:int = selectedIndex * itemsPerPage + 1;
+				var lastItemInSet:int = Math.min(selectedIndex * itemsPerPage + itemsPerPage, totalItems);
+				
+				_display_txt = displayFormat.replace("@F", firstItemInSet).replace("@L", lastItemInSet).replace("@T", totalItems);
+			}
+			
+			private function onPrevClick ():void
+			{
+				var nextIndex:int = selectedIndex - 1;
+				selectedIndex = Math.max(0, nextIndex);
+			}
+			
+			private function onNextClick ():void
+			{
+				var nextIndex:int = selectedIndex + 1;				
+				selectedIndex = Math.min(pgSets - 1, nextIndex);
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<jwolib:states>
+		<mx:State name="minimum_state">
+			<mx:RemoveChild target="{display_lbl}"/>
+		</mx:State>
+		
+		<mx:State name="maximum_state">
+			<mx:AddChild position="firstChild">
+				<mx:LinkButton label="&lt;&lt;" click="selectedIndex = 0" enabled="{pgSets &gt; 0}"/>
+			</mx:AddChild>
+			
+			<mx:AddChild position="lastChild">
+				<mx:LinkButton label="&gt;&gt;" click="selectedIndex = pgSets - 1" enabled="{pgSets &gt; 0}"/>
+			</mx:AddChild>
+		</mx:State>
+	</jwolib:states>
+	
+	<mx:LinkButton id="prev_btn" label="{prevButtonLabel}" click="onPrevClick();"
+		enabled="{selectedIndex &gt; 0}"/>
+	
+	<mx:Label id="display_lbl" text="{_display_txt}" fontWeight="bold"/>
+	
+	<mx:LinkButton id="next_btn" label="{nextButtonLabel}" click="onNextClick();" 
+		enabled="{pgSets > 0 &amp;&amp; selectedIndex &lt; pgSets - 1}"/>
+	
+</jwolib:PaginatedItemsControlBase>

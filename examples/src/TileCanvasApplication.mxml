@@ -2,10 +2,9 @@
 <mx:Application 
 	layout="absolute"
 	
-	viewSourceURL="srcview/index.html"
+	viewSourceURL="srcview/TileCanvas/index.html"
 	
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:containers="com.jwopitz.containers.*">
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:jwolib="http://www.jwolib.com/2006/mxml">
 
 	<mx:Script>
 		<![CDATA[
@@ -126,7 +125,7 @@
 		</mx:HBox>
 		
 		<mx:HBox width="100%" height="100%">
-			<containers:TileCanvas id="tc" width="100%" height="100%" 
+			<jwolib:TileCanvas id="tc" width="100%" height="100%" 
 				itemSpawnPoint="{new Point(tc.width - tc.columnWidth, tc.height - tc.rowHeight)}" 
 				columns="{col_nm.value}" columnWidth="{columnWidth}" 
 				rows="{row_nm.value}" rowHeight="{rowHeight}" dragEnabled="true" dropEnabled="true"

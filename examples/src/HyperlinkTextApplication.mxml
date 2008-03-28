@@ -4,10 +4,9 @@
 	backgroundColor="0xFFFFFF"
 	horizontalAlign="center"
 	
-	viewSourceURL="srcview/index.html"
+	viewSourceURL="srcview/HyperlinkText/index.html"
 	
-	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:controls="com.jwopitz.controls.*">
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:jwolib="http://www.jwolib.com/2006/mxml">
 	
 	<mx:Script>
 		<![CDATA[
@@ -16,7 +15,7 @@
 	</mx:Script>
 	
 	<mx:Panel title="HyperlinkText Example">
-		<controls:HyperlinkText text="{ti.text}" click="Alert.show('try tabbing to the text input to test for accessibilities')"/>
+		<jwolib:HyperlinkText text="{ti.text}" click="Alert.show('try tabbing to the text input to test for accessibilities')"/>
 			
 		<mx:TextInput id="ti" text="change text here"/>	
 	</mx:Panel>
