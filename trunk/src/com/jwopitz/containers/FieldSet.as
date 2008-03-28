@@ -116,6 +116,8 @@ package com.jwopitz.containers
 				var s:CSSStyleDeclaration = new CSSStyleDeclaration();
 				s.setStyle('borderStyle', 'solid');
 				s.setStyle('borderSkin', FieldSetBorder);
+				s.setStyle('backgroundColor', 0xFFFFFF);
+				s.setStyle('backgroundAlpha', 0.0);
 
 				s.setStyle('paddingLeft', 2);
 				s.setStyle('paddingRight', 2);
