@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="jwo_lib" basedir="../" default="lib">
+<project name="jwo_lib" basedir="../" default="docs">
 
 	<!-- Define variables/paths used in this build script -->
 	<property file="./build/build.properties" />
@@ -14,12 +14,12 @@
 	<!-- Compile all of the classes under the "src" tree into a .swc file -->
 	<target name="lib" depends="properties">
 		<exec executable="${compc.exe}" dir="${basedir}">
+			<!--arg line="-include-sources ${src.dir}"/-->
 			<arg line="-output '${bin.dir}/${jwo_lib.name}.swc'"/>
 			<arg line="-source-path ${src.dir}"/>
 			<arg line="-namespace ${manifest.uri} ${manifest.xml}"/>
 			<arg line="-include-namespaces ${manifest.uri}"/>
 			<arg line="-include-file closeButtonSkins.swf ${src.dir}/assets/swf/closeButtonSkins.swf"/>
-			<!--arg line="-include-sources ${src.dir}"/-->
 			<arg line="-link-report='${build.dir}/${jwo_lib.report}.xml'"/>
 		</exec>
 	</target> 

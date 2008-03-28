@@ -24,8 +24,8 @@ SOFTWARE.
 package com.jwopitz.controls
 {
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.events.FocusEvent;
+	import flash.events.MouseEvent;
 	
 	import mx.controls.Button;
 	import mx.controls.TextInput;
@@ -182,6 +182,9 @@ package com.jwopitz.controls
 		public function TextInput ()
 		{
 			super();
+			
+			buttonMode = true;
+			useHandCursor = true;
 			
 			//tapping into private workings of mx:TextInput 
 			//which dispatches this event when the user types in the text field.
@@ -364,6 +367,15 @@ package com.jwopitz.controls
 		}
 
 		//////////////////////////////////////////////////////////////
+		//	HILITE TEXT ON FOCUS IN
+		//////////////////////////////////////////////////////////////
+
+		/**
+		 * @private
+		 */
+		public var hiliteTextOnFocusIn:Boolean = true;
+		
+		//////////////////////////////////////////////////////////////
 		//	FOCUS ON CLEAR
 		//////////////////////////////////////////////////////////////
 
@@ -473,7 +485,7 @@ package com.jwopitz.controls
 		override protected function createChildren ():void
 		{
 			super.createChildren();
-
+			
 			//add new listeners so text can affect clearBtn
 			if (!clearBtn)
 			{
@@ -603,6 +615,7 @@ package com.jwopitz.controls
 
 				clearBtn.move(tx, ty);
 			}
+			
 			else
 			{
 				tw = Math.max(0, unscaledWidth - (bm.left + bm.right));
@@ -620,6 +633,7 @@ package com.jwopitz.controls
 					clearBtn.visible = false;
 				}
 			}
+			
 			else
 			{
 				mx_internal::border.visible = true;
@@ -730,6 +744,9 @@ package com.jwopitz.controls
 		 */
 		protected function onFocusIn (evt:FocusEvent):void
 		{
+			if (hiliteTextOnFocusIn)
+				textField.setSelection(0, text.length - 1);
+			
 			if (appearAsLabel)
 				labelMode = false;
 			

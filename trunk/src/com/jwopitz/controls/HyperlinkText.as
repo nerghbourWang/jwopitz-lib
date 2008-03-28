@@ -21,17 +21,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.controls {
-
+package com.jwopitz.controls
+{
+	import com.jwopitz.core.UITextField;
 	import com.jwopitz.skins.ClearButtonSkin;
-
-	import flash.events.Event;
+	
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
-
+	
 	import mx.containers.Canvas;
 	import mx.controls.LinkButton;
-	import mx.core.UITextField;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
 
@@ -64,8 +63,8 @@ package com.jwopitz.controls {
 	 *  @see mx.controls.LinkButton
 	 *  @see mx.core.UITextField
 	 */
-	public class HyperlinkText extends Canvas {
-
+	public class HyperlinkText extends Canvas
+	{
 		//////////////////////////////////////////////////////////////
 		//	DEFAULT STYLES INIT
 		//////////////////////////////////////////////////////////////
@@ -78,10 +77,10 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		private static function setDefaultStyles ():Boolean {
-
-			if (!StyleManager.getStyleDeclaration('HyperlinkText')){
-
+		private static function setDefaultStyles ():Boolean
+		{
+			if (!StyleManager.getStyleDeclaration('HyperlinkText'))
+			{
 				var rollOverStyle:CSSStyleDeclaration = new CSSStyleDeclaration();
 				rollOverStyle.setStyle('textDecoration', 'underline');
 
@@ -107,7 +106,8 @@ package com.jwopitz.controls {
 		/**
 		 * Constructor
 		 */
-		public function HyperlinkText (){
+		public function HyperlinkText ()
+		{
 			super();
 
 			horizontalScrollPolicy = "off";
@@ -131,10 +131,12 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		override protected function createChildren ():void {
+		override protected function createChildren ():void
+		{
 			super.createChildren();
 
-			if (!linkBtn){
+			if (!linkBtn)
+			{
 				linkBtn = new LinkButton();
 				linkBtn.buttonMode = true;
 				linkBtn.owner = this;
@@ -154,7 +156,8 @@ package com.jwopitz.controls {
 				addChild(linkBtn);
 			}
 
-			if (!txtField){
+			if (!txtField)
+			{
 				txtField = new UITextField();
 				txtField.mouseEnabled = false;
 				txtField.owner = this;
@@ -171,16 +174,21 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void {
+		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 
 			var tw:Number;
 			var th:Number;
 
-			if (isNaN(percentWidth)){
+			if (isNaN(percentWidth))
+			{
 				tw = getExplicitOrMeasuredWidth();
 				th = getExplicitOrMeasuredHeight();
-			} else {
+			} 
+			
+			else
+			{
 				tw = unscaledWidth;
 				th = unscaledHeight;
 			}
@@ -198,9 +206,11 @@ package com.jwopitz.controls {
 		/**
 		 * If a defined width is set, then the textField's wordWrap is set to true.
 		 */
-		protected function updateTextFieldProperties ():void {
+		protected function updateTextFieldProperties ():void
+		{
 			if (!isNaN(width) || !isNaN(percentWidth))
 				hasDefinedWidth = true;
+			
 			else
 				hasDefinedWidth = false;
 
@@ -208,7 +218,6 @@ package com.jwopitz.controls {
 				txtField.wordWrap = hasDefinedWidth;
 
 			invalidateDisplayList();
-
 		}
 
 		//////////////////////////////////////////////////////////////
@@ -218,7 +227,8 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onClick (evt:MouseEvent):void {
+		protected function linkBtn_onClick (evt:MouseEvent):void
+		{
 			evt.stopPropagation();
 			dispatchEvent(evt);
 		}
@@ -226,42 +236,48 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onMouseDown (evt:MouseEvent):void {
+		protected function linkBtn_onMouseDown (evt:MouseEvent):void
+		{
 			txtField.styleName = getStyle("rollOverStyle");
 		}
 
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onMouseUp (evt:MouseEvent):void {
+		protected function linkBtn_onMouseUp (evt:MouseEvent):void
+		{
 			txtField.styleName = getStyle("rollOverStyle");
 		}
 
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onRollOut (evt:MouseEvent):void {
+		protected function linkBtn_onRollOut (evt:MouseEvent):void
+		{
 			txtField.styleName = this;
 		}
 
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onRollOver (evt:MouseEvent):void {
+		protected function linkBtn_onRollOver (evt:MouseEvent):void
+		{
 			txtField.styleName = getStyle("rollOverStyle");
 		}
 
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onFocusIn (evt:FocusEvent):void {
+		protected function linkBtn_onFocusIn (evt:FocusEvent):void
+		{
 			txtField.styleName = getStyle("rollOverStyle");
 		}
 
 		/**
 		 * @private
 		 */
-		protected function linkBtn_onFocusOut (evt:FocusEvent):void {
+		protected function linkBtn_onFocusOut (evt:FocusEvent):void
+		{
 			txtField.styleName = this;
 		}
 
@@ -277,14 +293,16 @@ package com.jwopitz.controls {
 		/**
 		 * Specifies the plain text displayed by this control.
 		 */
-		public function get text ():String {
+		public function get text ():String
+		{
 			return txt;
 		}
 
 		/**
 		 * @private
 		 */
-		public function set text (value:String):void {
+		public function set text (value:String):void
+		{
 			txt = value;
 
 			if (txtField)
@@ -303,7 +321,8 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		override public function set width (value:Number):void {
+		override public function set width (value:Number):void
+		{
 			super.width = value;
 
 			updateTextFieldProperties();
@@ -312,7 +331,8 @@ package com.jwopitz.controls {
 		/**
 		 * @private
 		 */
-		override public function set percentWidth (value:Number):void {
+		override public function set percentWidth (value:Number):void
+ 		{
 			super.percentWidth = value;
 
 			updateTextFieldProperties();
