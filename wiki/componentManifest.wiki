@@ -23,8 +23,6 @@
 
 *com.jwopitz.controls.pagination*
 
-  * [http://jwopitz-lib.googlecode.com/svn/trunk/asdoc/com/jwopitz/controls/pagination/IPaginatedItemsControl.html IPaginatedItemsControl] [http://jwopitz-lib.googlecode.com/svn/examples/examples/PaginatedItemsControlApplication.html example]
-
   * [http://jwopitz-lib.googlecode.com/svn/trunk/asdoc/com/jwopitz/controls/pagination/PaginatedItemsControlBase.html PaginatedItemsControlBase] [http://jwopitz-lib.googlecode.com/svn/examples/examples/PaginatedItemsControlApplication.html example]
 
 
