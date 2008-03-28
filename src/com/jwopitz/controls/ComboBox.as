@@ -8,7 +8,8 @@ package com.jwopitz.controls
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
 	
-	public class ComboBox extends mx.controls.ComboBox
+	//not publishing this component at this time - 2008.03.26
+	internal class ComboBox extends mx.controls.ComboBox
 	{
 		//////////////////////////////////////////////////////////////
 		//	DEFAULT STYLES
@@ -68,16 +69,28 @@ package com.jwopitz.controls
 		//	EDIT PROMPT
 		//////////////////////////////////////////////////////////////
 		
+		/**
+		 * @private
+		 */
 		protected var editPromptChanged:Boolean = false;
 		
+		/**
+		 * @private
+		 */
 		protected var ePrompt:String = " (edit)";
 		
+		/**
+		 * The string value of the prompt when not in an editing state.
+		 */
 		[Bindable("editPromptChanged")]
 		public function get editPrompt ():String
 		{
 			return ePrompt;
 		}
 		
+		/**
+		 * @private
+		 */
 		public function set editPrompt (value:String):void
 		{
 			if (ePrompt != value)
@@ -175,6 +188,9 @@ package com.jwopitz.controls
 		//	OVERRIDES
 		//////////////////////////////////////////////////////////////
 		
+		/**
+		 * @private
+		 */
 		override protected function createChildren ():void
 		{
 			super.createChildren();
@@ -182,6 +198,9 @@ package com.jwopitz.controls
 			
 		}
 		
+		/**
+		 * @private
+		 */
 		override protected function commitProperties ():void
 		{
 			super.commitProperties();
@@ -196,6 +215,9 @@ package com.jwopitz.controls
 			}
 		}
 		
+		/**
+		 * @private
+		 */
 		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
@@ -223,6 +245,9 @@ package com.jwopitz.controls
 		//	EVT HANDLERS
 		//////////////////////////////////////////////////////////////
 		
+		/**
+		 * @private
+		 */
 		override protected function focusInHandler (event:FocusEvent):void
 		{
 			super.focusInHandler(event);
@@ -230,6 +255,9 @@ package com.jwopitz.controls
 			labelMode = false;
 		}
 		
+		/**
+		 * @private
+		 */
 		override protected function focusOutHandler (event:FocusEvent):void
 		{
 			super.focusOutHandler(event);

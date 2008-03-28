@@ -63,32 +63,109 @@ package com.jwopitz.containers
 		//
 		//properties
 		//-----------------------------------------------------------//
+		/**
+		 * @private
+		 */
 		protected var _columns:int = 1;
+		
+		/**
+		 * @private
+		 */
 		protected var _columnWidth:int = 50;
+		
+		/**
+		 * @private
+		 */
 		protected var _columnGap:int = 5;
 		
+		/**
+		 * @private
+		 */
 		protected var _rows:int = 1;
+		
+		/**
+		 * @private
+		 */
 		protected var _rowHeight:int = 50;
+		
+		/**
+		 * @private
+		 */
 		protected var _rowGap:int = 5;
 		
+		/**
+		 * @private
+		 */
 		protected var _direction:String = 'horizontal';
 		
+		/**
+		 * @private
+		 */
 		protected var _dataProvider:ListCollectionView;
 		
+		/**
+		 * @private
+		 */
 		protected var _currentItemCount:int = 0;
+		
+		/**
+		 * @private
+		 */
 		protected var _itemRenderer:IFactory;
+		
+		/**
+		 * @private
+		 */
 		protected var _itemAddOn:Function = defaultItemAddOn;
+		
+		/**
+		 * @private
+		 */
 		protected var _items:ArrayCollection;
+		
+		/**
+		 * @private
+		 */
 		protected var _filteredItems:Array;
 		
+		/**
+		 * @private
+		 */
 		protected var _mouseDownPt:Point;
+		
+		/**
+		 * @private
+		 */
 		protected var _mouseOverItem:Container;
+		
+		/**
+		 * @private
+		 */
 		protected var _draggedItem:Container;
 		
+		/**
+		 * @private
+		 */
 		protected var _isPressed:Boolean = false;
+		
+		/**
+		 * @private
+		 */
 		protected var _dragEnabled:Boolean = false;
+		
+		/**
+		 * @private
+		 */
 		protected var _dragMoveEnabled:Boolean = false;
+		
+		/**
+		 * @private
+		 */
 		protected var _dropEnabled:Boolean = false;
+		
+		/**
+		 * @private
+		 */
 		protected var _isManualViewUpdate:Boolean = false; //used to supress normal adding and removing evt handlers
 		
 		/**
@@ -96,8 +173,19 @@ package com.jwopitz.containers
 		 */
 		public var itemSpawnPoint:Point;
 		
+		/**
+		 * Flag indicating if the dataProvider will autoUpdate.
+		 */
 		public var enableAutoUpdate:Boolean = true;
+		
+		/**
+		 * Flag that determines if the animation effect takes place after the dataProvider refresh event is triggered.
+		 */
 		public var enableMoveOnRefresh:Boolean = true; //allows move animation on refresh of data
+		
+		/**
+		 * Flag indicating if the dataProvider gets refreshed after a drag and drop operation.
+		 */
 		public var enableRefreshOnMove:Boolean = true; //allows move to act as item sorting
 		
 		//

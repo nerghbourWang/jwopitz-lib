@@ -16,10 +16,10 @@
 		class="com.jwopitz.containers.TileCanvas"
 		/>
 	
-	<component 
+	<!--component 
 		id="ComboBox"
 		class="com.jwopitz.controls.ComboBox"
-		/>
+		/-->
 	
 	<component 
 		id="HRule"
@@ -33,12 +33,17 @@
 	
 	<component
 		id="TextInput"
-		class="com.jwopitz.controls.TextInput"
+		class="com.jwopitz.controls.TextInput" 
 		/>
 	
 	<component
 		id="VRule"
 		class="com.jwopitz.controls.VRule"
+		/>
+	
+	<component
+		id="PaginatedItemsControlBase"
+		class="com.jwopitz.controls.pagination.PaginatedItemsControlBase"
 		/>
 		
 </componentPackage>
