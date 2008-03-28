@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="jwo_lib" basedir="../" default="docs">
+<project name="jwo_lib" basedir="../" default="examples">
 
 	<!-- Define variables/paths used in this build script -->
 	<property file="./build/build.properties" />
@@ -40,7 +40,7 @@
 			
 			<arg line="-source-path ${examples.src}"/>
 			<arg line="-library-path '${flexSDK.lib.dir}'"/>
-			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
 			
 			<arg line="-locale ${flexSDK.locale}" />
 			<arg line="-l '${flexSDK.locale.dir}'" />
@@ -52,7 +52,7 @@
 			
 			<arg line="-source-path ${examples.src}"/>
 			<arg line="-library-path '${flexSDK.lib.dir}'"/>
-			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
 			
 			<arg line="-locale ${flexSDK.locale}" />
 			<arg line="-l '${flexSDK.locale.dir}'" />
@@ -64,7 +64,19 @@
 			
 			<arg line="-source-path ${examples.src}"/>
 			<arg line="-library-path '${flexSDK.lib.dir}'"/>
-			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
+			
+			<arg line="-locale ${flexSDK.locale}" />
+			<arg line="-l '${flexSDK.locale.dir}'" />
+		</exec>
+		
+		<exec executable="${mxmlc.exe}" dir="${examples.dir}">
+			<arg line="'${examples.src}/${paginatedItemsControlBaseApp.name}.mxml'"/>
+			<arg line="-output '${examples.bin}/${paginatedItemsControlBaseApp.name}.swf'"/>
+			
+			<arg line="-source-path ${examples.src}"/>
+			<arg line="-library-path '${flexSDK.lib.dir}'"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
 			
 			<arg line="-locale ${flexSDK.locale}" />
 			<arg line="-l '${flexSDK.locale.dir}'" />
@@ -76,7 +88,7 @@
 			
 			<arg line="-source-path ${examples.src}"/>
 			<arg line="-library-path '${flexSDK.lib.dir}'"/>
-			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
 			
 			<arg line="-locale ${flexSDK.locale}" />
 			<arg line="-l '${flexSDK.locale.dir}'" />
@@ -88,7 +100,7 @@
 			
 			<arg line="-source-path ${examples.src}"/>
 			<arg line="-library-path '${flexSDK.lib.dir}'"/>
-			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
 			
 			<arg line="-locale ${flexSDK.locale}" />
 			<arg line="-l '${flexSDK.locale.dir}'" />
@@ -100,7 +112,7 @@
 			
 			<arg line="-source-path ${examples.src}"/>
 			<arg line="-library-path '${flexSDK.lib.dir}'"/>
-			<arg line="-library-path ${bin.dir}\${jwo_lib.name}.swc"/>
+			<arg line="-library-path ${bin.dir}/${jwo_lib.name}.swc"/>
 			
 			<arg line="-locale ${flexSDK.locale}" />
 			<arg line="-l '${flexSDK.locale.dir}'" />

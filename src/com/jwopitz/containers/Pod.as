@@ -480,6 +480,10 @@ package com.jwopitz.containers
 			}
 
 			creationQueue = [];
+			
+			invalidateProperties();
+			invalidateSize();
+			invalidateDisplayList();
 		}
 
 		/**
