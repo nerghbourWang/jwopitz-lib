@@ -23,17 +23,16 @@ SOFTWARE.
 */
 package com.jwopitz.containers
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
-
+	
 	import mx.containers.Panel;
 	import mx.controls.Button;
 	import mx.core.EventPriority;
 	import mx.core.UIComponent;
-	import mx.core.mx_internal;
 	import mx.events.FlexEvent;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
-	import flash.events.Event;
 
 	//////////////////////////////////////////////////////////////
 	//	STYLES
@@ -212,8 +211,13 @@ package com.jwopitz.containers
 		protected var creationQueue:Array = [];
 
 		/**
+		 * Exposed for declaritive instantiation of title bar assets.  For MXML use only.
+		 */
+		[ArrayElementType("mx.core.UIComponent")]
+		public var titleBarChildren:Array = [];
+		
+		/**
 		 * @private
-		 *
 		 */
 		protected var titleBarAssets:Array = [];
 
@@ -245,6 +249,12 @@ package com.jwopitz.containers
 
 			titleBar.mouseChildren = false;
 			assignTitleBarListeners();
+			
+			var child:UIComponent;
+			for each (child in titleBarChildren)
+				addTitleBarComponent(child);
+				
+			titleBarChildren = [];
 		}
 
 		/**
@@ -365,59 +375,61 @@ package com.jwopitz.containers
 
 		/**
 		 * Adds new children to the title bar area and registers default mouse event handlers.
+		 * For most cases, title bar components should be added declaritively via MXML using titleBarChildren which calls this on the creation complete event.
+		 * If however, assets are needing to be added dynamically at runtime, the developer can add them via this method.
 		 *
+		 * @see #titleBarChildren
+		 * 
 		 * @param value The UIComponent to be added.
 		 *
 		 * @return The UIComponent to be added.
 		 */
-		public function addTitleBarComponent (value:UIComponent = null):UIComponent
+		public function addTitleBarComponent (child:UIComponent = null):UIComponent
 		{
-			if (!value)
-				value = new defaultTitleBarComponentClass();
-
-			value.addEventListener(MouseEvent.CLICK,
+			if (!child)
+				child = new defaultTitleBarComponentClass();
+			
+			child.addEventListener(MouseEvent.CLICK,
 				titleBarComponent_defaultMouseEventHandler,
 				false,
 				EventPriority.DEFAULT_HANDLER);
 
-			value.addEventListener(MouseEvent.MOUSE_DOWN,
+			child.addEventListener(MouseEvent.MOUSE_DOWN,
 				titleBarComponent_defaultMouseEventHandler,
 				false,
 				EventPriority.DEFAULT_HANDLER);
 
-			value.addEventListener(MouseEvent.MOUSE_OUT,
+			child.addEventListener(MouseEvent.MOUSE_OUT,
 				titleBarComponent_defaultMouseEventHandler,
 				false,
 				EventPriority.DEFAULT_HANDLER);
 
-			value.addEventListener(MouseEvent.MOUSE_OVER,
+			child.addEventListener(MouseEvent.MOUSE_OVER,
 				titleBarComponent_defaultMouseEventHandler,
 				false,
 				EventPriority.DEFAULT_HANDLER);
 
-			value.addEventListener(MouseEvent.MOUSE_UP,
+			child.addEventListener(MouseEvent.MOUSE_UP,
 				titleBarComponent_defaultMouseEventHandler,
 				false,
 				EventPriority.DEFAULT_HANDLER);
-
-			value.buttonMode = true;
-			value.owner = this;
-			//value.styleName = this;
-
-			titleBarAssets.push(value);
-
+			
+			child.buttonMode = true;
+			child.owner = this;
+			
+			titleBarAssets.push(child);
+			
 			if (!titleBar)
-			{
-				creationQueue.push(value);
-			}
+				creationQueue.push(child);
+			
 			else
-			{
-				titleBar.addChild(value);
-			}
-
-			return value;
+				titleBar.addChild(child);
+				
+			invalidateDisplayList();
+			
+			return child;
 		}
-
+		
 		/**
 		 * Clones a target mouse event but allows for the type to be set prior to cloning.
 		 * This method should be used only for capturing events fired from the titleBar area which
