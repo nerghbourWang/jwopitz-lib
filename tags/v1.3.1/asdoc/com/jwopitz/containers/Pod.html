@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="Pod,com.jwopitz.containers.Pod,defaultTitleBarComponentClass,headerHeight,addTitleBarComponent,assignTitleBarListeners,createTitleBarMouseEvent,repositionHeaderElements" name="keywords">
+<title>com.jwopitz.containers.Pod</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'Pod - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?com/jwopitz/containers/Pod.html&amp;com/jwopitz/containers/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;Pod</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#styleSummary">Styles</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class Pod"); titleBar_setSubNav(false,true,true,false,true,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">com.jwopitz.containers</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class Pod</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Pod <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> mx.containers.Panel</td>
+</tr>
+</table>
+<p></p>
+  Pod is an extension of the &lt;mx:Panel&gt; allowing children to be added to the header area
+  as well as triggering unique mouse events for the purposes of window's based interactions.
+    <p>
+   <pre>
+   &lt;jwo_lib:Pod
+     <strong>Styles</strong>
+     headerVerticalAlign="top|middle|bottom"
+     headerHorizontalGap="2"
+     &gt;
+     ...
+       <i>child tags</i>
+     ...
+   &lt;/jwo_lib:Pod&gt;
+   </pre>
+  </p>
+     <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">mx.containers.Panel</div>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultTitleBarComponentClass">defaultTitleBarComponentClass</a> : Class<div class="summaryTableDescription">
+   The default class to be used when calling <code>addTitleBarComponent()</code> with no parameter.</div>
+</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#headerHeight">headerHeight</a> : Number<div class="summaryTableDescription">
+   A convenience method for retrieving the header height.</div>
+</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addTitleBarComponent()">addTitleBarComponent</a>(value:UIComponent = null):UIComponent</div>
+<div class="summaryTableDescription">
+   Adds new children to the title bar area and registers default mouse event handlers.</div>
+</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#assignTitleBarListeners()">assignTitleBarListeners</a>():void</div>
+<div class="summaryTableDescription">
+   Assigns default mouse event handlers to the tilte bar area.</div>
+</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#createTitleBarMouseEvent()">createTitleBarMouseEvent</a>(type:String, targetEvt:MouseEvent):MouseEvent</div>
+<div class="summaryTableDescription">
+   Clones a target mouse event but allows for the type to be set prior to cloning.</div>
+</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#repositionHeaderElements()">repositionHeaderElements</a>():void</div>
+<div class="summaryTableDescription">
+   Repositions the child elements of the header.</div>
+</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+</table>
+</div>
+<a name="eventSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Events</div>
+<table id="summaryTableEvent" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripClick">gripClick</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user clicks on the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripMouseDown">gripMouseDown</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user presses the mouse button on the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripMouseMove">gripMouseMove</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user moves the mouse over the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripMouseOut">gripMouseOut</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user moves the mouse out of the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripMouseOver">gripMouseOver</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user clicks on the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripMouseUp">gripMouseUp</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user releases the mouse button above the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripRollOut">gripRollOut</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user rolls out of the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:gripRollOver">gripRollOver</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the user rolls over the header area.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+</table>
+</div>
+<a name="styleSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Styles</div>
+<table id="summaryTableStyle" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Style</th><th>Description</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol"><a name="style:headerHorizontalGap"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">headerHorizontalGap</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>Number &nbsp; <span class="label">CSS Inheritance: </span>no<br>
+     Sets the horizontal gap of the header children added with addTitleBarComponent.
+     If no value is set, then the value of horizontalGap will be used for the gap.
+           The default value is <code>6</code>.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol"><a name="style:headerVerticalAlign"></a>&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">headerVerticalAlign</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type: </span>String &nbsp; <span class="label">CSS Inheritance: </span>no<br>
+     Sets the vertical alignment of the header children added with addTitleBarComponent and the titleTextField.
+     Values are "top, "middle" and "bottom".
+           The default value is <code>middle</code>.</td><td class="summaryTableOwnerCol">Pod</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="defaultTitleBarComponentClass"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">defaultTitleBarComponentClass</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var defaultTitleBarComponentClass:Class</code><p>
+   The default class to be used when calling <code>addTitleBarComponent()</code> with no parameter.
+   </p></div>
+<a name="headerHeight"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">headerHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>headerHeight:Number</code>&nbsp;&nbsp;[read-write]<p>
+   A convenience method for retrieving the header height.
+      </p><p>This property can be used as the source for data binding.</p>
+<span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get headerHeight():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set headerHeight(value:Number):void</code>
+<br>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addTitleBarComponent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addTitleBarComponent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addTitleBarComponent(value:UIComponent = null):UIComponent</code><p>
+   Adds new children to the title bar area and registers default mouse event handlers.
+      </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:UIComponent</code> (default = <code>null</code>)<code></code> &mdash; The UIComponent to be added.
+      </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>UIComponent</code> &mdash; The UIComponent to be added.
+   </td>
+</tr>
+</table>
+</div>
+<a name="assignTitleBarListeners()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">assignTitleBarListeners</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function assignTitleBarListeners():void</code><p>
+   Assigns default mouse event handlers to the tilte bar area.
+   </p></div>
+<a name="createTitleBarMouseEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">createTitleBarMouseEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function createTitleBarMouseEvent(type:String, targetEvt:MouseEvent):MouseEvent</code><p>
+   Clones a target mouse event but allows for the type to be set prior to cloning.
+   This method should be used only for capturing events fired from the titleBar area which
+   do not originate from any of its children.
+      </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; The mouseEvent type of the target mouseEvent to be cloned.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">targetEvt</span>:MouseEvent</code> &mdash; The mouseEvent to be cloned.
+      </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>MouseEvent</code> &mdash; The cloned mouseEvent.
+   </td>
+</tr>
+</table>
+</div>
+<a name="repositionHeaderElements()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">repositionHeaderElements</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function repositionHeaderElements():void</code><p>
+   Repositions the child elements of the header.
+   </p></div>
+<div class="detailSectionHeader">Event detail</div>
+<a name="event:gripClick"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripClick</td><td class="detailHeaderType">event&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user clicks on the header area.
+  </p></div>
+<a name="event:gripMouseDown"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripMouseDown</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user presses the mouse button on the header area.
+  </p></div>
+<a name="event:gripMouseMove"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripMouseMove</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user moves the mouse over the header area.
+  </p></div>
+<a name="event:gripMouseOut"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripMouseOut</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user moves the mouse out of the header area.
+  </p></div>
+<a name="event:gripMouseOver"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripMouseOver</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user clicks on the header area.
+  </p></div>
+<a name="event:gripMouseUp"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripMouseUp</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user releases the mouse button above the header area.
+  </p></div>
+<a name="event:gripRollOut"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripRollOut</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user rolls out of the header area.
+  </p></div>
+<a name="event:gripRollOver"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">gripRollOver</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.MouseEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the user rolls over the header area.
+  </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
