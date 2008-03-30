@@ -1,4 +1,4 @@
-package com.jwopitz.controls
+package jwolib.controls
 {
 	import flash.events.Event;
 	import flash.events.FocusEvent;

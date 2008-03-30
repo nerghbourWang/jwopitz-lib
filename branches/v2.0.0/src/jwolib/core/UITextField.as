@@ -1,4 +1,4 @@
-package com.jwopitz.core
+package jwolib.core
 {
 	import mx.core.IRepeaterClient;
 	import mx.core.UITextField;

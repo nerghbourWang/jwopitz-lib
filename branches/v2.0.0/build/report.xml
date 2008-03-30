@@ -299,7 +299,7 @@
       <dep id="AS3" />
     </script>
     <script name="com/jwopitz/controls/TextInput_upSkin.as" mod="1194408344000" size="835" optimizedsize="383">
-      <def id="com.jwopitz.controls:TextInput_upSkin" />
+      <def id="jwolib.controls:TextInput_upSkin" />
       <pre id="mx.core:SpriteAsset" />
       <dep id="AS3" />
     </script>
@@ -357,7 +357,7 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/controls/pagination/IPaginatedItemsControl.as" mod="1206492204000" size="1671" optimizedsize="353">
-      <def id="com.jwopitz.controls.pagination:IPaginatedItemsControl" />
+      <def id="jwolib.controls.pagination:IPaginatedItemsControl" />
       <pre id="Object" />
       <dep id="AS3" />
     </script>
@@ -516,16 +516,16 @@
       <dep id="flash.display:Shape" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/controls/HyperlinkText.as" mod="1200085198000" size="4647" optimizedsize="2506">
-      <def id="com.jwopitz.controls:HyperlinkText" />
+      <def id="jwolib.controls:HyperlinkText" />
       <pre id="mx.containers:Canvas" />
       <dep id="String" />
       <dep id="flash.events:MouseEvent" />
       <dep id="flash.events:FocusEvent" />
       <dep id="mx.controls:LinkButton" />
-      <dep id="com.jwopitz.core:UITextField" />
+      <dep id="jwolib.core:UITextField" />
       <dep id="mx.styles:StyleManager" />
       <dep id="AS3" />
-      <dep id="com.jwopitz.skins:ClearButtonSkin" />
+      <dep id="jwolib.skins:ClearButtonSkin" />
       <dep id="mx.styles:CSSStyleDeclaration" />
     </script>
     <script name="/Users/jwopitz/Applications/Adobe Flex Builder 3 Plug-in/sdks/3.0.0/frameworks/libs/framework.swc(mx/collections/ICollectionView)" mod="1201055721846" size="1829" optimizedsize="488">
@@ -769,23 +769,23 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/controls/TextInput.as" mod="1200943338000" size="8700" optimizedsize="4623">
-      <def id="com.jwopitz.controls:TextInput" />
+      <def id="jwolib.controls:TextInput" />
       <pre id="mx.controls:TextInput" />
       <dep id="flash.events:MouseEvent" />
       <dep id="mx.core:EdgeMetrics" />
       <dep id="mx.core:mx_internal" />
       <dep id="flash.events:FocusEvent" />
-      <dep id="com.jwopitz.controls:TextInput_downSkin" />
+      <dep id="jwolib.controls:TextInput_downSkin" />
       <dep id="Class" />
       <dep id="mx.controls:Button" />
       <dep id="mx.managers:IFocusManagerComponent" />
-      <dep id="com.jwopitz.controls:TextInput_disabledSkin" />
+      <dep id="jwolib.controls:TextInput_disabledSkin" />
       <dep id="flash.events:Event" />
       <dep id="AS3" />
       <dep id="Math" />
-      <dep id="com.jwopitz.controls:TextInput_overSkin" />
+      <dep id="jwolib.controls:TextInput_overSkin" />
       <dep id="mx.core:IFlexDisplayObject" />
-      <dep id="com.jwopitz.controls:TextInput_upSkin" />
+      <dep id="jwolib.controls:TextInput_upSkin" />
       <dep id="Number" />
       <dep id="mx.core:EventPriority" />
       <dep id="mx.styles:StyleManager" />
@@ -804,7 +804,7 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/containers/Pod.as" mod="1206742372000" size="8586" optimizedsize="5126">
-      <def id="com.jwopitz.containers:Pod" />
+      <def id="jwolib.containers:Pod" />
       <pre id="mx.containers:Panel" />
       <dep id="String" />
       <dep id="flash.events:MouseEvent" />
@@ -1033,7 +1033,7 @@
       <dep id="AS3" />
     </script>
     <script name="com/jwopitz/controls/TextInput_disabledSkin.as" mod="1194408344000" size="871" optimizedsize="395">
-      <def id="com.jwopitz.controls:TextInput_disabledSkin" />
+      <def id="jwolib.controls:TextInput_disabledSkin" />
       <pre id="mx.core:SpriteAsset" />
       <dep id="AS3" />
     </script>
@@ -1125,7 +1125,7 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/controls/HRule.as" mod="1194408344000" size="2947" optimizedsize="1694">
-      <def id="com.jwopitz.controls:HRule" />
+      <def id="jwolib.controls:HRule" />
       <pre id="mx.controls:HRule" />
       <dep id="flash.display:Sprite" />
       <dep id="Number" />
@@ -1455,8 +1455,8 @@
       <dep id="mx.core:IRawChildrenContainer" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/controls/pagination/PaginatedItemsControlBase.as" mod="1206723779000" size="5614" optimizedsize="3316">
-      <def id="com.jwopitz.controls.pagination:PaginatedItemsControlBase" />
-      <pre id="com.jwopitz.controls.pagination:IPaginatedItemsControl" />
+      <def id="jwolib.controls.pagination:PaginatedItemsControlBase" />
+      <pre id="jwolib.controls.pagination:IPaginatedItemsControl" />
       <pre id="flash.events:IEventDispatcher" />
       <pre id="mx.containers:Box" />
       <dep id="Error" />
@@ -1560,7 +1560,7 @@
       <dep id="Math" />
     </script>
     <script name="com/jwopitz/controls/TextInput_downSkin.as" mod="1194408344000" size="847" optimizedsize="387">
-      <def id="com.jwopitz.controls:TextInput_downSkin" />
+      <def id="jwolib.controls:TextInput_downSkin" />
       <pre id="mx.core:SpriteAsset" />
       <dep id="AS3" />
     </script>
@@ -1571,7 +1571,7 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/skins/ClearButtonSkin.as" mod="1194408346000" size="1308" optimizedsize="762">
-      <def id="com.jwopitz.skins:ClearButtonSkin" />
+      <def id="jwolib.skins:ClearButtonSkin" />
       <pre id="mx.skins:RectangularBorder" />
       <dep id="mx.core:EdgeMetrics" />
       <dep id="flash.display:Graphics" />
@@ -1595,7 +1595,7 @@
       <dep id="XML" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/containers/TileCanvas.as" mod="1206491656000" size="16243" optimizedsize="8665">
-      <def id="com.jwopitz.containers:TileCanvas" />
+      <def id="jwolib.containers:TileCanvas" />
       <pre id="mx.containers:Canvas" />
       <pre id="flash.events:IEventDispatcher" />
       <pre id="Object" />
@@ -1689,7 +1689,7 @@
       <dep id="mx.events:PropertyChangeEvent" />
     </script>
     <script name="com/jwopitz/controls/TextInput_overSkin.as" mod="1194408344000" size="847" optimizedsize="387">
-      <def id="com.jwopitz.controls:TextInput_overSkin" />
+      <def id="jwolib.controls:TextInput_overSkin" />
       <pre id="mx.core:SpriteAsset" />
       <dep id="AS3" />
     </script>
@@ -1737,10 +1737,10 @@
       <dep id="mx.effects:IAbstractEffect" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/skins/FieldSetBorder.as" mod="1205269705000" size="2889" optimizedsize="1788">
-      <def id="com.jwopitz.skins:FieldSetBorder" />
+      <def id="jwolib.skins:FieldSetBorder" />
       <pre id="mx.skins:RectangularBorder" />
-      <dep id="com.jwopitz.core:jwo_internal" />
-      <dep id="com.jwopitz.containers:FieldSet" />
+      <dep id="jwolib.core:jwo_internal" />
+      <dep id="jwolib.containers:FieldSet" />
       <dep id="mx.core:EdgeMetrics" />
       <dep id="mx.core:UITextField" />
       <dep id="flash.geom:Point" />
@@ -2244,7 +2244,7 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/core/jwo_internal.as" mod="1194408346000" size="191" optimizedsize="113">
-      <def id="com.jwopitz.core:jwo_internal" />
+      <def id="jwolib.core:jwo_internal" />
       <dep id="AS3" />
     </script>
     <script name="/Users/jwopitz/Applications/Adobe Flex Builder 3 Plug-in/sdks/3.0.0/frameworks/libs/framework.swc(mx/core/IPropertyChangeNotifier)" mod="1201055703439" size="431" optimizedsize="158">
@@ -2460,7 +2460,7 @@
       <dep id="mx.effects.effectClasses:PropertyChanges" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/controls/VRule.as" mod="1194408344000" size="2946" optimizedsize="1693">
-      <def id="com.jwopitz.controls:VRule" />
+      <def id="jwolib.controls:VRule" />
       <pre id="mx.controls:VRule" />
       <dep id="flash.display:Sprite" />
       <dep id="Number" />
@@ -2849,12 +2849,12 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/containers/FieldSet.as" mod="1206728803000" size="4164" optimizedsize="2473">
-      <def id="com.jwopitz.containers:FieldSet" />
+      <def id="jwolib.containers:FieldSet" />
       <pre id="mx.containers:Box" />
       <dep id="String" />
-      <dep id="com.jwopitz.core:jwo_internal" />
+      <dep id="jwolib.core:jwo_internal" />
       <dep id="mx.core:UITextField" />
-      <dep id="com.jwopitz.skins:FieldSetBorder" />
+      <dep id="jwolib.skins:FieldSetBorder" />
       <dep id="Number" />
       <dep id="flash.geom:Point" />
       <dep id="mx.styles:StyleManager" />
@@ -2966,7 +2966,7 @@
       <dep id="AS3" />
     </script>
     <script name="/proj/flexBuilder3_projects/jwo_lib/src/com/jwopitz/core/UITextField.as" mod="1200085185000" size="1864" optimizedsize="939">
-      <def id="com.jwopitz.core:UITextField" />
+      <def id="jwolib.core:UITextField" />
       <pre id="mx.core:UITextField" />
       <pre id="mx.core:IRepeaterClient" />
       <dep id="AS3" />

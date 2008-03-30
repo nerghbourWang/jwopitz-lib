@@ -3,47 +3,47 @@
 	
 	<component 
 		id="FieldSet" 
-		class="com.jwopitz.containers.FieldSet"
+		class="jwolib.containers.FieldSet"
 		/>
 	
 	<component 
 		id="Pod" 
-		class="com.jwopitz.containers.Pod"
+		class="jwolib.containers.Pod"
 		/>
 	
 	<component 
 		id="TileCanvas" 
-		class="com.jwopitz.containers.TileCanvas"
+		class="jwolib.containers.TileCanvas"
 		/>
 	
 	<!--component 
 		id="ComboBox"
-		class="com.jwopitz.controls.ComboBox"
+		class="jwolib.controls.ComboBox"
 		/-->
 	
 	<component 
 		id="HRule"
-		class="com.jwopitz.controls.HRule"
+		class="jwolib.controls.HRule"
 		/>
 	
 	<component
 		id="HyperlinkText"
-		class="com.jwopitz.controls.HyperlinkText"
+		class="jwolib.controls.HyperlinkText"
 		/>
 	
 	<component
 		id="TextInput"
-		class="com.jwopitz.controls.TextInput" 
+		class="jwolib.controls.TextInput" 
 		/>
 	
 	<component
 		id="VRule"
-		class="com.jwopitz.controls.VRule"
+		class="jwolib.controls.VRule"
 		/>
 	
 	<component
 		id="PaginatedItemsControlBase"
-		class="com.jwopitz.controls.pagination.PaginatedItemsControlBase"
+		class="jwolib.controls.pagination.PaginatedItemsControlBase"
 		/>
 		
 </componentPackage>
