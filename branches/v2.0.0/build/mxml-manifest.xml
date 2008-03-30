@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentPackage>
+	
+	<component 
+		id="FieldSet" 
+		class="com.jwopitz.containers.FieldSet"
+		/>
+	
+	<component 
+		id="Pod" 
+		class="com.jwopitz.containers.Pod"
+		/>
+	
+	<component 
+		id="TileCanvas" 
+		class="com.jwopitz.containers.TileCanvas"
+		/>
+	
+	<!--component 
+		id="ComboBox"
+		class="com.jwopitz.controls.ComboBox"
+		/-->
+	
+	<component 
+		id="HRule"
+		class="com.jwopitz.controls.HRule"
+		/>
+	
+	<component
+		id="HyperlinkText"
+		class="com.jwopitz.controls.HyperlinkText"
+		/>
+	
+	<component
+		id="TextInput"
+		class="com.jwopitz.controls.TextInput" 
+		/>
+	
+	<component
+		id="VRule"
+		class="com.jwopitz.controls.VRule"
+		/>
+	
+	<component
+		id="PaginatedItemsControlBase"
+		class="com.jwopitz.controls.pagination.PaginatedItemsControlBase"
+		/>
+		
+</componentPackage>
