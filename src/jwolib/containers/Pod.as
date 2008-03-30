@@ -26,6 +26,9 @@ package jwolib.containers
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import jwolib.events.TitleBarEvent;
+	import jwolib.events.TitleBarMouseEvent;
+	
 	import mx.containers.Panel;
 	import mx.controls.Button;
 	import mx.core.EventPriority;
@@ -55,48 +58,58 @@ package jwolib.containers
     [Style(name="headerHorizontalGap", type="Number", inherit="no")]
 
 	//////////////////////////////////////////////////////////////
-	//	EVENTS
+	//	POD EVENTS
 	//////////////////////////////////////////////////////////////
 
 	/**
-	 * Dispatched when the user clicks on the header area.
+	 * Triggered when title bar area fires its creation complete event.
 	 */
-	[Event(name="gripClick", type="flash.events.MouseEvent")]
+	[Event(name="titleBarCreated", type="jwolib.events.TitleBarEvent")]
 
 	/**
-	 * Dispatched when the user presses the mouse button on the header area.
+	 * Triggered when title bar area's children have been created.
 	 */
-	[Event(name="gripMouseDown", type="flash.events.MouseEvent")]
+	[Event(name="titleBarChildrenCreated", type="jwolib.events.TitleBarEvent")]
+	
+	/**
+	 * Triggered when title bar area (not its children) is clicked.
+	 */
+	[Event(name="titleBarClick", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
-	 * Dispatched when the user moves the mouse over the header area.
+	 * Triggered when the mouse is pressed down over the title bar area (not its children).
 	 */
-	[Event(name="gripMouseMove", type="flash.events.MouseEvent")]
+	[Event(name="titleBarMouseDown", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
-	 * Dispatched when the user clicks on the header area.
+	 * Triggered when the mouse moves within the title bar area (not its children).
 	 */
-	[Event(name="gripMouseOver", type="flash.events.MouseEvent")]
+	[Event(name="titleBarMouseMove", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
-	 * Dispatched when the user moves the mouse out of the header area.
+	 * Triggered when the mouse moves into the title bar area (not its children).
 	 */
-	[Event(name="gripMouseOut", type="flash.events.MouseEvent")]
+	[Event(name="titleBarMouseOver", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
-	 * Dispatched when the user releases the mouse button above the header area.
+	 * Triggered when the mouse moves out of the title bar area (not its children).
 	 */
-	[Event(name="gripMouseUp", type="flash.events.MouseEvent")]
+	[Event(name="titleBarMouseOut", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
-	 * Dispatched when the user rolls out of the header area.
+	 * Triggered when the mouse button is released over the title bar area (not its children).
 	 */
-	[Event(name="gripRollOut", type="flash.events.MouseEvent")]
+	[Event(name="titleBarMouseUp", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
-	 * Dispatched when the user rolls over the header area.
+	 * Triggered when the mouse rolls over the title bar area (not its children).
 	 */
-	[Event(name="gripRollOver", type="flash.events.MouseEvent")]
+	[Event(name="titleBarRollOut", type="jwolib.events.TitleBarMouseEvent")]
+
+	/**
+	 * Triggered when the mouse rolls out of the title bar area (not its children).
+	 */
+	[Event(name="titleBarRollOver", type="jwolib.events.TitleBarMouseEvent")]
 
 	/**
 	 * Pod is an extension of the &lt;mx:Panel&gt; allowing children to be added to the header area
@@ -120,59 +133,7 @@ package jwolib.containers
 	 */
 	public class Pod extends Panel
 	{
-
-		/////////////////////////////////////////////////////////////////////////////////
-		// CONSTANTS
-		/////////////////////////////////////////////////////////////////////////////////
-
-		/*
-
-		2007.10.01 - jwopitz
-		The following constants are located here rather than in a seperate MouseEvent subclass for ease of use.
-		At some future point these MAY be moved over to a specialized MouseEvent subclass if the need arises.
-
-		*/
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_CLICK:String = "gripClick";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_MOUSE_DOWN:String = "gripMouseDown";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_MOUSE_MOVE:String = "gripMouseMove";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_MOUSE_OVER:String = "gripMouseOver";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_MOUSE_OUT:String = "gripMouseOut";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_MOUSE_UP:String = "gripMouseUp";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_ROLL_OUT:String = "gripRollOut";
-
-		/**
-		 * @private
-		 */
-    	public static const GRIP_ROLL_OVER:String = "gripRollOver";
-
+		
 		/////////////////////////////////////////////////////////////////////////////////
 		// DEFAULT STYLES INIT
 		/////////////////////////////////////////////////////////////////////////////////
@@ -442,7 +403,7 @@ package jwolib.containers
 		 */
 		protected function createTitleBarMouseEvent (type:String, targetEvt:MouseEvent):MouseEvent
 		{
-			var evt:MouseEvent = new MouseEvent(type,
+			var evt:TitleBarMouseEvent = new TitleBarMouseEvent(type,
 				targetEvt.bubbles,
 				targetEvt.cancelable,
 				targetEvt.localX,
@@ -482,6 +443,8 @@ package jwolib.containers
 		 */
 		protected function titleBar_onCreationComplete (evt:FlexEvent):void
 		{
+			dispatchEvent(new TitleBarEvent(TitleBarEvent.TITLE_BAR_CREATED));
+			
 			var titleBarChild:UIComponent;
 			var i:int = 0;
 			var l:int = creationQueue.length;
@@ -490,6 +453,8 @@ package jwolib.containers
 				titleBarChild = creationQueue[i] as UIComponent;
 				titleBar.addChild(titleBarChild);
 			}
+			
+			dispatchEvent(new TitleBarEvent(TitleBarEvent.TITLE_BAR_CHILDREN_CREATED));
 
 			creationQueue = [];
 			
@@ -503,7 +468,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onClick (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_CLICK, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_CLICK, evt));
 		}
 
 		/**
@@ -515,7 +480,7 @@ package jwolib.containers
 		protected function titleBar_onMouseDown (evt:MouseEvent):void
 		{
 			if (!isPopUp)
-				dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_DOWN, evt));
+				dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_MOUSE_DOWN, evt));
 		}
 
 		/**
@@ -523,7 +488,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onMouseMove (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_MOVE, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_MOUSE_MOVE, evt));
 		}
 
 		/**
@@ -531,7 +496,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onMouseOut (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_OUT, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_MOUSE_OUT, evt));
 		}
 
 		/**
@@ -539,7 +504,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onMouseOver (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_OVER, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_MOUSE_OVER, evt));
 		}
 
 		/**
@@ -547,7 +512,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onMouseUp (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_MOUSE_UP, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_MOUSE_UP, evt));
 		}
 
 		/**
@@ -555,7 +520,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onRollOut (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_ROLL_OUT, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_ROLL_OUT, evt));
 		}
 
 		/**
@@ -563,7 +528,7 @@ package jwolib.containers
 		 */
 		protected function titleBar_onRollOver (evt:MouseEvent):void
 		{
-			dispatchEvent(createTitleBarMouseEvent(Pod.GRIP_ROLL_OVER, evt));
+			dispatchEvent(createTitleBarMouseEvent(TitleBarMouseEvent.TITLE_BAR_ROLL_OVER, evt));
 		}
 
 		////////////////////////////////////////////////////////////////////////
