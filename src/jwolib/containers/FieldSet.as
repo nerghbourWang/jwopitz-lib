@@ -21,10 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.containers
+package jwolib.containers
 {
-	import com.jwopitz.core.jwo_internal;
-	import com.jwopitz.skins.FieldSetBorder;
+	import jwolib.core.jwo_internal;
+	import jwolib.skins.FieldSetBorder;
 
 	import flash.events.Event;
 	import flash.geom.Point;

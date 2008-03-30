@@ -21,10 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.controls
+package jwolib.controls
 {
-	import com.jwopitz.core.UITextField;
-	import com.jwopitz.skins.ClearButtonSkin;
+	import jwolib.core.UITextField;
+	import jwolib.skins.ClearButtonSkin;
 	
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;

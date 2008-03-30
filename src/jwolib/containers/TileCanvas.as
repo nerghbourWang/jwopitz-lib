@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.containers
+package jwolib.containers
 {	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

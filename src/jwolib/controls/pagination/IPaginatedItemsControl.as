@@ -21,12 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.controls.pagination
+package jwolib.controls.pagination
 {
 	/**
 	 * Interface for controlling paginated data.
 	 * 
-	 * @see com.jwopitz.controls.pagination.PaginatedItemsControlBase
+	 * @see jwolib.controls.pagination.PaginatedItemsControlBase
 	 */
 	public interface IPaginatedItemsControl
 	{

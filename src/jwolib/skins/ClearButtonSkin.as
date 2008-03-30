@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.jwopitz.skins
+package jwolib.skins
 {
 	import flash.display.Graphics;
 	import flash.geom.Point;
