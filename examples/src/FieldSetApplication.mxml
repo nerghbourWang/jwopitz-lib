@@ -18,7 +18,7 @@
 	
 	<mx:Button toggle="true" id="resize_btn"/>
 	
-	<jwolib:FieldSet id="fs" width="450" title="title" height="{resize_btn.selected ? 500 : 250}" backgroundColor="#FF0000" backgroundAlpha="0.5">
+	<jwolib:FieldSet id="fs" width="450" title="title" height="{resize_btn.selected ? 500 : 250}">
 		
 		<mx:Form>
 			

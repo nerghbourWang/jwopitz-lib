@@ -14,35 +14,6 @@
 			import mx.controls.ColorPicker;
 			import mx.controls.Button;
 			
-			public function createPodControls ():void
-			{
-				var expandCollapseBtn:Button = new Button();
-				expandCollapseBtn.label = "-";
-				expandCollapseBtn.toggle = true;
-				expandCollapseBtn.width = 30;
-				
-				expandCollapseBtn.addEventListener(MouseEvent.CLICK, onClick_expandCollapseBtnHandler);
-				
-				var cp:ColorPicker = new ColorPicker();
-				cp.addEventListener(ColorPickerEvent.CHANGE, 
-					function (evt:ColorPickerEvent):void
-					{
-						pod.setStyle('backgroundColor', evt.color);
-					});
-				
-				var cb:ComboBox = new ComboBox();
-				cb.dataProvider = [100, 200, 300];
-				cb.addEventListener(Event.CHANGE,
-					function (evt:Event):void
-					{
-						pod.height = Number(evt.target.selectedItem);
-					});
-				
-				pod.addTitleBarComponent(expandCollapseBtn);
-				pod.addTitleBarComponent(cb);
-				pod.addTitleBarComponent(cp);
-			}
-			
 			public function onClick_expandCollapseBtnHandler (evt:MouseEvent):void
 			{
 				if (evt.target.selected)
@@ -64,8 +35,13 @@
 		width="400" height="300"
 		headerHeight="40"
 		gripMouseDown="pod.startDrag();" 
-		gripMouseUp="pod.stopDrag();"
-		creationComplete="createPodControls();">
+		gripMouseUp="pod.stopDrag();">
+		
+		<jwolib:titleBarChildren>
+			<mx:Button label="-" toggle="true" width="30" click="onClick_expandCollapseBtnHandler(event);"/>
+			<mx:ColorPicker change="pod.setStyle('backgroundColor', event.color);"/>
+			<mx:ComboBox dataProvider="{[100, 200, 300]}" change="pod.height = Number(event.target.selectedItem);"/>
+		</jwolib:titleBarChildren>
 		
 		<mx:Label text="drag me!!!"/>
 		
