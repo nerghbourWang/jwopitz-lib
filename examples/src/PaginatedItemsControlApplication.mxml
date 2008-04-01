@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	layout="vertical"
+	creationComplete="onCreationComplete(50);"
+	
+	viewSourceURL="srcview/PaginatedItemsControlBase/index.html"
+	
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="controls.*">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			private function onCreationComplete (num:int):void
+			{
+				var a:Array = [];
+				var obj:Object = {};
+				
+				var i:int;
+				var l:int = num;
+				for (i; i < l; i++)
+				{
+					obj = {};
+					obj.label = "list item " + (i + 1);
+					obj.data = 1000 * Math.random() + 1;
+					
+					a.push(obj);
+				}
+				
+				_dp = a;
+			}
+			
+			[Bindable]
+			private var _dp:Array = [];
+			
+			[Bindable]
+			private var _state_dp:Array = [
+				{label:'base', data:null},
+				{label:'min', data:'minimum_state'},
+				{label:'max', data:'maximum_state'},
+			];
+		]]>
+	</mx:Script>
+	
+	<mx:Panel width="100%" height="100%" title="PaginatedItemsControlBase Implementation Example">
+		
+		<mx:Form>
+			
+			<mx:FormItem label="num of items">
+				<mx:HSlider id="numResults_hs" minimum="10" maximum="100" snapInterval="5" change="onCreationComplete(numResults_hs.value);"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="items per page">
+				<mx:HSlider id="itemsPerPg_hs" minimum="2" value="5" maximum="10" snapInterval="1" change="items_pgic.itemsPerPage = itemsPerPg_hs.value"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="list of items">
+				<mx:List dataProvider="{items_pgic.selectedItems}" width="150" height="250" labelField="label"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="paginated items control subclass">
+				<controls:PaginatedItemsControl id="items_pgic" itemsPerPage="{itemsPerPg_hs.value}" dataProvider="{_dp}"/>
+			</mx:FormItem>
+			
+			<mx:FormItem label="control state">
+				<mx:ComboBox id="state_cb" dataProvider="{_state_dp}" change="items_pgic.currentState = state_cb.selectedItem.data"/>
+			</mx:FormItem>
+		
+		</mx:Form>
+		
+	</mx:Panel>
+	
+</mx:Application>
