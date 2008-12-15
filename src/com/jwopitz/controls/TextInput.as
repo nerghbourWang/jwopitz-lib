@@ -764,7 +764,7 @@ package com.jwopitz.controls
 		 */
 		protected function onFocusOut (evt:FocusEvent):void
 		{
-			var	nextFocus:IFocusManagerComponent = focusManager.getFocus();
+			var	nextFocus:IFocusManagerComponent = focusManager ? focusManager.getFocus(): null;
 			if (clearBtn != nextFocus && appearAsLabel)
 				labelMode = true;
 			

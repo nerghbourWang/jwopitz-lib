@@ -80,34 +80,28 @@ package com.jwopitz.controls
 		/**
 		 * @private
 		 */
-		private static function setDefaultStyles ():Boolean
+		 private static function setDefaultStyles ():Boolean
 		{
-			//copy over old styles if applicable
-			var oldS:CSSStyleDeclaration = StyleManager.getStyleDeclaration("VRule");
-			var s:CSSStyleDeclaration = new CSSStyleDeclaration();
+			var s:CSSStyleDeclaration = StyleManager.getStyleDeclaration("HRule");
+			if (!s)
+				s = new CSSStyleDeclaration();
+				
+			if (!s.getStyle("strokeColor"))
+				s.setStyle("strokeColor", 0xC4CCCC);
+			
+			if (!s.getStyle("strokeWidth"))
+				s.setStyle("strokeWidth", 1);
 
-        	if (oldS)
-        	{
-        		var oldStrokeColor:uint = oldS.getStyle("strokeColor");
-        		var oldStrokeWidth:Number = oldS.getStyle("strokeWidth");
+        	if (!s.getStyle("paddingTop"))
+        		s.setStyle("paddingTop", 0);
 
-        		s.setStyle("strokeColor", oldStrokeColor);
-        		s.setStyle("strokeWidth", oldStrokeWidth);
+        	if (!s.getStyle("paddingBottom"))
+        		s.setStyle("paddingBottom", 0);
 
-        		StyleManager.clearStyleDeclaration("VRule", true);
-        	}
-        	else
-        	{
-        		s.setStyle("strokeColor", 0xC4CCCC);
-        		s.setStyle("strokeWidth", 1);
-        	}
+        	if (!s.getStyle("dashLength"))
+        		s.setStyle("dashLength", 0);
 
-        	//add new default styles
-        	s.setStyle("paddingTop", 0);
-        	s.setStyle("paddingBottom", 0);
-        	s.setStyle("dashLength", 0);
-
-        	StyleManager.setStyleDeclaration("VRule", s, true);
+        	StyleManager.setStyleDeclaration("HRule", s, true);
 
         	return true;
         }

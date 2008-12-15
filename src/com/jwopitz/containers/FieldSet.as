@@ -25,10 +25,10 @@ package com.jwopitz.containers
 {
 	import com.jwopitz.core.jwo_internal;
 	import com.jwopitz.skins.FieldSetBorder;
-
+	
 	import flash.events.Event;
 	import flash.geom.Point;
-
+	
 	import mx.containers.Box;
 	import mx.core.UITextField;
 	import mx.styles.CSSStyleDeclaration;
@@ -108,29 +108,52 @@ package com.jwopitz.containers
 		 */
 		private static function setDefaultStyles ():Boolean
 		{
-			if (!StyleManager.getStyleDeclaration('FieldSet'))
+			var s:CSSStyleDeclaration = StyleManager.getStyleDeclaration('FieldSet');
+			if (!s)
+				s = new CSSStyleDeclaration();
+			
+			if (!s.getStyle("titleStyleName"))
 			{
 				var tsn:CSSStyleDeclaration = new CSSStyleDeclaration();
-				tsn.setStyle('fontWeight', 'bold');
-
-				var s:CSSStyleDeclaration = new CSSStyleDeclaration();
-				s.setStyle('borderStyle', 'solid');
-				s.setStyle('borderSkin', FieldSetBorder);
-				s.setStyle('backgroundColor', 0xFFFFFF);
-				s.setStyle('backgroundAlpha', 0.0);
-
-				s.setStyle('paddingLeft', 2);
-				s.setStyle('paddingRight', 2);
-				s.setStyle('paddingTop', 2);
-				s.setStyle('paddingBottom', 2);
-
-				s.setStyle('titleAlign', 'left');
-				s.setStyle('titleGap', 2);
-				s.setStyle('titlePlacement', 'top');
-				s.setStyle('titleStyleName', tsn);
-
-				StyleManager.setStyleDeclaration('FieldSet', s, true);
+				tsn.setStyle("fontWeight", "bold");
+				
+				s.setStyle("titleStyleName", tsn);
 			}
+			
+			if (!s.getStyle("borderStyle"))
+				s.setStyle("borderStyle", "solid");
+			
+			if (!s.getStyle("borderSkin"))
+				s.setStyle("borderSkin", FieldSetBorder);
+			
+			if (!s.getStyle("backgroundColor"))
+				s.setStyle("backgroundColor", 0xFFFFFF);
+			
+			if (!s.getStyle("backgroundAlpha"))
+				s.setStyle("backgroundAlpha", 0.0);
+			
+			if (!s.getStyle("paddingLeft"))
+				s.setStyle("paddingLeft", 2);
+			
+			if (!s.getStyle("paddingRight"))
+				s.setStyle("paddingRight", 2);
+			
+			if (!s.getStyle("paddingTop"))
+				s.setStyle("paddingTop", 2);
+			
+			if (!s.getStyle("paddingBottom"))
+				s.setStyle("paddingBottom", 2);
+			
+			if (!s.getStyle("titleAlign"))
+				s.setStyle("titleAlign", "left");
+			
+			if (!s.getStyle("titleGap"))
+				s.setStyle("titleGap", 2);
+			
+			if (!s.getStyle("titlePlacement"))
+				s.setStyle("titlePlacement", "top");
+
+			StyleManager.setStyleDeclaration('FieldSet', s, true);
 
 			return true;
 		}

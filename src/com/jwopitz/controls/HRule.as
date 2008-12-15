@@ -25,8 +25,7 @@ package com.jwopitz.controls
 {
 	import flash.display.Graphics;
 	import flash.display.Sprite;
-	import flash.geom.Point;
-
+	
 	import mx.controls.HRule;
 	import mx.styles.CSSStyleDeclaration;
 	import mx.styles.StyleManager;
@@ -83,30 +82,24 @@ package com.jwopitz.controls
 		 */
 		private static function setDefaultStyles ():Boolean
 		{
-			//copy over old styles if applicable
-			var oldS:CSSStyleDeclaration = StyleManager.getStyleDeclaration("HRule");
-			var s:CSSStyleDeclaration = new CSSStyleDeclaration();
+			var s:CSSStyleDeclaration = StyleManager.getStyleDeclaration("HRule");
+			if (!s)
+				s = new CSSStyleDeclaration();
+				
+			if (!s.getStyle("strokeColor"))
+				s.setStyle("strokeColor", 0xC4CCCC);
+			
+			if (!s.getStyle("strokeWidth"))
+				s.setStyle("strokeWidth", 1);
 
-        	if (oldS)
-        	{
-        		var oldStrokeColor:uint = oldS.getStyle("strokeColor");
-        		var oldStrokeWidth:Number = oldS.getStyle("strokeWidth");
+        	if (!s.getStyle("paddingLeft"))
+        		s.setStyle("paddingLeft", 0);
 
-        		s.setStyle("strokeColor", oldStrokeColor);
-        		s.setStyle("strokeWidth", oldStrokeWidth);
+        	if (!s.getStyle("paddingRight"))
+        		s.setStyle("paddingRight", 0);
 
-        		StyleManager.clearStyleDeclaration("HRule", true);
-        	}
-        	else
-        	{
-        		s.setStyle("strokeColor", 0xC4CCCC);
-        		s.setStyle("strokeWidth", 1);
-        	}
-
-        	//add new default styles
-        	s.setStyle("paddingLeft", 0);
-        	s.setStyle("paddingRight", 0);
-        	s.setStyle("dashLength", 0);
+        	if (!s.getStyle("dashLength"))
+        		s.setStyle("dashLength", 0);
 
         	StyleManager.setStyleDeclaration("HRule", s, true);
 
