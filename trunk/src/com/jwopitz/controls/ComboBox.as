@@ -25,20 +25,9 @@ package com.jwopitz.controls
 		 */
 		private static function setDefaultStyles ():Boolean
 		{
-			//copy over old styles if applicable
-			var oldS:CSSStyleDeclaration = StyleManager.getStyleDeclaration("ComboBox");
-			var s:CSSStyleDeclaration = new CSSStyleDeclaration();
-
-			if (oldS)
-			{
-				//copy over old styles
-				s = oldS;
-
-				//clear old style
-				StyleManager.clearStyleDeclaration("ComboBox", true); //will this clear the mx.controls.ComboBox style too?
-			}
-			
-			//s.setStyle();
+			var s:CSSStyleDeclaration = StyleManager.getStyleDeclaration("ComboBox");
+			if (!s)
+				s = new CSSStyleDeclaration();
 			
 			StyleManager.setStyleDeclaration("ComboBox", s, true);
 

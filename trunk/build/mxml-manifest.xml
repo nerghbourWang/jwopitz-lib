@@ -16,6 +16,16 @@
 		class="com.jwopitz.containers.TileCanvas"
 		/>
 	
+	<component
+		id="AutoCompleteBase"
+		class="com.jwopitz.controls.autoCompleteClasses.AutoCompleteBase"
+		/>
+	
+	<component
+		id="AutoCompleteListItemRenderer"
+		class="com.jwopitz.controls.autoCompleteClasses.AutoCompleteListItemRenderer"
+		/>
+	
 	<!--component 
 		id="ComboBox"
 		class="com.jwopitz.controls.ComboBox"
@@ -34,6 +44,11 @@
 	<component
 		id="TextInput"
 		class="com.jwopitz.controls.TextInput" 
+		/>
+	
+	<component
+		id="TickerTape"
+		class="com.jwopitz.controls.TickerTape" 
 		/>
 	
 	<component

@@ -39,6 +39,14 @@ package com.jwopitz.containers
 	//////////////////////////////////////////////////////////////
 
 	/**
+     * Sets the horizontal alignment of the header children added with addTitleBarComponent and the titleTextField.
+     * Values are "left" and "right".
+     *
+     * @default right
+     */
+    [Style(name="headerHorizontalAlign", type="String", enumeration="left,right", inherit="no")]
+
+    /**
      * Sets the vertical alignment of the header children added with addTitleBarComponent and the titleTextField.
      * Values are "top, "middle" and "bottom".
      *
@@ -187,16 +195,22 @@ package com.jwopitz.containers
 		 */
 		private static function setDefaultStyles ():Boolean
 		{
-        	if (!StyleManager.getStyleDeclaration('Pod'))
-        	{
-        		var s:CSSStyleDeclaration = new CSSStyleDeclaration();
-        		s.setStyle('headerVerticalAlign', 'middle');
-        		s.setStyle('headerHorizontalGap', 2);
-
-				StyleManager.setStyleDeclaration('Pod', s, true);
-        	}
-
-        	return true;
+			var s:CSSStyleDeclaration = StyleManager.getStyleDeclaration("Pod");
+			if (!s)
+				s = new CSSStyleDeclaration();
+			
+			if (!s.getStyle("headerHorizontalAlign"))
+				s.setStyle("headerHorizontalAlign", "right");
+			
+			if (!s.getStyle("headerVerticalAlign"))
+				s.setStyle("headerVerticalAlign", "middle");
+				
+			if (!s.getStyle("headerHorizontalGap"))
+				s.setStyle("headerHorizontalGap", 2);
+			
+        	StyleManager.setStyleDeclaration('Pod', s, true);
+			
+			return true;
         }
 
         /////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +248,8 @@ package com.jwopitz.containers
 			super.styleChanged(styleProp);
 
 			var allStyles:Boolean = !styleProp || styleProp == "styleName";
-			if (allStyles || styleProp == "headerVerticalAlign" || styleProp == "headerHorizontalGap")
+			if (allStyles || styleProp == "headerHorizontalAlign" ||
+				styleProp == "headerVerticalAlign" || styleProp == "headerHorizontalGap")
 			{
 				invalidateProperties();
 			}
@@ -264,7 +279,7 @@ package com.jwopitz.containers
 		{
 			super.layoutChrome(unscaledWidth, unscaledHeight);
 
-			repositionHeaderElements();
+			repositionHeaderElements(); //should this be called on updateDisplayList?
 		}
 
 		/**
@@ -293,60 +308,14 @@ package com.jwopitz.containers
 			var tx:Number = 0; //target x value
 			var px:Number = 0; //previous x value
 			var ty:Number = 0; //target y value
-
+			
+			var headerHorizontalAlign:String = getStyle('headerHorizontalAlign');
 			var headerVerticalAlign:String = getStyle('headerVerticalAlign');
 			var headerHorizontalGap:Number = getStyle('headerHorizontalGap');
-
-			var i:int = 0;
-			var l:int = titleBarAssets.length;
-			if (l == 0)
-				return;
-
-			for (i; i < l; i++)
-			{
-				uic = titleBarAssets[i] as UIComponent;
-				uic.setActualSize(uic.getExplicitOrMeasuredWidth(), uic.getExplicitOrMeasuredHeight());
-
-				if (i == 0)
-				{
-					tx = unscaledWidth - borderMetrics.right - uic.getExplicitOrMeasuredWidth() - 10;
-				}
-				else
-				{
-					tx = px - uic.getExplicitOrMeasuredWidth() - headerHorizontalGap;
-				}
-
-				switch(headerVerticalAlign)
-				{
-					case "top":
-					{
-						ty = 5;
-						break;
-					}
-
-					case "bottom":
-					{
-						ty = getHeaderHeight() - uic.getExplicitOrMeasuredHeight();
-						break;
-					}
-
-					case "middle":
-					default:
-					{
-						ty = (getHeaderHeight() - uic.getExplicitOrMeasuredHeight()) / 2;
-						break;
-					}
-				}
-
-				if (uic.x != tx || uic.y != ty)
-					uic.move(tx, ty);
-
-				px = tx;
-			}
-
+			
 			if (titleTextField)
 			{
-				switch(headerVerticalAlign)
+				switch (headerVerticalAlign)
 				{
 					case "top":
 					{
@@ -371,8 +340,73 @@ package com.jwopitz.containers
 				titleTextField.move(titleTextField.x, ty);
 			}
 
+			var i:int = 0;
+			var l:int = titleBarAssets.length;
+			if (l == 0)
+				return;
+			
+			for (i; i < l; i++)
+			{
+				uic = UIComponent(titleBarAssets[i]);
+				uic.setActualSize(uic.getExplicitOrMeasuredWidth(), uic.getExplicitOrMeasuredHeight());
+				
+				//set the target y value
+				switch (headerVerticalAlign)
+				{
+					case "top":
+					{
+						ty = 5;
+						break;
+					}
+					
+					case "bottom":
+					{
+						ty = getHeaderHeight() - uic.getExplicitOrMeasuredHeight();
+						break;
+					}
+					
+					case "middle":
+					default:
+					{
+						ty = (getHeaderHeight() - uic.getExplicitOrMeasuredHeight()) / 2;
+						break;
+					}
+				}
+				
+				//set the target x value
+				switch (headerHorizontalAlign)
+				{
+					case "left":
+					{
+						if (i == 0)
+							tx = titleTextField.x + titleTextField.getExplicitOrMeasuredWidth() + headerHorizontalGap;
+						
+						else
+							tx = px;
+						
+						px = tx + uic.getExplicitOrMeasuredWidth() + headerHorizontalGap;
+						break;
+					}
+					
+					case "right":
+					default:
+					{
+						if (i == 0)
+							tx = unscaledWidth - borderMetrics.right - uic.getExplicitOrMeasuredWidth() - 10;
+						
+						else
+							tx = px - uic.getExplicitOrMeasuredWidth() - headerHorizontalGap;
+						
+						px = tx;							
+						break;
+					}
+				}
+				
+				if (uic.x != tx || uic.y != ty)
+					uic.move(tx, ty);
+			}
 		}
-
+		
 		/**
 		 * Adds new children to the title bar area and registers default mouse event handlers.
 		 * For most cases, title bar components should be added declaritively via MXML using titleBarChildren which calls this on the creation complete event.

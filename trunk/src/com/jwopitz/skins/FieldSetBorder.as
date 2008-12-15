@@ -65,7 +65,7 @@ package com.jwopitz.skins
 	        		var textHeight:Number = FieldSet(parent).titleTextField.getExplicitOrMeasuredHeight();
 
 	        		if (borderTop < textHeight || borderTop < radius)
-	        			borderTop = (textHeight > radius)? textHeight: radius;
+	        			borderTop = Math.max(textHeight, radius);
 	        	}
 
 	            bm = new EdgeMetrics(borderThickness, borderTop, borderThickness, borderThickness);

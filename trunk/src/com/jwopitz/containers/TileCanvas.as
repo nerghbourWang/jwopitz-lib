@@ -33,6 +33,7 @@ package com.jwopitz.containers
 	import mx.collections.ArrayCollection;
 	import mx.collections.ICollectionView;
 	import mx.collections.IList;
+	import mx.collections.IViewCursor;
 	import mx.collections.ListCollectionView;
 	import mx.collections.XMLListCollection;
 	import mx.containers.Canvas;
@@ -41,8 +42,10 @@ package com.jwopitz.containers
 	import mx.core.ClassFactory;
 	import mx.core.Container;
 	import mx.core.DragSource;
+	import mx.core.IDataRenderer;
 	import mx.core.IFactory;
 	import mx.core.IFlexDisplayObject;
+	import mx.core.UIComponent;
 	import mx.effects.Move;
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
@@ -136,12 +139,12 @@ package com.jwopitz.containers
 		/**
 		 * @private
 		 */
-		protected var _mouseOverItem:Container;
+		protected var _mouseOverItem:UIComponent;
 		
 		/**
 		 * @private
 		 */
-		protected var _draggedItem:Container;
+		protected var _draggedItem:UIComponent;
 		
 		/**
 		 * @private
@@ -294,6 +297,8 @@ package com.jwopitz.containers
 			if (!_dataProvider)
 				return;
 			
+			var iterator:IViewCursor = _items.createCursor();
+			
 			var count:int = 0
 			var i:int = 0;
 			for (i; i < rows; i++)
@@ -301,10 +306,12 @@ package com.jwopitz.containers
 				var j:int = 0;
 				for (j; j < columns; j++)
 				{	
-					if (count == _dataProvider.length)
+					if (iterator.afterLast)
 						return;
 					
-					var item:Container = _items[count] as Container;	
+					var item:UIComponent = iterator.current as UIComponent;
+					iterator.moveNext();
+					
 					var pt:Point = calculateItemPosition(j, i);
 					
 					if (item && item.x != pt.x || item.y != pt.y)
@@ -314,8 +321,6 @@ package com.jwopitz.containers
 						m.yTo = pt.y;
 						m.play();
 					}
-					
-					count++
 				}
 			}
 		}
@@ -330,8 +335,8 @@ package com.jwopitz.containers
 			var i:int = 0;
 			for (i; i < _items.length; i++)
 			{
-				var item:Container = _items.getItemAt(i) as Container;
-				tempArray[i] = item.data;
+				var item:Object = _items.getItemAt(i);
+				tempArray[i] = item is IDataRenderer ? IDataRenderer(item).data : null;
 			}
 			
 			for (i = 0; i < _dataProvider.length; i++)
@@ -345,9 +350,9 @@ package com.jwopitz.containers
 		 * 
 		 * @return A new instance from the itemRenderer.
 		 */
-		protected function getItemInstance ():Container
+		protected function getItemInstance ():UIComponent
 		{
-			var item:Container = itemRenderer.newInstance() as Container;
+			var item:UIComponent = UIComponent(itemRenderer.newInstance());
 			item.owner = this;
 			item.x = itemSpawnPoint.x;
 			item.y = itemSpawnPoint.y;
@@ -363,16 +368,17 @@ package com.jwopitz.containers
 		 * 
 		 * @return The item under the mouse.
 		 */
-		protected function getItemUnderMouse ():Container
+		protected function getItemUnderMouse ():UIComponent
 		{
 			var pt:Point = localToGlobal(_mouseDownPt);
 			var i:int = 0;
 			for (i; i < _items.length; i++)
 			{
-				var item:Container = _items.getItemAt(i) as Container;
+				var item:UIComponent = UIComponent(_items.getItemAt(i));
 				if (item.hitTestPoint(pt.x, pt.y))
 					return item;
 			}
+			
 			return null;
 		}
 		
@@ -381,7 +387,7 @@ package com.jwopitz.containers
 		 * 
 		 * @param value The instance genereated from the itemRendere in which to add functionality.
 		 */
-		protected function defaultItemAddOn (value:Container):void
+		protected function defaultItemAddOn (value:Object):void
 		{
 			//do nothing
 		}
@@ -454,12 +460,14 @@ package com.jwopitz.containers
 			
 			var changeItemsCount:int = evt.items.length;
 			var startingIndex:int = evt.location;
-			var item:Container;
+			var item:UIComponent;
 			var i:int = 0;
 			for (i; i < changeItemsCount; i++)
 			{
 				item = getItemInstance();
-				item.data = _dataProvider.getItemAt(startingIndex + i);
+				if (item is IDataRenderer)
+					IDataRenderer(item).data = _dataProvider.getItemAt(startingIndex + i);
+				
 				_items.addItemAt(item, startingIndex + i);
 				addChild(item);
 			}
@@ -477,7 +485,7 @@ package com.jwopitz.containers
 			if (_isManualViewUpdate)
 			{
 				//need to update item indices in _items
-				var item:Container = _items.removeItemAt(evt.oldLocation) as Container;
+				var item:Object = _items.removeItemAt(evt.oldLocation);
 				_items.addItemAt(item, evt.location);
 				
 				_isManualViewUpdate = false;
@@ -496,27 +504,30 @@ package com.jwopitz.containers
 		protected function collectionChange_refreshLogic (evt:CollectionEvent):void
 		{
 			trace('collectionChange_refreshLogic');
-			var item:Container;
+			var item:IDataRenderer;
 			var tempArray:Array = new Array();
 			var i:int = 0;
 			if (!enableMoveOnRefresh && _dataProvider.filterFunction == null)
 			{
 				for (i; i < _items.length; i++)
 				{
-					item = _items.getItemAt(i) as Container;
+					item = IDataRenderer(_items.getItemAt(i));
 					item.data = _dataProvider.getItemAt(i);
 				}
 			} 
+			
 			else if (_dataProvider.filterFunction == null)
 			{
 				for (i; i < _items.length; i++)
 				{
-					item = _items.getItemAt(i) as Container;
+					item = IDataRenderer(_items.getItemAt(i));
 					var index:int = _dataProvider.getItemIndex(item.data);
 					tempArray[index] = item;
 				}
+				
 				_items = new ArrayCollection(tempArray);
 			}
+			
 			else
 			{
 				//do nothing			
@@ -537,11 +548,11 @@ package com.jwopitz.containers
 			
 			var changeItemsCount:int = evt.items.length;
 			var startingIndex:int = evt.location;
-			var item:Container;
+			var item:UIComponent;
 			var i:int = 0;
 			for (i; i < changeItemsCount; i++)
 			{
-				item = _items.removeItemAt(startingIndex) as Container;
+				item = UIComponent(_items.removeItemAt(startingIndex));
 				removeChild(item);
 			}
 			
@@ -562,8 +573,10 @@ package com.jwopitz.containers
 			var i:int = 0;
 			for (i; i < _dataProvider.length; i++)
 			{
-				var item:Container = getItemInstance();
-				item.data = _dataProvider.getItemAt(_currentItemCount);
+				var item:UIComponent = getItemInstance();
+				if (item is IDataRenderer)
+					IDataRenderer(item).data = _dataProvider.getItemAt(_currentItemCount);
+				
 				item.x = 0;
 				item.y = 0;
 				
@@ -588,8 +601,9 @@ package com.jwopitz.containers
 				var updateEvt:PropertyChangeEvent = evt.items[i] as PropertyChangeEvent;
 				var itemIndex:int = _dataProvider.getItemIndex(updateEvt.source);
 				
-				var item:Container = _items.getItemAt(itemIndex) as Container;
-				item.data = _dataProvider.getItemAt(itemIndex);
+				var item:UIComponent = UIComponent(_items.getItemAt(itemIndex));
+				if (item && item is IDataRenderer)
+					IDataRenderer(item).data = _dataProvider.getItemAt(itemIndex);
 			}
 		}
 		
@@ -975,14 +989,16 @@ package com.jwopitz.containers
 		}
 		
 		/**
-		 * The custom item renderer for the control.
+		 * @private
 		 */
 		public function get itemRenderer ():IFactory
 		{
 			return _itemRenderer;
 		}
+		
 		/**
-		 * @private 
+		 * The custom item renderer (IFactory) for the control.
+		 * The expected generator class at a minimum should be an UIComponent and should implement IDataRenderer.
 		 */
 		public function set itemRenderer (value:IFactory):void
 		{
