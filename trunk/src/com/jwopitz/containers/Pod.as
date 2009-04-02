@@ -25,6 +25,7 @@ package com.jwopitz.containers
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.Dictionary;
 	
 	import mx.containers.Panel;
 	import mx.controls.Button;
@@ -273,13 +274,30 @@ package com.jwopitz.containers
 		}
 
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
 		override protected function layoutChrome (unscaledWidth:Number, unscaledHeight:Number):void
 		{
+			//this is to fix a bug associated with setting visiblity of titlebar children
+			var temp:Dictionary = new Dictionary();
+			var child:UIComponent;
+			for each (child in titleBarAssets)
+				temp[child] = child.visible;
+			
 			super.layoutChrome(unscaledWidth, unscaledHeight);
-
-			repositionHeaderElements(); //should this be called on updateDisplayList?
+			
+			for each (child in titleBarAssets)
+				child.visible = temp[child];
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function updateDisplayList (unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			repositionHeaderElements();
 		}
 
 		/**
@@ -494,7 +512,7 @@ package com.jwopitz.containers
 		////////////////////////////////////////////////////////////////////////
 		//	TITLE BAR EVENT HANDLERS
 		////////////////////////////////////////////////////////////////////////
-
+		
 		/**
 		 * @private
 		 *
